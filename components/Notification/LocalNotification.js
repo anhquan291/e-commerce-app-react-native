@@ -47,13 +47,12 @@ const LocalNotification = () => {
       Notifications.scheduleNotificationAsync({
         content: {
           title: 'Ngày mới tốt lành bạn nhé ^^',
-          body: 'Hãy lựa chọn sự may mán, mua sự thành công cùng với CatTuong',
+          body: 'Hãy lựa chọn sự may mắn, mua sự thành công cùng với CatTuong',
           data: { mySpecialData: 'Some text' },
         },
         trigger: {
-          hour: 8,
-          minute: 0,
-          repeats: true,
+          hour: 14,
+          minute: 54,
         },
       });
     };

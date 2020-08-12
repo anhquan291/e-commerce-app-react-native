@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,8 +7,11 @@ import {
   FlatList,
   Platform,
 } from 'react-native';
+
 //Redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+//Action
+import * as ProductActions from '../store/shop-actions';
 //Colors
 import Colors from '../constants/Colors';
 // OrderItem
@@ -16,26 +19,26 @@ import OrderItem from '../components/Product/OrderItem';
 //Icon
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TextGeo from '../components/UI/TextGeo';
+import SkeletonLoadingCart from '../components/SkeletonLoadingCart';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const { height } = Dimensions.get('window');
 
 const OrderScreen = (props) => {
-  const [searchValue, setSearchValue] = useState('');
+  const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.auth.user);
   const orders = useSelector((state) => state.order.orders);
-  const [orderFilter, setOrderFilter] = useState([]);
-  const [notFound, setNotFound] = useState('');
-  // const searchHandler = async () => {
-  //   const data = await orders.filter(
-  //     (order) => order.id.toString() === searchValue
-  //   );
-  //   setOrderFilter(data);
-  //   if (data.length === 0) {
-  //     setNotFound('Không tìm thấy mã đơn hàng');
-  //   } else {
-  //     setNotFound('');
-  //   }
-  // };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setLoading(true);
+    const fetching = async () => {
+      await dispatch(ProductActions.fetchOrder());
+      setLoading(false);
+    };
+    fetching();
+  }, [user.userid]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -53,70 +56,54 @@ const OrderScreen = (props) => {
         <TextGeo style={styles.titleHeader}>Tra cứu đơn hàng</TextGeo>
         <View />
       </View>
-      <View style={styles.footer}>
-        {Object.keys(user).length === 0 ? (
-          <View style={styles.center}>
-            <TextGeo style={{ fontSize: 16 }}>
-              Bạn cần đăng nhập để xem sản phẩm yêu thích!
-            </TextGeo>
-            <View
-              style={{
-                borderWidth: 1,
-                paddingHorizontal: 15,
-                paddingVertical: 5,
-                borderColor: Colors.lighter_green,
-                borderRadius: 5,
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate('SignUp')}
-              >
-                <TextGeo style={{ fontSize: 16, color: Colors.lighter_green }}>
-                  Tiếp tục
-                </TextGeo>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ) : (
-          <FlatList
-            data={orders}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => {
-              return <OrderItem order={item} />;
-            }}
-          />
-        )}
-
-        {/* <View style={styles.search}>
-          <TextInput
-            placeholder='Nhập mã đơn hàng'
-            clearButtonMode='while-editing'
-            keyboardType='numeric'
-            onChangeText={(value) => setSearchValue(value)}
-          />
+      {loading ? (
+        <View style={styles.centerLoader}>
+          <SkeletonLoadingCart />
         </View>
-        <View style={styles.searchContainer}>
-          <View style={styles.searchButton}>
-            <TouchableOpacity onPress={searchHandler}>
-              <TextGeo
-                style={{ textAlign: 'center', fontSize: 15, color: '#fff' }}
-              >
-                Tìm đơn hàng
+      ) : (
+        <View style={styles.footer}>
+          {Object.keys(user).length === 0 ? (
+            <View style={styles.center}>
+              <TextGeo style={{ fontSize: 16 }}>
+                Bạn cần đăng nhập để xem đơn hàng!
               </TextGeo>
-            </TouchableOpacity>
-          </View>
+              <View
+                style={{
+                  borderWidth: 1,
+                  paddingHorizontal: 15,
+                  paddingVertical: 5,
+                  borderColor: Colors.lighter_green,
+                  borderRadius: 5,
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('SignUp')}
+                >
+                  <TextGeo
+                    style={{ fontSize: 16, color: Colors.lighter_green }}
+                  >
+                    Tiếp tục
+                  </TextGeo>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ) : orders.length === 0 ? (
+            <View style={styles.center}>
+              <TextGeo style={{ fontSize: 16 }}>
+                Bạn không có đơn hàng nào!
+              </TextGeo>
+            </View>
+          ) : (
+            <FlatList
+              data={orders}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => {
+                return <OrderItem order={item} />;
+              }}
+            />
+          )}
         </View>
-        <View style={styles.content}>
-          <Text style={{ textAlign: 'center' }}>{notFound}</Text>
-          <FlatList
-            data={orderFilter}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => {
-              return <OrderItem order={item} />;
-            }}
-          />
-        </View> */}
-      </View>
+      )}
     </View>
   );
 };
@@ -125,6 +112,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  centerLoader: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top: Platform.OS === 'android' ? 70 : height < 668 ? 70 : 90,
   },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   header: {
@@ -142,7 +137,6 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     marginTop: 5,
-    marginHorizontal: 15,
   },
   search: {
     width: '100%',

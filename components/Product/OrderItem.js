@@ -17,12 +17,24 @@ moment.locale('vi');
 
 const OrderItem = ({ order }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const status = () => {
+    switch (order.status) {
+      case 'waiting':
+        return 'Chưa xác nhận';
+      case 'confirmed':
+        return 'Đã xác nhận';
+      case 'delivery':
+        return 'Đang vận chuyển';
+      default:
+        return 'Chưa xác nhận';
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.summary}>
         <View style={styles.textContainer}>
           <TextGeo style={styles.text}>Mã đơn: </TextGeo>
-          <TextGeo style={styles.detail}>{order.id}</TextGeo>
+          <TextGeo style={styles.detail}>{order._id}</TextGeo>
         </View>
 
         <View style={styles.textContainer}>
@@ -51,15 +63,19 @@ const OrderItem = ({ order }) => {
             </View>
             <View style={styles.textContainer}>
               <TextGeo style={styles.text}>Số điện thoại: </TextGeo>
-              <TextGeo style={styles.detail}>{order.phone}</TextGeo>
+              <TextGeo style={styles.detail}>0{order.phone}</TextGeo>
+            </View>
+            <View style={styles.textContainer}>
+              <TextGeo style={styles.text}>Trạng thái: </TextGeo>
+              <TextGeo style={styles.detail}>{status()}</TextGeo>
             </View>
 
             <TextGeo style={styles.text}>Sản phẩm đã đặt:</TextGeo>
             <FlatList
               data={order.items}
-              keyExtractor={(item) => item._id}
+              keyExtractor={(item) => item.item._id}
               renderItem={({ item }) => {
-                return <ItemList key={item._id} item={item} />;
+                return <ItemList item={item} />;
               }}
             />
             <View

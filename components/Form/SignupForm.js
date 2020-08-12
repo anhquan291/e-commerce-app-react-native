@@ -150,10 +150,10 @@ const SignupComponent = (props) => {
   const [showConfirmPass, setshowConfirmPass] = useState(false);
   const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
-  const submit = async (values) => {
+  const submit = (values) => {
     setLoading(true);
     if (!isSignup) {
-      await dispatch(ProductActions.Login(values.email, values.password));
+      dispatch(ProductActions.Login(values.email, values.password));
       setLoading(false);
       if (error) {
         return;
@@ -161,11 +161,11 @@ const SignupComponent = (props) => {
       reset();
       props.navigation.navigate('Home');
     } else {
-      await dispatch(
+      dispatch(
         ProductActions.SignUp(values.username, values.email, values.password)
       );
       setLoading(false);
-      await reset();
+      reset();
       setIsSignup(false);
       alert('Sign Up Successfully');
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,7 +14,6 @@ import bannerTest from '../db/BannerTest';
 import Carousel from '../components/UI/Carousel';
 import CategorySection from '../components/UI/CategorySection';
 import Skeleton from '../components/SkeletonLoading';
-import AskingExpo from '../components/Notification/AskingNotiPermission';
 
 //height
 const { height } = Dimensions.get('window');
@@ -30,7 +29,6 @@ const HomeScreen = ({ navigation }) => {
     setLoading(true);
     const fetching = async () => {
       await dispatch(ProductActions.fetchProducts());
-      await dispatch(ProductActions.fetchCart());
       setLoading(false);
     };
     fetching();

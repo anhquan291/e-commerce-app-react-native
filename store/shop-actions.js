@@ -7,6 +7,7 @@ export const ADD_CART = 'ADD_CART';
 export const RESET_CART = 'RESET_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const DES_CART_QUANTITY = 'DES_CART_QUANTITY';
+export const FETCH_ORDER = 'FETCH_ORDER';
 export const ADD_ORDER = 'ADD_ORDER';
 export const FIRST_OPEN = 'FIRST_OPEN';
 export const SIGN_UP = 'SIGN_UP';
@@ -250,6 +251,39 @@ export const resetCart = (cartId) => {
     }
   };
 };
+//Fetch order
+export const fetchOrder = () => {
+  return async (dispatch, getState) => {
+    const user = getState().auth.user;
+    if (user.userid == undefined) {
+      return;
+    }
+    try {
+      const response = await fetch('http://192.168.0.27:8080/api/v1/order/', {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'auth-token': user.token,
+        },
+        method: 'GET',
+      });
+      if (!response.ok) {
+        alert('Order Error');
+        return;
+      }
+      const resData = await response.json();
+      const filterUserOrder = resData.content.filter(
+        (userOrder) => userOrder.userId._id === user.userid
+      );
+      dispatch({
+        type: 'FETCH_ORDER',
+        orderData: filterUserOrder,
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+};
 
 //Add order
 export const addOrder = (orderItems, totalAmount, fullAddress, phone) => {
@@ -281,7 +315,7 @@ export const addOrder = (orderItems, totalAmount, fullAddress, phone) => {
       const resData = await response.json();
       dispatch({
         type: 'ADD_ORDER',
-        orderData: resData,
+        orderItem: resData.content,
       });
     } catch (err) {
       console.log(err.message);
