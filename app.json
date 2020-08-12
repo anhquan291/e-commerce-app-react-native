@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "scheme": "cattuong",
+    "name": "Cat Tuong UI font Fixed",
+    "slug": "newfont",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "CatTuong",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "useNextNotificationsApi": true
+    },
+    "description": ""
+  }
+}
