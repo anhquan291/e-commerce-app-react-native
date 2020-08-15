@@ -6,7 +6,7 @@ import { navigationRef } from './RootNavigation';
 import * as RootNavigation from './RootNavigation.js';
 import { DrawerNavigator, IntroStackScreen } from './StoneNavigator';
 import { useDispatch } from 'react-redux';
-import * as ProductActions from '../store/shop-actions';
+import * as AuthActions from '../store/actions/authActions';
 //Deep Link
 import * as Linking from 'expo-linking';
 
@@ -52,7 +52,7 @@ const AppNavigator = () => {
       if (getUser) {
         const user = await JSON.parse(getUser);
         if (user.data.expireTime - Date.now() < 0) {
-          dispatch(ProductActions.Logout());
+          dispatch(AuthActions.Logout());
         }
       }
       return;

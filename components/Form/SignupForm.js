@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import {
   StyleSheet,
@@ -18,9 +18,9 @@ import Colors from '../../constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TextGeo from '../UI/TextGeo';
 //Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //Action
-import * as ProductActions from '../../store/shop-actions';
+import * as AuthActions from '../../store/actions/authActions';
 
 //Validation
 const validate = (values) => {
@@ -148,26 +148,34 @@ const SignupComponent = (props) => {
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showConfirmPass, setshowConfirmPass] = useState(false);
-  const error = useSelector((state) => state.auth.error);
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
   const dispatch = useDispatch();
-  const submit = (values) => {
+  const submit = async (values) => {
     setLoading(true);
-    if (!isSignup) {
-      dispatch(ProductActions.Login(values.email, values.password));
-      setLoading(false);
-      if (error) {
-        return;
+    try {
+      if (!isSignup) {
+        await dispatch(AuthActions.Login(values.email, values.password));
+        if (!unmounted.current) {
+          setLoading(false);
+        }
+      } else {
+        await dispatch(
+          AuthActions.SignUp(values.username, values.email, values.password)
+        );
+        setLoading(false);
+        reset();
+        setIsSignup(false);
+        if (!unmounted.current) {
+          alert('Sign Up Successfully');
+        }
       }
-      reset();
-      props.navigation.navigate('Home');
-    } else {
-      dispatch(
-        ProductActions.SignUp(values.username, values.email, values.password)
-      );
-      setLoading(false);
-      reset();
-      setIsSignup(false);
-      alert('Sign Up Successfully');
+    } catch (err) {
+      throw err;
     }
   };
   return (

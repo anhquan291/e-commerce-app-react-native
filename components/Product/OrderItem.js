@@ -12,6 +12,7 @@ import 'moment/min/locales';
 //PropTypes check
 import PropTypes from 'prop-types';
 import TextGeo from '../UI/TextGeo';
+import Steps from '../UI/Steps';
 
 moment.locale('vi');
 
@@ -20,13 +21,13 @@ const OrderItem = ({ order }) => {
   const status = () => {
     switch (order.status) {
       case 'waiting':
-        return 'Chưa xác nhận';
+        return 0;
       case 'confirmed':
-        return 'Đã xác nhận';
+        return 1;
       case 'delivery':
-        return 'Đang vận chuyển';
+        return 2;
       default:
-        return 'Chưa xác nhận';
+        return 3;
     }
   };
   return (
@@ -34,7 +35,9 @@ const OrderItem = ({ order }) => {
       <View style={styles.summary}>
         <View style={styles.textContainer}>
           <TextGeo style={styles.text}>Mã đơn: </TextGeo>
-          <TextGeo style={styles.detail}>{order._id}</TextGeo>
+          <TextGeo style={styles.detail}>
+            CT-{order._id.substr(order._id.length - 10)}
+          </TextGeo>
         </View>
 
         <View style={styles.textContainer}>
@@ -65,9 +68,8 @@ const OrderItem = ({ order }) => {
               <TextGeo style={styles.text}>Số điện thoại: </TextGeo>
               <TextGeo style={styles.detail}>0{order.phone}</TextGeo>
             </View>
-            <View style={styles.textContainer}>
-              <TextGeo style={styles.text}>Trạng thái: </TextGeo>
-              <TextGeo style={styles.detail}>{status()}</TextGeo>
+            <View style={styles.steps}>
+              <Steps position={status()} />
             </View>
 
             <TextGeo style={styles.text}>Sản phẩm đã đặt:</TextGeo>
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   detailButtom: {
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.lighter_green,
     alignItems: 'center',
     paddingVertical: 10,
     borderRadius: 5,
@@ -128,8 +130,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   detail: {
-    color: Colors.blue,
+    color: Colors.lighter_green,
     fontSize: 16,
+  },
+  steps: {
+    width: '100%',
+    height: 100,
   },
 });
 

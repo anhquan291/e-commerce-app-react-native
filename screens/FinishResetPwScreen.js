@@ -21,7 +21,7 @@ const FinishResetPwScreen = (props) => {
           />
         </View>
         <TextGeo style={styles.title}>
-          Link mật khẩu đã được gửi về email:
+          Link được gửi về email:
           <TextGeo
             style={{
               fontSize: 16,

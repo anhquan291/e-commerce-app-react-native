@@ -22,7 +22,7 @@ import TextGeo from './UI/TextGeo';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 // Action
-import * as ProductActions from '../store/shop-actions';
+import * as AuthActions from '../store/actions/authActions';
 //Link
 import OpenURLButton from './Link/OpenURL';
 
@@ -41,7 +41,7 @@ const CustomDrawer = (props) => {
       {
         text: 'Đồng ý',
         onPress: () => {
-          dispatch(ProductActions.Logout());
+          dispatch(AuthActions.Logout());
           props.navigation.navigate('Home');
         },
       },

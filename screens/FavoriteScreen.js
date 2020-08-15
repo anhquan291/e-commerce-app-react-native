@@ -22,9 +22,8 @@ const { height } = Dimensions.get('window');
 
 const FavoriteScreen = (props) => {
   const user = useSelector((state) => state.auth.user);
-  const FavoriteProducts = useSelector(
-    (state) => state.store.favProducts
-  ).sort((a, b) => (a._id > b._id ? 1 : -1));
+  const FavoriteProducts = useSelector((state) => state.fav.favoriteList);
+  // console.log(FavoriteProducts);
 
   return (
     <View style={styles.container}>

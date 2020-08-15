@@ -3,7 +3,8 @@ import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 //Action
-import * as ProductActions from '../store/shop-actions';
+import * as FavoriteActions from '../store/actions/favoriteActions';
+import * as ProductActions from '../store/actions/productActions';
 //Colors
 import Colors from '../constants/Colors';
 //Animation
@@ -20,24 +21,43 @@ const { height } = Dimensions.get('window');
 
 const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
-  const user = useSelector((state) => state.auth.user);
-  const userId = Object.keys(user).length === 0 ? user.userid : '';
+  const products = useSelector((state) => state.store.products);
   const dispatch = useDispatch();
-
+  const user = useSelector((state) => state.auth.user);
   //fetch Api
   useEffect(() => {
+    let unmounted = false;
     setLoading(true);
     const fetching = async () => {
-      await dispatch(ProductActions.fetchProducts());
-      setLoading(false);
+      try {
+        await dispatch(ProductActions.fetchProducts());
+        setLoading(false);
+      } catch (err) {
+        throw err;
+      }
     };
     fetching();
-  }, [userId]);
-  const products = useSelector((state) => state.store.products);
-  //Demo data
-  const demoData = products.filter(
-    (product, index) => index === 1 || index === 7 || index === 4 || index === 3
-  );
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
+  useEffect(() => {
+    let unmounted = false;
+    setLoading(true);
+    const fetching = async () => {
+      try {
+        await dispatch(FavoriteActions.fetchFavorite());
+        setLoading(false);
+      } catch (err) {
+        throw err;
+      }
+    };
+    fetching();
+    return () => {
+      unmounted.current = true;
+    };
+  }, [user.userid]);
+
   //Header Animation
   const scrollY = new Animated.Value(0);
   if (loading) {
@@ -71,18 +91,21 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <CategorySection
           data={products}
+          user={user}
           navigation={navigation}
           name='Vòng Thạch Anh'
           bg={require('../assets/Images/bg1.jpg')}
         />
         <CategorySection
           data={products}
+          user={user}
           navigation={navigation}
           name='Nhẫn Đá Quý'
           bg={require('../assets/Images/bg2.jpg')}
         />
         <CategorySection
           data={products}
+          user={user}
           navigation={navigation}
           name='Đá Ruby'
           bg={require('../assets/Images/bg3.jpg')}

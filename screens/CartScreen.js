@@ -1,12 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Platform, Dimensions } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Dimensions,
+  TouchableOpacity,
+  FlatList,
+  Alert,
+} from 'react-native';
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 //Action
-import * as ProductActions from '../store/shop-actions';
+import * as CartActions from '../store/actions/cartActions';
 //Colors
 import Colors from '../constants/Colors';
-import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 //Icon
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 //component
@@ -21,19 +29,26 @@ const { height } = Dimensions.get('window');
 const CartScreen = (props) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const carts = useSelector((state) => state.cart.cartItems);
   const cartItems = carts.items;
   const cartId = carts._id;
   let total = 0;
   carts.items.map((item) => (total += +item.item.price * +item.quantity));
-  useEffect(() => {
+  const loadCarts = useCallback(async () => {
     setLoading(true);
-    const fetching = async () => {
-      await dispatch(ProductActions.fetchCart());
-      setLoading(false);
-    };
-    fetching();
+    setIsRefreshing(true);
+    try {
+      await dispatch(CartActions.fetchCart());
+    } catch (err) {
+      alert(err.message);
+    }
+    setIsRefreshing(false);
+    setLoading(false);
+  }, [dispatch, setIsRefreshing]);
+  useEffect(() => {
+    loadCarts();
   }, [user.userid]);
   return (
     <View style={styles.container}>
@@ -97,30 +112,41 @@ const CartScreen = (props) => {
             ) : (
               <FlatList
                 data={cartItems}
+                onRefresh={loadCarts}
+                refreshing={isRefreshing}
                 keyExtractor={(item) => item.item._id}
                 renderItem={({ item }) => {
                   return (
                     <CartItem
                       item={item}
                       onRemove={() => {
-                        dispatch(
-                          ProductActions.removeFromCart(
-                            carts._id,
-                            item.item._id
-                          )
+                        Alert.alert(
+                          'Bỏ giỏ hàng',
+                          'Bạn có chắc bỏ sản phẩm khỏi giỏ hàng?',
+                          [
+                            {
+                              text: 'Hủy',
+                            },
+                            {
+                              text: 'Đồng ý',
+                              onPress: () => {
+                                dispatch(
+                                  CartActions.removeFromCart(
+                                    carts._id,
+                                    item.item._id
+                                  )
+                                );
+                              },
+                            },
+                          ]
                         );
                       }}
                       onAdd={() => {
-                        dispatch(
-                          ProductActions.addToCart(item.item, user.token)
-                        );
+                        dispatch(CartActions.addToCart(item.item, user.token));
                       }}
                       onDes={() => {
                         dispatch(
-                          ProductActions.decCartQuantity(
-                            carts._id,
-                            item.item._id
-                          )
+                          CartActions.decCartQuantity(carts._id, item.item._id)
                         );
                       }}
                     />

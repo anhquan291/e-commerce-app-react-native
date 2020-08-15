@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from './shop-actions';
+import { LOGIN, LOGOUT } from '../actions/authActions';
 import { AsyncStorage } from 'react-native';
 
 const initialState = {
@@ -22,11 +22,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.user,
-        error: action.error,
       };
+
     case LOGOUT:
       return {
         user: {},
+        error: {},
       };
   }
   return state;

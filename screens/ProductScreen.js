@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,11 +7,12 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   FlatList,
+  Text,
 } from 'react-native';
 //redux
 import { useSelector } from 'react-redux';
 //icon
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 //Component
 import HorizontalItem from '../components/Product/HorizontalItem';
 import SearchInput from '../components/Search/SearchInput';
@@ -98,15 +99,23 @@ const ProductScreen = (props) => {
           }}
         >
           <View tabLabel='Vòng chuỗi'>
-            <FlatList
-              data={productsFilter}
-              keyExtractor={(item) => item._id}
-              renderItem={({ item }) => {
-                return (
-                  <HorizontalItem item={item} navigation={props.navigation} />
-                );
-              }}
-            />
+            {productsFilter.length === 0 ? (
+              <View style={styles.center}>
+                <Text style={{ color: Colors.grey }}>
+                  Không tìm thấy sản phầm
+                </Text>
+              </View>
+            ) : (
+              <FlatList
+                data={productsFilter}
+                keyExtractor={(item) => item._id}
+                renderItem={({ item }) => {
+                  return (
+                    <HorizontalItem item={item} navigation={props.navigation} />
+                  );
+                }}
+              />
+            )}
           </View>
           <View tabLabel='Nhẫn'></View>
           <View tabLabel='Đá quý'></View>
@@ -124,6 +133,10 @@ const styles = StyleSheet.create({
   },
   header: {
     marginHorizontal: 20,
+  },
+  center: {
+    alignItems: 'center',
+    marginTop: 30,
   },
   title: {
     marginTop: height < 668 ? 90 : 110,

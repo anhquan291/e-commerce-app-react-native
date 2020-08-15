@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 //Reducer
-import ProductReducer from './store/shop-productReducer';
-import CartReducer from './store/shop-cartReducer';
-import OrderReducer from './store/shop_orderReducer';
-import AuthReducer from './store/shop_authReducer';
+import ProductReducer from './store/reducers/shop-productReducer';
+import CartReducer from './store/reducers/shop-cartReducer';
+import OrderReducer from './store/reducers/shop_orderReducer';
+import AuthReducer from './store/reducers/shop_authReducer';
+import FavoriteReducer from './store/reducers/shop-favoriteReducer';
 //Navigator
 import AppNavigator from './navigation/AppNavigator';
 //redux form
@@ -24,10 +26,14 @@ const rootReducer = combineReducers({
   cart: CartReducer,
   order: OrderReducer,
   auth: AuthReducer,
+  fav: FavoriteReducer,
   form: formReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(ReduxThunk))
+);
 
 const fetchFonts = () => {
   return Font.loadAsync({

@@ -51,8 +51,8 @@ const LocalNotification = () => {
           data: { mySpecialData: 'Some text' },
         },
         trigger: {
-          hour: 14,
-          minute: 54,
+          hour: 8,
+          minute: 0,
         },
       });
     };

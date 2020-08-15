@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,8 +12,9 @@ import {
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 //Redux
 import { useDispatch } from 'react-redux';
-//Import Action
-import * as ProductActions from '../../store/shop-actions';
+// Action
+import * as FavoriteActions from '../../store/actions/favoriteActions';
+import * as CartActions from '../../store/actions/cartActions';
 //Color
 import Colors from '../../constants/Colors';
 //number format
@@ -42,9 +43,26 @@ const renderRightAction = (text, color, action, x, progress) => {
 
 const FavoriteItem = ({ navigation, item }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
   const dispatch = useDispatch();
-  const addToCart = () => {
-    dispatch(ProductActions.addToCart(item));
+  const addToCart = async () => {
+    try {
+      await dispatch(CartActions.addToCart(item));
+      if (!unmounted.current) {
+        Alert.alert('Thêm thành công', 'Sản phẩm đã được thêm vào giỏ hàng', [
+          {
+            text: 'OK',
+          },
+        ]);
+      }
+    } catch (err) {
+      throw err;
+    }
   };
   const removeFavorite = () => {
     Alert.alert(
@@ -57,7 +75,7 @@ const FavoriteItem = ({ navigation, item }) => {
         },
         {
           text: 'Đồng ý',
-          onPress: () => dispatch(ProductActions.addFavorite(item._id)),
+          onPress: () => dispatch(FavoriteActions.removeFavorite(item._id)),
         },
       ]
     );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,7 +11,7 @@ import {
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 //Action
-import * as ProductActions from '../store/shop-actions';
+import * as OrderActions from '../store/actions/orderActions';
 //Colors
 import Colors from '../constants/Colors';
 // OrderItem
@@ -20,23 +20,28 @@ import OrderItem from '../components/Product/OrderItem';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TextGeo from '../components/UI/TextGeo';
 import SkeletonLoadingCart from '../components/SkeletonLoadingCart';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const { height } = Dimensions.get('window');
 
 const OrderScreen = (props) => {
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const orders = useSelector((state) => state.order.orders);
   const dispatch = useDispatch();
-
-  useEffect(() => {
+  const loadOrders = useCallback(async () => {
     setLoading(true);
-    const fetching = async () => {
-      await dispatch(ProductActions.fetchOrder());
-      setLoading(false);
-    };
-    fetching();
+    setIsRefreshing(true);
+    try {
+      await dispatch(OrderActions.fetchOrder());
+    } catch (err) {
+      alert(err.message);
+    }
+    setIsRefreshing(false);
+    setLoading(false);
+  }, [dispatch, setIsRefreshing]);
+  useEffect(() => {
+    loadOrders();
   }, [user.userid]);
 
   return (
@@ -96,6 +101,8 @@ const OrderScreen = (props) => {
           ) : (
             <FlatList
               data={orders}
+              onRefresh={loadOrders}
+              refreshing={isRefreshing}
               keyExtractor={(item) => item._id}
               renderItem={({ item }) => {
                 return <OrderItem order={item} />;
@@ -137,25 +144,6 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     marginTop: 5,
-  },
-  search: {
-    width: '100%',
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: Colors.grey,
-    borderRadius: 5,
-  },
-  searchContainer: {
-    width: '100%',
-    alignItems: 'center',
-  },
-  searchButton: {
-    width: 150,
-    marginVertical: 10,
-    backgroundColor: Colors.blue,
-    borderRadius: 5,
-    paddingVertical: 10,
   },
   content: {
     marginVertical: 10,
