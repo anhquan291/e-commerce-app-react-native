@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,9 +8,7 @@ import {
   Modal,
   Dimensions,
   Alert,
-  StatusBar,
   Image,
-  Platform,
 } from 'react-native';
 //Animatable
 import * as Animatable from 'react-native-animatable';
@@ -24,8 +22,9 @@ import NumberFormat from '../components/UI/NumberFormat';
 import TextGeo from '../components/UI/TextGeo';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
-//Import Action
-import * as ProductActions from '../store/shop-actions';
+//Action
+import * as CartActions from '../store/cart/cartActions';
+import * as FavoriteActions from '../store/favorite/favoriteActions';
 import ShareItem from '../components/Product/ShareItem';
 
 const { width, height } = Dimensions.get('window');
@@ -41,28 +40,43 @@ const DetailScreen = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   //Favorite
   const FavoriteProducts = useSelector((state) =>
-    state.store.favProducts.some((product) => product._id === item._id)
+    state.fav.favoriteList.some((product) => product._id === item._id)
   );
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
   const addToCart = async () => {
-    if (Object.keys(user).length === 0) {
-      Alert.alert('Đăng Nhập', 'Bạn cần đăng nhập để mua hàng', [
-        {
-          text: 'OK',
-        },
-      ]);
+    try {
+      if (Object.keys(user).length === 0) {
+        if (!unmounted.current) {
+          Alert.alert('Đăng Nhập', 'Bạn cần đăng nhập để mua hàng', [
+            {
+              text: 'OK',
+            },
+          ]);
+        }
+      } else {
+        setIsAddingCart(true);
+        await dispatch(CartActions.addToCart(item, user.token));
+        setIsAddingCart(false);
+        setModalVisible(true);
+      }
+    } catch (err) {
+      throw err;
     }
-    setIsAddingCart(true);
-    await dispatch(ProductActions.addToCart(item));
-    setIsAddingCart(false);
-    setModalVisible(true);
   };
   const toggleFavorite = () => {
     if (Object.keys(user).length === 0) {
-      Alert.alert('Đăng Nhập', 'Bạn cần đăng nhập để thực hiện', [
-        {
-          text: 'OK',
-        },
-      ]);
+      if (!unmounted.current) {
+        Alert.alert('Đăng Nhập', 'Bạn cần đăng nhập để mua hàng', [
+          {
+            text: 'OK',
+          },
+        ]);
+      }
     } else if (FavoriteProducts) {
       Alert.alert(
         'Bỏ yêu thích',
@@ -74,12 +88,12 @@ const DetailScreen = (props) => {
           },
           {
             text: 'Đồng ý',
-            onPress: () => dispatch(ProductActions.addFavorite(item._id)),
+            onPress: () => dispatch(FavoriteActions.removeFavorite(item._id)),
           },
         ]
       );
     } else {
-      dispatch(ProductActions.addFavorite(item._id));
+      dispatch(FavoriteActions.addFavorite(item));
     }
   };
 

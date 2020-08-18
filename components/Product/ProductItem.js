@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { useSelector } from 'react-redux';
 //Icon
 import { AntDesign } from '@expo/vector-icons';
 //Colors
@@ -20,26 +19,45 @@ import TextGeo from '../UI/TextGeo';
 //Redux
 import { useDispatch } from 'react-redux';
 //Import Action
-import * as ProductActions from '../../store/shop-actions';
+import * as CartActions from '../../store/cart/cartActions';
 //PropTypes check
 import PropTypes from 'prop-types';
 
-const productItem = ({ item, navigation }) => {
+const productItem = ({ item, navigation, user }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const user = useSelector((state) => state.auth.user);
-  const addCart = () => {
-    dispatch(ProductActions.addToCart(item, user.token))
-      .then(() => {
-        Alert.alert('Thêm thành công', 'Sản phẩm đã được thêm vào giỏ hàng', [
-          {
-            text: 'OK',
-          },
-        ]);
-      })
-      .catch((err) => {
-        throw err.message;
-      });
+  const [isLoadAction, setisLoadAction] = useState(false);
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
+  const addCart = async () => {
+    try {
+      if (Object.keys(user).length === 0) {
+        if (!unmounted.current) {
+          Alert.alert('Đăng Nhập', 'Bạn cần đăng nhập để mua hàng', [
+            {
+              text: 'OK',
+            },
+          ]);
+        }
+      } else {
+        setisLoadAction(true);
+        await dispatch(CartActions.addToCart(item, user.token));
+        setisLoadAction(false);
+        if (!unmounted.current) {
+          Alert.alert('Thêm thành công', 'Sản phẩm đã được thêm vào giỏ hàng', [
+            {
+              text: 'OK',
+            },
+          ]);
+        }
+      }
+    } catch (err) {
+      throw err;
+    }
   };
   return (
     <View style={styles.container}>
@@ -67,13 +85,13 @@ const productItem = ({ item, navigation }) => {
             onLoadEnd={() => setIsLoading(false)}
           />
         </TouchableOpacity>
-        {isLoading && (
+        {/* {isLoading && (
           <ActivityIndicator
             size='small'
             color={Colors.grey}
             style={{ position: 'absolute', left: 0, right: 0, top: 40 }}
           />
-        )}
+        )} */}
       </View>
       <View style={styles.center}>
         <TextGeo style={styles.name}>{item.filename}</TextGeo>
@@ -87,12 +105,18 @@ const productItem = ({ item, navigation }) => {
       </View>
       <View style={{ marginHorizontal: 5 }}>
         <TouchableOpacity style={styles.btn} onPress={addCart}>
-          <TextGeo style={styles.detailBtn}>Thêm vào giỏ</TextGeo>
-          <AntDesign
-            name='shoppingcart'
-            color={Colors.lighter_green}
-            size={15}
-          />
+          {isLoadAction ? (
+            <ActivityIndicator size='small' color={Colors.lighter_green} />
+          ) : (
+            <>
+              <TextGeo style={styles.detailBtn}>Thêm vào giỏ</TextGeo>
+              <AntDesign
+                name='shoppingcart'
+                color={Colors.lighter_green}
+                size={15}
+              />
+            </>
+          )}
         </TouchableOpacity>
       </View>
     </View>

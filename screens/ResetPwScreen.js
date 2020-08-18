@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 import TextGeo from '../components/UI/TextGeo';
@@ -19,7 +20,7 @@ import { Feather } from '@expo/vector-icons';
 //Redux
 import { useDispatch } from 'react-redux';
 //Import Action
-import * as ProductActions from '../store/shop-actions';
+import * as AuthActions from '../store/auth/authActions';
 
 //Validation
 const validate = (values) => {
@@ -116,23 +117,39 @@ const renderField = ({
 
 const ResetPwScreen = (props) => {
   const { handleSubmit, reset } = props;
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
   const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showConfirmPass, setshowConfirmPass] = useState(false);
   const url = props.route.params;
   const dispatch = useDispatch();
   const submit = async (values) => {
-    await dispatch(ProductActions.ResetPassword(values.password, url));
-    Alert.alert(
-      'Đổi Thành công',
-      'Bạn đã đổi mật khẩu thành công !',
-      [
-        {
-          text: 'Đăng Nhập',
-          onPress: () => props.navigation.navigate('SignUp'),
-        },
-      ],
-      { cancelable: false }
-    );
+    setLoading(true);
+    try {
+      await dispatch(AuthActions(values.password, url));
+      await setLoading(false);
+      reset();
+      if (!unmounted.current) {
+        Alert.alert(
+          'Đổi Thành công',
+          'Bạn đã đổi mật khẩu thành công !',
+          [
+            {
+              text: 'Trang chủ',
+              onPress: () => props.navigation.navigate('Home'),
+            },
+          ],
+          { cancelable: false }
+        );
+      }
+    } catch (err) {
+      throw err;
+    }
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -179,7 +196,11 @@ const ResetPwScreen = (props) => {
           style={{ marginVertical: 10, alignItems: 'center' }}
         >
           <View style={styles.signIn}>
-            <TextGeo style={styles.textSign}>Đặt Lại Mật Khẩu</TextGeo>
+            {loading ? (
+              <ActivityIndicator size='small' color='#fff' />
+            ) : (
+              <TextGeo style={styles.textSign}>Đặt Lại Mật Khẩu</TextGeo>
+            )}
           </View>
         </TouchableOpacity>
       </View>

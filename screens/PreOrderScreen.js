@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,8 @@ import PreOrderItem from '../components/Product/PreOrderItem';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 //Action
-import * as ProductActions from '../store/shop-actions';
+import * as OrderActions from '../store/order/orderActions';
+import * as CartActions from '../store/cart/cartActions';
 //Number
 import NumberFormat from '../components/UI/NumberFormat';
 //Text
@@ -28,10 +29,15 @@ const { height } = Dimensions.get('window');
 
 const PreOrderScreen = (props) => {
   const dispatch = useDispatch();
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
   const carts = useSelector((state) => state.cart.cartItems);
   const [loading, setLoading] = useState(false);
   const { cartItems } = props.route.params;
-
   const { total } = props.route.params;
   const { cartId } = props.route.params;
   const [name, setName] = useState('');
@@ -54,28 +60,34 @@ const PreOrderScreen = (props) => {
   const fullAddress = `${address}, ${town} ,${province}`;
   //action Add Order
   const addOrder = async () => {
-    setLoading(true);
-    if (
-      name.length < 6 ||
-      phone.length != 10 ||
-      address.length < 5 ||
-      province.length < 5 ||
-      town.length < 5
-    ) {
-      Alert.alert(
-        'Thông tin không hợp lệ',
-        'Bạn vui lòng nhập đẩy đủ thông tin',
-        [{ text: 'Nhập lại' }],
-        { cancelable: false }
-      );
-      setLoading(false);
-    } else {
-      await dispatch(
-        ProductActions.addOrder(orderItems, total, fullAddress, parseInt(phone))
-      );
-      await dispatch(ProductActions.resetCart(cartId));
-      setLoading(false);
-      props.navigation.navigate('FinishOrder');
+    try {
+      setLoading(true);
+      if (
+        name.length < 6 ||
+        phone.length != 10 ||
+        address.length < 5 ||
+        province.length < 5 ||
+        town.length < 5
+      ) {
+        Alert.alert(
+          'Thông tin không hợp lệ',
+          'Bạn vui lòng nhập đẩy đủ thông tin',
+          [{ text: 'Nhập lại' }],
+          { cancelable: false }
+        );
+        setLoading(false);
+      } else {
+        await dispatch(
+          OrderActions.addOrder(orderItems, total, fullAddress, parseInt(phone))
+        );
+        await dispatch(CartActions.resetCart(cartId));
+        setLoading(false);
+        if (!unmounted.current) {
+          props.navigation.navigate('FinishOrder');
+        }
+      }
+    } catch (err) {
+      throw err;
     }
   };
   useEffect(() => {
@@ -100,8 +112,12 @@ const PreOrderScreen = (props) => {
         <View />
       </View>
       <Address getInfor={getInfor}>
-        {cartItems.map((item, index) => {
-          return <PreOrderItem key={index} item={item} />;
+        {cartItems.map((item) => {
+          return (
+            <View key={item.item._id}>
+              <PreOrderItem item={item} />
+            </View>
+          );
         })}
         <View
           style={{

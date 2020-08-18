@@ -6,7 +6,7 @@ import Colors from '../../constants/Colors';
 //PropTypes check
 import PropTypes from 'prop-types';
 
-const CategorySection = ({ name, bg, data, navigation }) => {
+const CategorySection = ({ name, bg, data, navigation, user }) => {
   return (
     <View style={[styles.category]}>
       <Image style={styles.background} source={bg} />
@@ -14,12 +14,13 @@ const CategorySection = ({ name, bg, data, navigation }) => {
         <TextGeo style={styles.title}>{name}</TextGeo>
       </View>
       <View style={styles.productList}>
-        {data.map((item, index) => {
+        {data.map((item) => {
           return (
             <ProductItem
-              key={`${item._id}${index}`}
+              key={item._id}
               item={item}
               navigation={navigation}
+              user={user}
             />
           );
         })}

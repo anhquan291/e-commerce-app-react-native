@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 import TextGeo from '../components/UI/TextGeo';
@@ -18,7 +18,7 @@ import { Feather } from '@expo/vector-icons';
 //Redux
 import { useDispatch } from 'react-redux';
 //Action
-import * as ProductActions from '../store/shop-actions';
+import * as AuthActions from '../store/auth/authActions';
 
 //Validation
 const validate = (values) => {
@@ -83,13 +83,28 @@ const renderField = ({
 
 const ForgetPwScreen = (props) => {
   const { handleSubmit, reset } = props;
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
   const submit = async (values) => {
-    await dispatch(ProductActions.ForgetPassword(values.email));
-    await reset();
-    props.navigation.navigate('FinishResetScreen', {
-      value: values,
-    });
+    try {
+      setLoading(true);
+      await dispatch(AuthActions.ForgetPassword(values.email));
+      setLoading(false);
+      reset();
+      if (!unmounted.current) {
+        props.navigation.navigate('FinishResetScreen', {
+          value: values,
+        });
+      }
+    } catch (err) {
+      throw err;
+    }
   };
 
   return (
@@ -120,7 +135,11 @@ const ForgetPwScreen = (props) => {
           style={{ marginVertical: 10, alignItems: 'center' }}
         >
           <View style={styles.signIn}>
-            <TextGeo style={styles.textSign}>Tiếp Tục</TextGeo>
+            {loading ? (
+              <ActivityIndicator size='small' color='#fff' />
+            ) : (
+              <TextGeo style={styles.textSign}>Tiếp Tục</TextGeo>
+            )}
           </View>
         </TouchableOpacity>
       </View>

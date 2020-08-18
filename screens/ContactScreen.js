@@ -46,7 +46,23 @@ const ContactScreen = (props) => {
         <TextGeo style={styles.title}>Liên hệ với chúng tôi</TextGeo>
         <View style={styles.info}>
           <TextGeo style={styles.text}>Địa chỉ: 14 Phan Ngữ</TextGeo>
-          <TextGeo style={styles.text}>Email: Nguyễn Thọ Nam</TextGeo>
+          <View style={{ flexDirection: 'row' }}>
+            <TextGeo style={styles.text}>Email: </TextGeo>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL('mailto: anhquan291@gmail.com');
+              }}
+            >
+              <TextGeo
+                style={{
+                  ...styles.text,
+                  color: Colors.lighter_green,
+                }}
+              >
+                anhquan291@gmail.com
+              </TextGeo>
+            </TouchableOpacity>
+          </View>
           <View style={{ flexDirection: 'row' }}>
             <TextGeo style={styles.text}>Số điện thoại: </TextGeo>
             <TouchableOpacity
@@ -57,8 +73,7 @@ const ContactScreen = (props) => {
               <TextGeo
                 style={{
                   ...styles.text,
-                  color: Colors.blue,
-                  textDecorationLine: 'underline',
+                  color: Colors.lighter_green,
                 }}
               >
                 0944942540

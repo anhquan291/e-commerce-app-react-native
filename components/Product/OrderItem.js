@@ -12,17 +12,32 @@ import 'moment/min/locales';
 //PropTypes check
 import PropTypes from 'prop-types';
 import TextGeo from '../UI/TextGeo';
+import Steps from '../UI/Steps';
 
 moment.locale('vi');
 
 const OrderItem = ({ order }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const status = () => {
+    switch (order.status) {
+      case 'waiting':
+        return 0;
+      case 'confirmed':
+        return 1;
+      case 'delivery':
+        return 2;
+      default:
+        return 3;
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.summary}>
         <View style={styles.textContainer}>
           <TextGeo style={styles.text}>Mã đơn: </TextGeo>
-          <TextGeo style={styles.detail}>{order.id}</TextGeo>
+          <TextGeo style={styles.detail}>
+            CT-{order._id.substr(order._id.length - 10)}
+          </TextGeo>
         </View>
 
         <View style={styles.textContainer}>
@@ -51,15 +66,18 @@ const OrderItem = ({ order }) => {
             </View>
             <View style={styles.textContainer}>
               <TextGeo style={styles.text}>Số điện thoại: </TextGeo>
-              <TextGeo style={styles.detail}>{order.phone}</TextGeo>
+              <TextGeo style={styles.detail}>0{order.phone}</TextGeo>
+            </View>
+            <View style={styles.steps}>
+              <Steps position={status()} />
             </View>
 
             <TextGeo style={styles.text}>Sản phẩm đã đặt:</TextGeo>
             <FlatList
               data={order.items}
-              keyExtractor={(item) => item._id}
+              keyExtractor={(item) => item.item._id}
               renderItem={({ item }) => {
-                return <ItemList key={item._id} item={item} />;
+                return <ItemList item={item} />;
               }}
             />
             <View
@@ -99,7 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   detailButtom: {
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.lighter_green,
     alignItems: 'center',
     paddingVertical: 10,
     borderRadius: 5,
@@ -112,8 +130,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   detail: {
-    color: Colors.blue,
+    color: Colors.lighter_green,
     fontSize: 16,
+  },
+  steps: {
+    width: '100%',
+    height: 100,
   },
 });
 

@@ -1,11 +1,11 @@
-import { Cart } from '../models/Cart';
+import { Cart } from '../../models/Cart';
 import {
   ADD_CART,
   FETCH_CART,
   REMOVE_FROM_CART,
   DES_CART_QUANTITY,
   RESET_CART,
-} from './shop-actions';
+} from './cartActions';
 
 const emptyCart = {
   items: [],

@@ -1,93 +1,117 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, Platform } from 'react-native';
-//Animatable
-import * as Animatable from 'react-native-animatable';
-import Colors from '../constants/Colors';
-//Swiper
-import Swiper from 'react-native-swiper';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Animated,
+  StatusBar,
+} from 'react-native';
 //Redux
 import { useDispatch } from 'react-redux';
 //Action
-import * as ProductActions from '../store/shop-actions';
-//Intro Button
-import IntroButton from '../components/Intro/IntroButton';
-//Intro Slide
-import IntroSlider from '../components/Intro/IntroSlider';
-//device height
+import * as CheckFirstTimeAction from '../store/product/checkFirstTimeActions';
+//Slides
+import Slide from '../components/Intro/Slide';
+import SubSlide from '../components/Intro/SubSlide';
+import slides from '../db/IntroSlides';
+import Ticker from '../components/Intro/TickerText';
+import Pagination from '../components/Intro/Pagination';
+import Loader from '../components/Loaders/Loader';
+
 const { height, width } = Dimensions.get('window');
 
-const StartupScreen = (props) => {
-  const [index, setIndex] = useState();
+const IntroScreen = () => {
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const scrollClick = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
+  const backgroundColor = scrollX.interpolate({
+    inputRange: [0, width, width * 2],
+    outputRange: ['#BFEAF5', '#BEECC4', '#FFE4D9'],
+    extrapolate: 'clamp',
+  });
+  const textTranslate = scrollX.interpolate({
+    inputRange: [0, width, width * 2],
+    outputRange: [0, width * -1, width * -2],
+    extrapolate: 'clamp',
+  });
   const dispatch = useDispatch();
-  const handleIndex = (index) => {
-    setIndex(index);
+  const EnterApp = async () => {
+    setLoading(true);
+    await dispatch(CheckFirstTimeAction.firstOpen());
+    if (!unmounted.current) {
+      setLoading(false);
+    }
   };
-  const EnterApp = () => {
-    dispatch(ProductActions.firstOpen());
-  };
+
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          resizeMode: 'contain',
-          width: 700,
-          height: 700,
-          position: 'absolute',
-          borderRadius: 350,
-          top: -(700 - width / 2),
-          backgroundColor: Colors.lighter_green,
-          alignSelf: 'center',
-          borderColor: Colors.lighter_green,
-          borderWidth: 2,
-        }}
-      />
-      <View style={styles.header}>
-        <Animatable.Image
-          animation='zoomIn'
-          style={{
-            resizeMode: 'contain',
-            width: '60%',
-            height: 100,
-            marginTop: height < 668 ? 10 : 40,
-          }}
-          source={require('../assets/Images/logoTextWhite.png')}
-        />
-      </View>
-      <View style={{ flex: 1 }}>
-        <Swiper
-          style={styles.wrapper}
-          loop={false}
-          onIndexChanged={(index) => handleIndex(index)}
-          dot={<View style={styles.dot} />}
-          activeDot={<View style={styles.activeDot} />}
+      {loading ? <Loader /> : <></>}
+      <Animated.View style={[styles.slider, { backgroundColor }]}>
+        <Ticker scrollX={scrollX} />
+        <Animated.ScrollView
+          ref={scrollClick}
+          horizontal
+          snapToInterval={width}
+          scrollTo={{ x: scrollClick, animated: true }}
+          decelerationRate='fast'
+          showsHorizontalScrollIndicator={false}
+          bounces={false}
+          scrollEventThrottle={1}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: false } //
+          )}
         >
-          <IntroSlider
-            imageUrl={require('../assets/Images/slide1.png')}
-            text='Mua Sự May Mắn'
-          />
-          <IntroSlider
-            imageUrl={require('../assets/Images/slide2.png')}
-            text='Cầu Chúc Bình An'
-          />
-          <IntroSlider
-            imageUrl={require('../assets/Images/slide3.png')}
-            text='Vạn Sự Như Ý'
-          />
-        </Swiper>
+          {slides.map((slide) => {
+            return (
+              <Slide
+                key={slide.lable}
+                label={slide.lable}
+                imageUrl={slide.imageUrl}
+              />
+            );
+          })}
+        </Animated.ScrollView>
+      </Animated.View>
+      <View style={styles.footer}>
+        <Pagination slides={slides} scrollX={scrollX} />
+        <Animated.View
+          style={[StyleSheet.absoluteFillObject, { backgroundColor }]}
+        ></Animated.View>
+        <Animated.View style={styles.footerContent}>
+          <Animated.View
+            style={{
+              flexDirection: 'row',
+              width: width * slides.length,
+              transform: [{ translateX: textTranslate }],
+            }}
+          >
+            {slides.map(({ subtitle, des }, index) => {
+              return (
+                <SubSlide
+                  key={subtitle}
+                  last={index === slides.length - 1}
+                  EnterApp={EnterApp}
+                  subtitle={subtitle}
+                  des={des}
+                  scrollX={scrollX}
+                  NextSlide={() => {
+                    if (scrollClick.current) {
+                      scrollClick.current.scrollTo({ x: width * (index + 1) });
+                    }
+                  }}
+                />
+              );
+            })}
+          </Animated.View>
+        </Animated.View>
       </View>
-      {index === 2 ? (
-        <Animatable.View style={styles.btnContainer} animation='fadeIn'>
-          <IntroButton EnterApp={EnterApp} navigation={props.navigation} />
-        </Animatable.View>
-      ) : (
-        <Animatable.View
-          style={styles.btnContainer}
-          animation='fadeOut'
-          duration={500}
-        >
-          <IntroButton EnterApp={EnterApp} navigation={props.navigation} />
-        </Animatable.View>
-      )}
     </View>
   );
 };
@@ -95,37 +119,22 @@ const StartupScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
-  header: {
-    width: '100%',
-    height: Platform.OS === 'android' ? 150 : height < 668 ? 130 : 200,
-    alignItems: 'center',
+  slider: {
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
+    height: 0.61 * height,
+    borderBottomEndRadius: 75,
   },
-  dot: {
-    backgroundColor: 'rgba(0,0,0,.2)',
-    width: 10,
-    height: 5,
-    borderRadius: 5,
-    marginLeft: 3,
-    marginRight: 3,
-    marginTop: 0,
-    marginBottom: 0,
+  footer: {
+    flex: 1,
   },
-  activeDot: {
-    backgroundColor: Colors.light_green,
-    width: 20,
-    height: 5,
-    borderRadius: 5,
-    marginLeft: 3,
-    marginRight: 3,
-    marginTop: 0,
-    marginBottom: 0,
-  },
-  btnContainer: {
-    height: Platform.OS === 'android' ? 70 : 100,
-    alignItems: 'center',
+  footerContent: {
+    flex: 1,
+    borderTopLeftRadius: 75,
+    flexDirection: 'row',
+    backgroundColor: '#ffffff',
   },
 });
 
-export default StartupScreen;
+export default IntroScreen;
