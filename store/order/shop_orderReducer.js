@@ -1,4 +1,4 @@
-import { ADD_ORDER, FETCH_ORDER } from '../actions/orderActions';
+import { ADD_ORDER, FETCH_ORDER } from './orderActions';
 
 const initialState = {
   orders: [],

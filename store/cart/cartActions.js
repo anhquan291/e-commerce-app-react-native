@@ -1,5 +1,5 @@
 import { API_URL } from '../../constants/Config';
-
+import { timeoutPromise } from '../../utils/Tools';
 export const FETCH_CART = 'FETCH_CART';
 export const ADD_CART = 'ADD_CART';
 export const RESET_CART = 'RESET_CART';
@@ -15,14 +15,16 @@ export const fetchCart = () => {
     };
     if (user.userid != undefined) {
       try {
-        const response = await fetch(`${API_URL}/cart`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
-          },
-          method: 'GET',
-        });
+        const response = await timeoutPromise(
+          fetch(`${API_URL}/cart`, {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'auth-token': user.token,
+            },
+            method: 'GET',
+          })
+        );
         if (!response.ok) {
           throw new Error("Something went wrong!, can't get the products");
         }
@@ -52,23 +54,25 @@ export const addToCart = (item) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
-      const response = await fetch(`${API_URL}/cart/post`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': user.token,
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          userId: user.userid,
-          items: [
-            {
-              item: item._id,
-              quantity: '1',
-            },
-          ],
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/cart/post`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            userId: user.userid,
+            items: [
+              {
+                item: item._id,
+                quantity: '1',
+              },
+            ],
+          }),
+        })
+      );
       if (!response.ok) {
         const errorResData = await response.json();
         alert(errorResData);
@@ -95,17 +99,19 @@ export const removeFromCart = (cartId, itemId) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
-      const response = await fetch(`${API_URL}/cart/cartitem/${cartId}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': user.token,
-        },
-        method: 'DELETE',
-        body: JSON.stringify({
-          item: itemId,
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/cart/cartitem/${cartId}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'DELETE',
+          body: JSON.stringify({
+            item: itemId,
+          }),
+        })
+      );
       if (!response.ok) {
         const errorResData = await response.json();
         alert(errorResData);
@@ -124,18 +130,20 @@ export const decCartQuantity = (cartId, itemId) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
-      const response = await fetch(`${API_URL}/cart/cartitem/${cartId}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': user.token,
-        },
-        method: 'PUT',
-        body: JSON.stringify({
-          item: itemId,
-          quantity: 'decrease',
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/cart/cartitem/${cartId}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'PUT',
+          body: JSON.stringify({
+            item: itemId,
+            quantity: 'decrease',
+          }),
+        })
+      );
       if (!response.ok) {
         const errorResData = await response.json();
         alert(errorResData);
@@ -155,14 +163,16 @@ export const resetCart = (cartId) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
-      const response = await fetch(`${API_URL}/cart/${cartId}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': user.token,
-        },
-        method: 'DELETE',
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/cart/${cartId}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'DELETE',
+        })
+      );
       if (!response.ok) {
         const errorResData = await response.json();
         alert(errorResData);

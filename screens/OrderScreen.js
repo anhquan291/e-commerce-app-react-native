@@ -11,7 +11,7 @@ import {
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 //Action
-import * as OrderActions from '../store/actions/orderActions';
+import * as OrderActions from '../store/order/orderActions';
 //Colors
 import Colors from '../constants/Colors';
 // OrderItem
@@ -19,7 +19,7 @@ import OrderItem from '../components/Product/OrderItem';
 //Icon
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TextGeo from '../components/UI/TextGeo';
-import SkeletonLoadingCart from '../components/SkeletonLoadingCart';
+import SkeletonLoadingCart from '../components/Loaders/SkeletonLoadingCart';
 
 const { height } = Dimensions.get('window');
 

@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 //Color
 import Colors from '../constants/Colors';
 //Custom Drawer
-import CustomDrawer from '../components/CustomDrawer';
+import CustomDrawer from './CustomDrawer';
 import TextGeo from '../components/UI/TextGeo';
 //Screens
 import HomeScreen from '../screens/HomeScreen';
@@ -40,21 +40,6 @@ export const IntroStackScreen = () => (
     <IntroStack.Screen
       name='IntroScreen'
       component={IntroScreen}
-      options={{ headerShown: false }}
-    />
-    <IntroStack.Screen
-      name='SignUpScreen'
-      component={SignUpScreen}
-      options={{ headerShown: false }}
-    />
-    <IntroStack.Screen
-      name='ForgetPwScreen'
-      component={ForgetPwScreen}
-      options={{ headerShown: false }}
-    />
-    <IntroStack.Screen
-      name='FinishResetScreen'
-      component={FinishResetPwScreen}
       options={{ headerShown: false }}
     />
   </IntroStack.Navigator>

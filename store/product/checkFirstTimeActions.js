@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+export const FIRST_OPEN = 'FIRST_OPEN';
 
 //Create dataStorage
 const saveDataToStorage = (name, data) => {
@@ -7,7 +8,6 @@ const saveDataToStorage = (name, data) => {
     JSON.stringify({
       data,
     })
-    //convert to string, but when you access in startup screen, have to convert to javascript object or array
   );
 };
 

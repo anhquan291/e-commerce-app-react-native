@@ -1,5 +1,5 @@
-import { FETCH_PRODUCTS } from '../actions/productActions';
-import { FIRST_OPEN } from '../actions/checkFirstTimeActions';
+import { FETCH_PRODUCTS } from './productActions';
+import { FIRST_OPEN } from './checkFirstTimeActions';
 
 const initialState = {
   products: [],

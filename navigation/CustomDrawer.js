@@ -17,14 +17,14 @@ import {
 import { Drawer } from 'react-native-paper';
 //Color
 import Colors from '../constants/Colors';
-import TextGeo from './UI/TextGeo';
+import TextGeo from '../components/UI/TextGeo';
 //Icon
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 // Action
-import * as AuthActions from '../store/actions/authActions';
+import * as AuthActions from '../store/auth/authActions';
 //Link
-import OpenURLButton from './Link/OpenURL';
+import { OpenURL } from '../utils/Tools';
 
 const fbURL = 'https://www.facebook.com/daquyankhangthinhvuong/';
 const youtubeURL = 'https://www.youtube.com/';
@@ -83,24 +83,24 @@ const CustomDrawer = (props) => {
           <Drawer.Section style={styles.drawerSection}></Drawer.Section>
 
           <View style={styles.social}>
-            <OpenURLButton url={fbURL}>
+            <OpenURL url={fbURL}>
               <Image
                 style={{ resizeMode: 'contain', width: 80, height: 80 }}
                 source={require('../assets/Images/social1.png')}
               />
-            </OpenURLButton>
-            <OpenURLButton url={youtubeURL}>
+            </OpenURL>
+            <OpenURL url={youtubeURL}>
               <Image
                 style={{ resizeMode: 'contain', width: 80, height: 80 }}
                 source={require('../assets/Images/social3.png')}
               />
-            </OpenURLButton>
-            <OpenURLButton url={fbURL}>
+            </OpenURL>
+            <OpenURL url={fbURL}>
               <Image
                 style={{ resizeMode: 'contain', width: 80, height: 80 }}
                 source={require('../assets/Images/social2.png')}
               />
-            </OpenURLButton>
+            </OpenURL>
           </View>
         </View>
       </DrawerContentScrollView>

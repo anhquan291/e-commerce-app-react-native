@@ -3,18 +3,18 @@ import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 //Action
-import * as FavoriteActions from '../store/actions/favoriteActions';
-import * as ProductActions from '../store/actions/productActions';
+import * as FavoriteActions from '../store/favorite/favoriteActions';
+import * as ProductActions from '../store/product/productActions';
 //Colors
 import Colors from '../constants/Colors';
 //Animation
 import Animated from 'react-native-reanimated';
 //Components
 import Header from '../components/UI/Header';
-import bannerTest from '../db/BannerTest';
+import Banners from '../db/Banners';
 import Carousel from '../components/UI/Carousel';
 import CategorySection from '../components/UI/CategorySection';
-import Skeleton from '../components/SkeletonLoading';
+import Skeleton from '../components/Loaders/SkeletonLoading';
 
 //height
 const { height } = Dimensions.get('window');
@@ -31,12 +31,12 @@ const HomeScreen = ({ navigation }) => {
     const fetching = async () => {
       try {
         await dispatch(ProductActions.fetchProducts());
-        setLoading(false);
       } catch (err) {
         throw err;
       }
     };
     fetching();
+    setLoading(false);
     return () => {
       unmounted.current = true;
     };
@@ -87,7 +87,7 @@ const HomeScreen = ({ navigation }) => {
         ])}
       >
         <View style={styles.banner}>
-          <Carousel products={bannerTest} />
+          <Carousel products={Banners} />
         </View>
         <CategorySection
           data={products}

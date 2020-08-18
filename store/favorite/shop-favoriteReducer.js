@@ -2,7 +2,7 @@ import {
   FETCH_FAVORITE,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
-} from '../actions/favoriteActions';
+} from './favoriteActions';
 
 const initialState = {
   favoriteList: [],

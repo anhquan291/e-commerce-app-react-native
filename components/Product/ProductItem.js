@@ -19,7 +19,7 @@ import TextGeo from '../UI/TextGeo';
 //Redux
 import { useDispatch } from 'react-redux';
 //Import Action
-import * as CartActions from '../../store/actions/cartActions';
+import * as CartActions from '../../store/cart/cartActions';
 //PropTypes check
 import PropTypes from 'prop-types';
 
@@ -85,13 +85,13 @@ const productItem = ({ item, navigation, user }) => {
             onLoadEnd={() => setIsLoading(false)}
           />
         </TouchableOpacity>
-        {isLoading && (
+        {/* {isLoading && (
           <ActivityIndicator
             size='small'
             color={Colors.grey}
             style={{ position: 'absolute', left: 0, right: 0, top: 40 }}
           />
-        )}
+        )} */}
       </View>
       <View style={styles.center}>
         <TextGeo style={styles.name}>{item.filename}</TextGeo>

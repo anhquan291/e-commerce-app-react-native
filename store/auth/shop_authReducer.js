@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from '../actions/authActions';
+import { LOGIN, LOGOUT } from './authActions';
 import { AsyncStorage } from 'react-native';
 
 const initialState = {

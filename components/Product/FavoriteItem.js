@@ -13,8 +13,8 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 //Redux
 import { useDispatch } from 'react-redux';
 // Action
-import * as FavoriteActions from '../../store/actions/favoriteActions';
-import * as CartActions from '../../store/actions/cartActions';
+import * as FavoriteActions from '../../store/favorite/favoriteActions';
+import * as CartActions from '../../store/cart/cartActions';
 //Color
 import Colors from '../../constants/Colors';
 //number format

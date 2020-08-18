@@ -12,7 +12,7 @@ import {
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 //Action
-import * as CartActions from '../store/actions/cartActions';
+import * as CartActions from '../store/cart/cartActions';
 //Colors
 import Colors from '../constants/Colors';
 //Icon
@@ -22,7 +22,7 @@ import CartItem from '../components/Product/CartItem';
 import NumberFormat from '../components/UI/NumberFormat';
 //Text
 import TextGeo from '../components/UI/TextGeo';
-import SkeletonLoadingCart from '../components/SkeletonLoadingCart';
+import SkeletonLoadingCart from '../components/Loaders/SkeletonLoadingCart';
 
 const { height } = Dimensions.get('window');
 

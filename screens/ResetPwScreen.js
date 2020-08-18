@@ -20,7 +20,7 @@ import { Feather } from '@expo/vector-icons';
 //Redux
 import { useDispatch } from 'react-redux';
 //Import Action
-import * as AuthActions from '../store/actions/authActions';
+import * as AuthActions from '../store/auth/authActions';
 
 //Validation
 const validate = (values) => {

@@ -1,7 +1,5 @@
 import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
 import React, { useEffect } from 'react';
-import { Platform } from 'react-native';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -13,36 +11,6 @@ Notifications.setNotificationHandler({
 
 const LocalNotification = () => {
   useEffect(() => {
-    const getPermissionsAsync = async () => {
-      const { status: existingStatus } = await Permissions.getAsync(
-        Permissions.NOTIFICATIONS
-      );
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(
-          Permissions.NOTIFICATIONS
-        );
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      if (Platform.OS === 'android') {
-        Notifications.setNotificationChannelAsync('default', {
-          name: 'default',
-          importance: Notifications.AndroidImportance.MAX,
-          vibrationPattern: [0, 250, 250, 250],
-          lightColor: '#FF231F7C',
-        });
-      }
-      return token;
-    };
-    getPermissionsAsync();
-  }, []);
-
-  useEffect(() => {
     const triggerNotificationHandler = () => {
       Notifications.scheduleNotificationAsync({
         content: {
@@ -51,8 +19,9 @@ const LocalNotification = () => {
           data: { mySpecialData: 'Some text' },
         },
         trigger: {
-          hour: 8,
-          minute: 0,
+          hour: 7,
+          minute: 30,
+          type: 'daily',
         },
       });
     };

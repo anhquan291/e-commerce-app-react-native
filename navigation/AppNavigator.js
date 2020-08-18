@@ -3,31 +3,16 @@ import { AsyncStorage } from 'react-native';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './RootNavigation';
-import * as RootNavigation from './RootNavigation.js';
 import { DrawerNavigator, IntroStackScreen } from './StoneNavigator';
 import { useDispatch } from 'react-redux';
-import * as AuthActions from '../store/actions/authActions';
+import * as AuthActions from '../store/auth/authActions';
 //Deep Link
+import { urlRedirect } from '../utils/Tools';
 import * as Linking from 'expo-linking';
 
 const AppNavigator = () => {
   const [value, setValue] = useState(null);
   const dispatch = useDispatch();
-  //Handle Deep Link
-  const urlRedirect = (url) => {
-    if (!url) return;
-    // parse and redirect to new url
-    let { path, queryParams } = Linking.parse(url);
-    // console.log(
-    //   `Linked to app with path: ${path} and data: ${JSON.stringify(
-    //     queryParams
-    //   )}`
-    // );
-    if (path) {
-      RootNavigation.navigate(path, queryParams);
-    }
-    return;
-  };
 
   useEffect(() => {
     // listen for new url events coming from Expo
@@ -59,10 +44,12 @@ const AppNavigator = () => {
     };
     autoLogout();
   }, [dispatch]);
-  const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
 
+  const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
+  console.log(isFirstOpen);
   return (
     <NavigationContainer ref={navigationRef}>
+      {/* <IntroStackScreen /> */}
       {(isFirstOpen || value !== null) && <DrawerNavigator />}
       {!isFirstOpen && value === null && <IntroStackScreen />}
     </NavigationContainer>

@@ -5,7 +5,7 @@ import {
   REMOVE_FROM_CART,
   DES_CART_QUANTITY,
   RESET_CART,
-} from '../actions/cartActions';
+} from './cartActions';
 
 const emptyCart = {
   items: [],

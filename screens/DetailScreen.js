@@ -23,8 +23,8 @@ import TextGeo from '../components/UI/TextGeo';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 //Action
-import * as CartActions from '../store/actions/cartActions';
-import * as FavoriteActions from '../store/actions/favoriteActions';
+import * as CartActions from '../store/cart/cartActions';
+import * as FavoriteActions from '../store/favorite/favoriteActions';
 import ShareItem from '../components/Product/ShareItem';
 
 const { width, height } = Dimensions.get('window');

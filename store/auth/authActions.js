@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { API_URL } from '../../constants/Config';
+import { timeoutPromise } from '../../utils/Tools';
 
 export const SIGN_UP = 'SIGN_UP';
 export const LOGIN = 'LOGIN';
@@ -22,18 +23,20 @@ const saveDataToStorage = (name, data) => {
 export const SignUp = (name, email, password) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${API_URL}/user/register`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/user/register`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+          }),
+        })
+      );
       if (!response.ok) {
         const errorResData = await response.json();
         alert(errorResData.err);
@@ -52,18 +55,20 @@ export const Login = (email, password) => {
   return async (dispatch) => {
     const pushToken = await AskingExpoToken();
     try {
-      const response = await fetch(`${API_URL}/user/login`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-          pushTokens: [pushToken],
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/user/login`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            email,
+            password,
+            pushTokens: [pushToken],
+          }),
+        })
+      );
       if (!response.ok) {
         const errorResData = await response.json();
         alert(errorResData.err);
@@ -84,16 +89,18 @@ export const Login = (email, password) => {
 export const ForgetPassword = (email) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${API_URL}/user/reset_pw`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/user/reset_pw`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            email,
+          }),
+        })
+      );
       if (!response.ok) {
         const errorResData = await response.json();
         alert(errorResData.err);
@@ -110,18 +117,20 @@ export const ForgetPassword = (email) => {
 export const ResetPassword = (password, url) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(
-        `${API_URL}/user/receive_new_password/${url.userid}/${url.token}`,
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          body: JSON.stringify({
-            password,
-          }),
-        }
+      const response = await timeoutPromise(
+        fetch(
+          `${API_URL}/user/receive_new_password/${url.userid}/${url.token}`,
+          {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+              password,
+            }),
+          }
+        )
       );
       if (!response.ok) {
         const errorResData = await response.json();

@@ -18,8 +18,8 @@ import PreOrderItem from '../components/Product/PreOrderItem';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 //Action
-import * as OrderActions from '../store/actions/orderActions';
-import * as CartActions from '../store/actions/cartActions';
+import * as OrderActions from '../store/order/orderActions';
+import * as CartActions from '../store/cart/cartActions';
 //Number
 import NumberFormat from '../components/UI/NumberFormat';
 //Text

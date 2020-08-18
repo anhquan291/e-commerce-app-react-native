@@ -5,11 +5,7 @@ import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 //Reducer
-import ProductReducer from './store/reducers/shop-productReducer';
-import CartReducer from './store/reducers/shop-cartReducer';
-import OrderReducer from './store/reducers/shop_orderReducer';
-import AuthReducer from './store/reducers/shop_authReducer';
-import FavoriteReducer from './store/reducers/shop-favoriteReducer';
+import Reducers from './store/reducers';
 //Navigator
 import AppNavigator from './navigation/AppNavigator';
 //redux form
@@ -22,11 +18,11 @@ import { AppLoading } from 'expo';
 import LocalNotication from './components/Notification/LocalNotification';
 
 const rootReducer = combineReducers({
-  store: ProductReducer,
-  cart: CartReducer,
-  order: OrderReducer,
-  auth: AuthReducer,
-  fav: FavoriteReducer,
+  store: Reducers.ProductReducer,
+  cart: Reducers.CartReducer,
+  order: Reducers.OrderReducer,
+  auth: Reducers.AuthReducer,
+  fav: Reducers.FavoriteReducer,
   form: formReducer,
 });
 

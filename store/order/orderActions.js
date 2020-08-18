@@ -1,4 +1,5 @@
 import { API_URL } from '../../constants/Config';
+import { timeoutPromise } from '../../utils/Tools';
 export const FETCH_ORDER = 'FETCH_ORDER';
 export const ADD_ORDER = 'ADD_ORDER';
 
@@ -10,14 +11,16 @@ export const fetchOrder = () => {
       return;
     }
     try {
-      const response = await fetch(`${API_URL}/order`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': user.token,
-        },
-        method: 'GET',
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/order`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'GET',
+        })
+      );
       if (!response.ok) {
         alert('Order Error');
         return;
@@ -41,22 +44,24 @@ export const addOrder = (orderItems, name, totalAmount, fullAddress, phone) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
-      const response = await fetch(`${API_URL}/order/post`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': user.token,
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          userId: user.userid,
-          items: orderItems,
-          name,
-          totalAmount,
-          address: fullAddress,
-          phone,
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/order/post`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            userId: user.userid,
+            items: orderItems,
+            name,
+            totalAmount,
+            address: fullAddress,
+            phone,
+          }),
+        })
+      );
       if (!response.ok) {
         alert('Order Error');
         return;
