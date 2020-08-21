@@ -1,9 +1,11 @@
-import { LOGIN, LOGOUT } from './authActions';
+import { LOGIN, LOGOUT, EDIT_INFO, UPLOAD_PROFILEPIC } from './authActions';
 import { AsyncStorage } from 'react-native';
+import UserMessages from '../../messages/user';
 
 const initialState = {
   user: {},
   error: {},
+  notification: {},
 };
 
 export default (state = initialState, action) => {
@@ -22,12 +24,25 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.user,
+        notification: UserMessages['user.login.success'],
       };
 
     case LOGOUT:
       return {
         user: {},
         error: {},
+        notification: UserMessages['user.logout.sucesss'],
+      };
+    case EDIT_INFO:
+      state.user.phone = action.phone;
+      state.user.address = action.address;
+      return {
+        ...state,
+      };
+    case UPLOAD_PROFILEPIC:
+      state.user.profilePicture = action.profilePic;
+      return {
+        ...state,
       };
   }
   return state;

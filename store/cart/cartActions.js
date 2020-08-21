@@ -1,4 +1,4 @@
-import { API_URL } from '../../constants/Config';
+import { API_URL } from '../../utils/Config';
 import { timeoutPromise } from '../../utils/Tools';
 export const FETCH_CART = 'FETCH_CART';
 export const ADD_CART = 'ADD_CART';

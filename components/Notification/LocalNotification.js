@@ -19,9 +19,9 @@ const LocalNotification = () => {
           data: { mySpecialData: 'Some text' },
         },
         trigger: {
+          type: 'daily',
           hour: 7,
           minute: 30,
-          type: 'daily',
         },
       });
     };

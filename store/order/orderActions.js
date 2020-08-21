@@ -1,4 +1,4 @@
-import { API_URL } from '../../constants/Config';
+import { API_URL } from '../../utils/Config';
 import { timeoutPromise } from '../../utils/Tools';
 export const FETCH_ORDER = 'FETCH_ORDER';
 export const ADD_ORDER = 'ADD_ORDER';

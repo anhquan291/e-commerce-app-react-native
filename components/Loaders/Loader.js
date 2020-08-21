@@ -1,6 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
+
+const { width, height } = Dimensions.get('window');
 
 const Loader = () => {
   return (
@@ -10,7 +12,7 @@ const Loader = () => {
         flex: 1,
         width,
         height,
-        backgroundColor: 'rgba(12,13,52,0.5)',
+        backgroundColor: 'rgba(12,13,52,0.3)',
         zIndex: 1001,
         justifyContent: 'center',
       }}

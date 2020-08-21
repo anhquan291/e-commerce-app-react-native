@@ -1,10 +1,12 @@
 import { AsyncStorage } from 'react-native';
-import { API_URL } from '../../constants/Config';
+import { API_URL } from '../../utils/Config';
 import { timeoutPromise } from '../../utils/Tools';
 
 export const SIGN_UP = 'SIGN_UP';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const EDIT_INFO = 'EDIT_INFO ';
+export const UPLOAD_PROFILEPIC = 'UPLOAD_PROFILEPIC';
 export const FORGET_PASSWORD = 'FORGET_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 
@@ -86,6 +88,80 @@ export const Login = (email, password) => {
   };
 };
 
+export const EditInfo = (phone, address) => {
+  return async (dispatch, getState) => {
+    const user = getState().auth.user;
+    try {
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/user/${user.userid}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'PATCH',
+          body: JSON.stringify({
+            phone,
+            address,
+          }),
+        })
+      );
+      if (!response.ok) {
+        const errorResData = await response.json();
+        alert(errorResData.err);
+      }
+      const resData = await response.json();
+      resData.phone = await phone;
+      resData.address = await address;
+      saveDataToStorage('user', resData);
+      dispatch({
+        type: EDIT_INFO,
+        phone,
+        address,
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+};
+
+export const UploadProfilePic = (imageUri, filename, type) => {
+  return async (dispatch, getState) => {
+    const user = getState().auth.user;
+    let formData = new FormData();
+    // Infer the type of the image
+    await formData.append('profilePic', {
+      uri: imageUri,
+      name: filename,
+      type,
+    });
+    try {
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/user/photo/${user.userid}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'auth-token': user.token,
+          },
+          method: 'PATCH',
+          body: formData,
+        })
+      );
+      if (!response.ok) {
+        const errorResData = await response.json();
+        alert(errorResData.err);
+      }
+
+      dispatch({
+        type: UPLOAD_PROFILEPIC,
+        profilePic: imageUri,
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+};
+
 export const ForgetPassword = (email) => {
   return async (dispatch) => {
     try {
@@ -151,7 +227,6 @@ export const Logout = () => {
   return (dispatch) => {
     clearLogoutTimer(); //clear setTimeout when logout
     AsyncStorage.removeItem('user');
-    alert('Logout section expired');
     dispatch({
       type: LOGOUT,
       user: {},

@@ -46,7 +46,6 @@ const AppNavigator = () => {
   }, [dispatch]);
 
   const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
-  console.log(isFirstOpen);
   return (
     <NavigationContainer ref={navigationRef}>
       {/* <IntroStackScreen /> */}

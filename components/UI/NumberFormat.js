@@ -1,30 +1,30 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 //Color
-import Colors from '../../constants/Colors';
+import Colors from '../../utils/Colors';
 //number format
 import NumberFormat from 'react-number-format';
 //Text
-import TextGeo from '../UI/TextGeo';
+import CustomText from './CustomText';
 
-const Number = (props) => {
+const Number = ({ price, color }, props) => {
   return (
     <NumberFormat
-      value={props.price}
+      value={price}
       displayType={'text'}
       thousandSeparator={true}
       suffix={' đ'}
       renderText={(formattedValue) => (
         <View
           style={
-            props.color
+            color
               ? { ...styles.priceContainer, backgroundColor: props.color }
               : styles.container
           }
         >
-          <TextGeo style={{ ...styles.price, ...props.style }}>
+          <CustomText style={{ ...styles.price, ...props.style }}>
             {formattedValue}
-          </TextGeo>
+          </CustomText>
         </View>
       )}
     />
@@ -44,8 +44,6 @@ const styles = StyleSheet.create({
   price: {
     color: Colors.red,
     fontSize: 14,
-    paddingTop: Platform.OS === 'android' ? 0 : 5,
-    paddingBottom: Platform.OS === 'android' ? 5 : 0,
   },
 });
 

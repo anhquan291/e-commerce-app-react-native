@@ -3,24 +3,24 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  TextInput,
   Platform,
   ScrollView,
 } from 'react-native';
+import { TextInput } from 'react-native-paper';
 //Select box
 import RNPickerSelect from 'react-native-picker-select';
 import { MaterialIcons } from '@expo/vector-icons';
 //Provinces
-import ProvincesData from '../../constants/ProvincesData';
-import Provinces from '../../constants/Proinces';
+import ProvincesData from '../../utils/ProvincesData';
+import Provinces from '../../utils/Proinces';
 //Colors
-import Colors from '../../constants/Colors';
+import Colors from '../../utils/Colors';
 //PropTypes check
 import PropTypes from 'prop-types';
-import TextGeo from './TextGeo';
+import CustomText from './CustomText';
 
 const { width } = Dimensions.get('window');
-TextInput.defaultProps.allowFontScaling = false;
+// TextInput.defaultProps.allowFontScaling = false;
 
 const Address = ({ getInfor, children }) => {
   const [selectedProvince, setselectedProvince] = useState('');
@@ -54,22 +54,7 @@ const Address = ({ getInfor, children }) => {
     },
     [selectedProvince]
   );
-  //change color when focus
-  const [colorName, setColorName] = useState(Colors.grey);
-  const [colorAddress, setColorAddress] = useState(Colors.grey);
-  const [colorPhone, setColorPhone] = useState(Colors.grey);
-  const onFocus = (name) => {
-    name === 'name'
-      ? setColorName(Colors.lighter_green)
-      : name === 'address'
-      ? setColorAddress(Colors.lighter_green)
-      : setColorPhone(Colors.lighter_green);
-  };
-  const onBlur = () => {
-    setColorName(Colors.grey);
-    setColorAddress(Colors.grey);
-    setColorPhone(Colors.grey);
-  };
+
   //get Address
   getInfor(name, phone, address, selectedProvince, selectedTown);
   //Show Icon
@@ -88,34 +73,46 @@ const Address = ({ getInfor, children }) => {
     <View style={styles.container}>
       <ScrollView>
         <View>
-          <TextGeo style={styles.title}>Thông tin giao hàng</TextGeo>
+          <CustomText style={styles.title}>Thông tin giao hàng</CustomText>
           <View style={styles.info}>
-            <View style={[styles.inputBox, { borderColor: colorName }]}>
+            <View style={[styles.inputBox]}>
               <TextInput
-                placeholder='Họ và tên'
-                clearButtonMode='always'
-                onFocus={() => onFocus('name')}
-                onBlur={onBlur}
+                label='Họ và tên'
+                mode='outlined'
+                theme={{ colors: { primary: Colors.leave_green } }}
+                selectionColor={Colors.leave_green}
                 onChangeText={(value) => setName(value)}
+                style={styles.input}
+                clearButtonMode='always'
               />
             </View>
-            <View style={[styles.inputBox, { borderColor: colorPhone }]}>
+            <View style={[styles.inputBox]}>
               <TextInput
-                placeholder='Số điện thoại'
-                clearButtonMode='always'
-                onFocus={() => onFocus('phone')}
-                onBlur={onBlur}
+                label='Số điện thoại'
+                mode='outlined'
+                theme={{ colors: { primary: Colors.leave_green } }}
+                selectionColor={Colors.leave_green}
                 onChangeText={(value) => setPhone(value)}
+                style={styles.input}
+                clearButtonMode='always'
                 keyboardType='numeric'
               />
             </View>
-            <View style={[styles.inputBox, { borderColor: colorAddress }]}>
+            <View style={[styles.inputBox]}>
               <TextInput
-                placeholder='Địa chỉ'
-                clearButtonMode='always'
-                onFocus={() => onFocus('address')}
-                onBlur={onBlur}
+                label='Địa chỉ'
+                mode='outlined'
+                theme={{
+                  colors: {
+                    primary: Colors.leave_green,
+                    borderColor: Colors.light_grey,
+                  },
+                }}
+                selectionColor={Colors.leave_green}
                 onChangeText={(value) => setAddress(value)}
+                style={styles.input}
+                clearButtonMode='always'
+                keyboardType='numeric'
               />
             </View>
           </View>
@@ -146,9 +143,9 @@ const Address = ({ getInfor, children }) => {
           </View>
         </View>
         <View>
-          <TextGeo style={{ ...styles.title, marginVertical: 0 }}>
+          <CustomText style={{ ...styles.title, marginVertical: 0 }}>
             Tóm tắt đơn hàng
-          </TextGeo>
+          </CustomText>
           {children}
         </View>
       </ScrollView>
@@ -170,13 +167,12 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   inputBox: {
-    height: 50,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    borderColor: Colors.grey,
-    borderRadius: 5,
     justifyContent: 'center',
     marginBottom: 15,
+  },
+  input: {
+    height: 50,
+    backgroundColor: '#fff',
   },
   boxSelect: {
     borderWidth: 1,
@@ -184,7 +180,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 15,
     paddingHorizontal: 10,
-    borderColor: Colors.grey,
+    borderColor: Colors.text,
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',

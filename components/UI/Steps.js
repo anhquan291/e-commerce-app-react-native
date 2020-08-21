@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import { MaterialIcons } from '@expo/vector-icons';
-import Colors from '../../constants/Colors';
+import Colors from '../../utils/Colors';
 
 const secondIndicatorStyles = {
   stepIndicatorSize: 30,

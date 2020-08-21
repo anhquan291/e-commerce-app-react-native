@@ -1,35 +1,29 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-  StatusBar,
-  Alert,
-} from 'react-native';
+import { View, StyleSheet, Image, StatusBar, Alert, Text } from 'react-native';
 //Drawer
 import {
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
+import { useDispatch, useSelector } from 'react-redux';
 import { Drawer } from 'react-native-paper';
 //Color
-import Colors from '../constants/Colors';
-import TextGeo from '../components/UI/TextGeo';
+import Colors from '../utils/Colors';
+import CustomText from '../components/UI/CustomText';
 //Icon
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
 // Action
 import * as AuthActions from '../store/auth/authActions';
 //Link
 import { OpenURL } from '../utils/Tools';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const fbURL = 'https://www.facebook.com/daquyankhangthinhvuong/';
 const youtubeURL = 'https://www.youtube.com/';
 
-const CustomDrawer = (props) => {
+//custom drawer content
+export default (props) => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const Logout = () => {
@@ -47,41 +41,62 @@ const CustomDrawer = (props) => {
       },
     ]);
   };
+  const { state, ...rest } = props;
+  const newState = { ...state }; //copy from state before applying any filter. do not change original state
+  // newState.routes = newState.routes.filter((item) => item.name !== 'Profile'); //replace "Login' with your route name
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ alignItems: 'center' }}>
-        <Image
-          style={styles.logo}
-          source={require('../assets/Images/logo1.png')}
-        />
-      </View>
+    <View style={styles.container}>
       <DrawerContentScrollView {...props}>
-        <View>
-          {Object.keys(user).length === 0 ? (
-            <></>
-          ) : (
-            <>
-              <View style={styles.actionButton}>
-                <TextGeo
+        {Object.keys(user).length === 0 ? (
+          <View style={{ alignItems: 'center', marginVertical: 20 }}>
+            <Image
+              style={styles.logo}
+              source={require('../assets/Images/logo1.png')}
+            />
+          </View>
+        ) : (
+          <>
+            <View style={styles.profileContainer}>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('Profile')}
+              >
+                <Image
+                  style={styles.profilePic}
+                  source={
+                    user.profilePicture.length === 0
+                      ? require('../assets/Images/defaultprofile.jpg')
+                      : { uri: user.profilePicture }
+                  }
+                />
+              </TouchableOpacity>
+              <View style={{ justifyContent: 'center' }}>
+                <Text
                   style={{
                     color: Colors.green,
-                    fontSize: 20,
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                    paddingVertical: 0,
+                  }}
+                >
+                  {user.name}
+                </Text>
+                <Text
+                  style={{
+                    color: Colors.grey,
+                    fontSize: 15,
                     paddingHorizontal: 10,
                   }}
                 >
-                  Hi, {user.name}
-                </TextGeo>
-                <FontAwesome5
-                  name='smile-beam'
-                  size={24}
-                  color={Colors.lighter_green}
-                />
+                  See your profile
+                </Text>
               </View>
-            </>
-          )}
-          <DrawerItemList {...props} />
+            </View>
+          </>
+        )}
+        <View>
+          <DrawerItemList state={newState} {...rest} />
           <Drawer.Section style={styles.drawerSection}></Drawer.Section>
-
           <View style={styles.social}>
             <OpenURL url={fbURL}>
               <Image
@@ -117,9 +132,9 @@ const CustomDrawer = (props) => {
                 style={{ marginRight: 30 }}
                 color={Colors.dark}
               />
-              <TextGeo style={{ fontSize: 16, color: Colors.dark }}>
+              <CustomText style={{ fontSize: 16, color: Colors.dark }}>
                 Đăng xuất
-              </TextGeo>
+              </CustomText>
             </View>
           )}
         />
@@ -128,15 +143,15 @@ const CustomDrawer = (props) => {
       <View style={styles.version}>
         <DrawerItem
           label={() => (
-            <TextGeo
+            <CustomText
               style={{ fontFamily: 'geoMetricItalic', color: Colors.grey }}
             >
               CatTuong App Version 1.0
-            </TextGeo>
+            </CustomText>
           )}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -144,6 +159,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+  },
+  profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    marginVertical: 20,
+  },
+  profilePic: {
+    resizeMode: 'contain',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
   logo: {
     resizeMode: 'contain',
@@ -182,5 +209,3 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.light_grey,
   },
 });
-
-export default CustomDrawer;

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import * as RootNavigation from '../navigation/RootNavigation';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import * as Linking from 'expo-linking';
 
 export const OpenURL = ({ url, children }) => {
@@ -52,4 +52,26 @@ export const timeoutPromise = (url) => {
       }
     );
   });
+};
+
+export const uploadProfilePic = async (id, token, imageUri, filename, type) => {
+  try {
+    let formData = new FormData();
+    // Infer the type of the image
+    await formData.append('profilePic', {
+      uri: imageUri,
+      name: filename,
+      type,
+    });
+    await fetch(`http://192.168.0.27:8080/api/v1/user/photo/${id}`, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    });
+  } catch (err) {
+    throw err;
+  }
 };

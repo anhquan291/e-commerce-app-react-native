@@ -2,31 +2,34 @@ import React from 'react';
 import {
   createStackNavigator,
   CardStyleInterpolators,
+  TransitionPresets,
 } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //Icon
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 //Color
-import Colors from '../constants/Colors';
+import Colors from '../utils/Colors';
 //Custom Drawer
 import CustomDrawer from './CustomDrawer';
-import TextGeo from '../components/UI/TextGeo';
+import CustomText from '../components/UI/CustomText';
 //Screens
-import HomeScreen from '../screens/HomeScreen';
-import DetailScreen from '../screens/DetailScreen';
-import IntroScreen from '../screens/IntroScreen';
-import FavoriteScreen from '../screens/FavoriteScreen';
-import SignUpScreen from '../screens/SignupScreen';
-import ContactScreen from '../screens/ContactScreen';
-import CartScreen from '../screens/CartScreen';
-import ProductScreen from '../screens/ProductScreen';
-import OrderScreen from '../screens/OrderScreen';
-import PreOrderScreen from '../screens/PreOrderScreen';
-import FinishOrderScreen from '../screens/FinishOrderScreen';
-import ForgetPwScreen from '../screens/ForgetPwScreen';
-import ResetPwScreen from '../screens/ResetPwScreen';
-import FinishResetPwScreen from '../screens/FinishResetPwScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import DetailScreen from '../screens/DetailScreen/DetailScreen';
+import IntroScreen from '../screens/IntroScreen/IntroScreen';
+import FavoriteScreen from '../screens/FavoriteScreen/FavoriteScreen';
+import SignUpScreen from '../screens/SignupScreen/SignupScreen';
+import ContactScreen from '../screens/ContactScreen/ContactScreen';
+import CartScreen from '../screens/CartScreen/CartScreen';
+import ProductScreen from '../screens/ProductScreen/ProductScreen';
+import OrderScreen from '../screens/OrderScreen/OrderScreen';
+import PreOrderScreen from '../screens/OrderScreen/PreOrderScreen';
+import FinishOrderScreen from '../screens/OrderScreen/FinishOrderScreen';
+import ForgetPwScreen from '../screens/ResetPwScreen/ForgetPwScreen';
+import ResetPwScreen from '../screens/ResetPwScreen/ResetPwScreen';
+import FinishResetPwScreen from '../screens/ResetPwScreen/FinishResetPwScreen';
+import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
+import EditProfileScreen from '../screens/ProfileScreen/EditProfileScreen';
 //redux
 import { useSelector } from 'react-redux';
 
@@ -132,6 +135,31 @@ export const ProductStackScreen = () => (
   </ProductStack.Navigator>
 );
 
+const ProfileStack = createStackNavigator();
+
+export const ProfileStackScreen = () => (
+  <ProfileStack.Navigator
+    screenOptions={{
+      headerShown: false,
+      gestureEnabled: true,
+      cardOverlayEnabled: true,
+      ...TransitionPresets.ModalPresentationIOS,
+    }}
+    mode='modal'
+  >
+    <ProfileStack.Screen
+      name='Profile'
+      component={ProfileScreen}
+      options={{ headerShown: false }}
+    />
+    <ProfileStack.Screen
+      name='ProfileEdit'
+      component={EditProfileScreen}
+      options={{ headerShown: false }}
+    />
+  </ProfileStack.Navigator>
+);
+
 const HomeStack = createStackNavigator();
 export const HomeStackScreen = () => (
   <HomeStack.Navigator
@@ -173,152 +201,133 @@ export const HomeStackScreen = () => (
   </HomeStack.Navigator>
 );
 
-export const TabScreen = () => (
-  <Tab.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused }) => {
-        let iconName;
-        const color = focused ? Colors.light_green : Colors.grey;
-        if (route.name === 'HomeTab') {
-          iconName = focused ? 'home' : 'home-outline';
-        } else if (route.name === 'Favorite') {
-          iconName = focused ? 'heart-multiple' : 'heart-multiple-outline';
-        } else if (route.name === 'Cart') {
-          iconName = focused ? 'cart' : 'cart-outline';
-        }
-        // You can return any component that you like here!
-        return (
-          <MaterialCommunityIcons name={iconName} size={25} color={color} />
-        );
-      },
-    })}
-    tabBarOptions={{
-      activeTintColor: Colors.light_green,
-      inactiveTintColor: Colors.grey,
-      labelStyle: {
-        fontFamily: 'geoMetric',
-      },
-      style: {
-        // borderTopLeftRadius: 15,
-        // borderTopRightRadius: 15,
-        // position: "absolute",
-      },
-    }}
-  >
-    <Tab.Screen
-      name='HomeTab'
-      component={HomeStackScreen}
-      options={{
-        tabBarLabel: 'Trang chủ',
+export const TabScreen = () => {
+  const carts = useSelector((state) => state.cart.cartItems);
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
+          let iconName;
+          const color = focused ? Colors.light_green : Colors.grey;
+          if (route.name === 'HomeTab') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Favorite') {
+            iconName = focused ? 'heart-multiple' : 'heart-multiple-outline';
+          } else if (route.name === 'Cart') {
+            iconName = focused ? 'cart' : 'cart-outline';
+          }
+          // You can return any component that you like here!
+          return (
+            <MaterialCommunityIcons name={iconName} size={25} color={color} />
+          );
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: Colors.light_green,
+        inactiveTintColor: Colors.grey,
+        labelStyle: {
+          fontFamily: 'geoMetric',
+        },
+        style: {
+          // borderTopLeftRadius: 15,
+          // borderTopRightRadius: 15,
+          // position: "absolute",
+        },
       }}
-    />
-    <Tab.Screen
-      name='Favorite'
-      component={FavoriteStackScreen}
-      options={({ navigation }) => ({
-        tabBarLabel: 'Yêu thích',
-      })}
-    />
-    <Tab.Screen
-      name='Cart'
-      component={CartStackScreen}
-      options={({ navigation }) => ({
-        tabBarLabel: 'Giỏ hàng',
-      })}
-    />
-  </Tab.Navigator>
-);
+    >
+      <Tab.Screen
+        name='HomeTab'
+        component={HomeStackScreen}
+        options={{
+          tabBarLabel: 'Trang chủ',
+        }}
+      />
+      <Tab.Screen
+        name='Favorite'
+        component={FavoriteStackScreen}
+        options={() => ({
+          tabBarLabel: 'Yêu thích',
+        })}
+      />
+      <Tab.Screen
+        name='Cart'
+        component={CartStackScreen}
+        options={() => ({
+          tabBarLabel: 'Giỏ hàng',
+          tabBarBadge: carts.items.length === 0 ? null : carts.items.length,
+        })}
+      />
+    </Tab.Navigator>
+  );
+};
 export const DrawerNavigator = () => {
   const user = useSelector((state) => state.auth.user);
+  const drawers = [
+    {
+      name: 'HomeTab',
+      screen: TabScreen,
+      label: 'Trang Chủ',
+      icon: 'home-outline',
+    },
+    {
+      name: 'Order',
+      screen: OrderScreen,
+      label: 'Đơn Hàng',
+      icon: 'receipt',
+    },
+    {
+      name: 'Contact',
+      screen: ContactScreen,
+      label: 'Liên Hệ',
+      icon: 'contacts',
+    },
+  ];
+
   return (
     <Drawer.Navigator
-      initialRouteName='IntroSlide'
       drawerContent={(props) => <CustomDrawer {...props} />}
       drawerContentOptions={{
         activeTintColor: Colors.grey,
         itemStyle: { marginVertical: 3 },
       }}
     >
-      {/* <Drawer.Screen name="IntroSlide" component={IntroStackScreen} /> */}
-      <Drawer.Screen
-        name='HomeTab'
-        component={TabScreen}
-        options={({ navigation }) => ({
-          title: ({ focused }) => (
-            <TextGeo
-              style={{
-                fontSize: 16,
-                fontWeight: '500',
-                color: focused ? Colors.lighter_green : Colors.grey,
-              }}
-            >
-              Trang chủ
-            </TextGeo>
-          ),
-          drawerIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name='home-outline'
-              size={25}
-              color={focused ? Colors.lighter_green : Colors.grey}
-            />
-          ),
-        })}
-      />
-      <Drawer.Screen
-        name='Order'
-        component={OrderScreen}
-        options={({ navigation }) => ({
-          title: ({ focused }) => (
-            <TextGeo
-              style={{
-                fontSize: 16,
-                fontWeight: '500',
-                color: focused ? Colors.lighter_green : Colors.grey,
-              }}
-            >
-              Đơn hàng
-            </TextGeo>
-          ),
-          drawerIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name='receipt'
-              size={25}
-              color={focused ? Colors.lighter_green : Colors.grey}
-            />
-          ),
-        })}
-      />
-      <Drawer.Screen
-        name='Contact'
-        component={ContactScreen}
-        options={({ navigation }) => ({
-          title: ({ focused }) => (
-            <TextGeo
-              style={{
-                fontSize: 16,
-                fontWeight: '500',
-                color: focused ? Colors.lighter_green : Colors.grey,
-              }}
-            >
-              Liên hệ
-            </TextGeo>
-          ),
-          drawerIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name='contacts'
-              size={25}
-              color={focused ? Colors.lighter_green : Colors.grey}
-            />
-          ),
-        })}
-      />
+      {drawers.map(({ name, icon, label, screen }) => {
+        return (
+          <Drawer.Screen
+            key={name}
+            name={name}
+            component={screen}
+            options={() => ({
+              title: ({ focused }) => (
+                <CustomText
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: focused ? Colors.lighter_green : Colors.grey,
+                  }}
+                >
+                  {label}
+                </CustomText>
+              ),
+              drawerIcon: ({ focused }) => (
+                <MaterialCommunityIcons
+                  name={icon}
+                  size={25}
+                  color={focused ? Colors.lighter_green : Colors.grey}
+                />
+              ),
+            })}
+          />
+        );
+      })}
+
       {Object.keys(user).length === 0 ? (
         <Drawer.Screen
           name='SignUp'
           component={AuthStackScreen}
-          options={({ navigation }) => ({
+          options={() => ({
             title: ({ focused }) => (
-              <TextGeo
+              <CustomText
                 style={{
                   fontSize: 16,
                   fontWeight: '500',
@@ -326,7 +335,7 @@ export const DrawerNavigator = () => {
                 }}
               >
                 Đăng nhập
-              </TextGeo>
+              </CustomText>
             ),
             drawerIcon: ({ focused }) => (
               <MaterialCommunityIcons
@@ -338,7 +347,30 @@ export const DrawerNavigator = () => {
           })}
         />
       ) : (
-        <></>
+        <Drawer.Screen
+          name='Profile'
+          component={ProfileStackScreen}
+          options={() => ({
+            title: ({ focused }) => (
+              <CustomText
+                style={{
+                  fontSize: 16,
+                  fontWeight: '500',
+                  color: focused ? Colors.lighter_green : Colors.grey,
+                }}
+              >
+                Thông Tin Cá Nhân
+              </CustomText>
+            ),
+            drawerIcon: ({ focused }) => (
+              <MaterialCommunityIcons
+                name='face-profile'
+                size={25}
+                color={focused ? Colors.lighter_green : Colors.grey}
+              />
+            ),
+          })}
+        />
       )}
     </Drawer.Navigator>
   );
