@@ -1,10 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 //Icon
-import { AntDesign } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 import CustomText from '../../components/UI/CustomText';
 import Colors from '../../utils/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 const { height } = Dimensions.get('window');
 
 const FinishResetPwScreen = (props) => {
@@ -12,16 +18,14 @@ const FinishResetPwScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.info}>
-        <View>
-          <AntDesign
-            name='checkcircleo'
-            size={24}
-            size={100}
-            color={Colors.lighter_green}
-          />
-        </View>
-        <CustomText style={styles.title}>
-          Link được gửi về email:
+        <LottieView
+          source={require('../../components/IconAnimation/mail-done.json')}
+          autoPlay
+          loop={false}
+          resizeMode='cover'
+          style={{ height: 130 }}
+        />
+        <CustomText style={{ marginVertical: 20 }}>
           <CustomText
             style={{
               fontSize: 16,
@@ -39,15 +43,16 @@ const FinishResetPwScreen = (props) => {
           Vui lòng kiểm tra hòm thư của bạn.{' '}
         </CustomText>
       </View>
-      <View style={styles.buttom}>
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate('SignUpScreen')}
-        >
+
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('FirstScreen')}
+      >
+        <View style={styles.button}>
           <CustomText style={{ ...styles.title, color: '#fff' }}>
-            Quay lại trang đăng nhập
+            LOGIN
           </CustomText>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -66,16 +71,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    textAlign: 'center',
     fontSize: 16,
     color: Colors.text,
+    fontWeight: '500',
   },
-  buttom: {
+  button: {
     marginTop: 20,
     backgroundColor: Colors.lighter_green,
     width: 200,
+    height: 50,
     paddingVertical: 10,
     borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

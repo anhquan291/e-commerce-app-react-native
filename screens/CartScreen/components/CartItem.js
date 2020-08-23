@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   Image,
   TouchableOpacity,
   StyleSheet,
@@ -14,6 +13,7 @@ import Colors from '../../../utils/Colors';
 import NumberFormat from '../../../components/UI/NumberFormat';
 //Icon
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import CustomText from '../../../components/UI/CustomText';
 //PropTypes check
 import PropTypes from 'prop-types';
 
@@ -53,23 +53,23 @@ const CartItem = ({ item, onAdd, onDes, onRemove }) => {
       </View>
       <View style={styles.right}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={styles.title}>{item.item.filename}</Text>
+          <CustomText style={styles.title}>{item.item.filename}</CustomText>
           <View>
             <TouchableOpacity onPress={onRemove}>
               <MaterialCommunityIcons name='close' size={20} color='#000' />
             </TouchableOpacity>
           </View>
         </View>
-        <Text style={{ color: Colors.grey, fontSize: 12, marginTop: 3 }}>
+        <CustomText style={{ color: Colors.grey, fontSize: 12 }}>
           Cung cấp bởi Cát Tường
-        </Text>
+        </CustomText>
         <NumberFormat price={sum.toString()} />
         <View style={styles.box}>
           <TouchableOpacity onPress={checkDesQuantity} style={styles.boxMin}>
             <MaterialCommunityIcons name='minus' size={16} />
           </TouchableOpacity>
           <View>
-            <Text style={styles.boxText}>{item.quantity}</Text>
+            <CustomText style={styles.boxText}>{item.quantity}</CustomText>
           </View>
           <TouchableOpacity onPress={onAdd} style={styles.boxMin}>
             <MaterialCommunityIcons name='plus' size={16} />
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     width: 90,
     borderRadius: 5,
     paddingHorizontal: 10,
+    marginTop: 5,
   },
   boxMin: {
     width: '30%',

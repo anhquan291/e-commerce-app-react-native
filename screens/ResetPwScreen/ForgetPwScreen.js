@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
+import { TextInput } from 'react-native-paper';
 import CustomText from '../../components/UI/CustomText';
 //Colors
 import Colors from '../../utils/Colors';
@@ -34,40 +34,26 @@ const validate = (values) => {
 const renderField = ({
   keyboardType,
   icon,
-  placeholder,
+  label,
   meta: { touched, error, warning },
   input: { onChange, ...restInput },
 }) => {
   return (
     <View>
-      <View
+      <TextInput
+        label={label}
+        underlineColorAndroid={Colors.light_green}
+        underlineColor={Colors.light_green}
+        theme={{ colors: { primary: Colors.leave_green } }}
+        left={<TextInput.Icon name={icon} color={Colors.lighter_green} />}
         style={{
-          height: 50,
-          width: '100%',
-          borderBottomWidth: 1,
-          borderBottomColor: Colors.grey,
+          backgroundColor: 'transparent',
+          justifyContent: 'center',
         }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons
-            name={icon}
-            size={22}
-            color={Colors.lighter_green}
-          />
-          <TextInput
-            style={{
-              height: 50,
-              padding: 5,
-              width: '80%',
-              marginLeft: 10,
-            }}
-            placeholder={placeholder}
-            keyboardType={keyboardType}
-            onChangeText={onChange}
-            {...restInput}
-          />
-        </View>
-      </View>
+        keyboardType={keyboardType}
+        onChangeText={onChange}
+        {...restInput}
+      />
       {touched &&
         ((error && (
           <Text style={{ color: 'red', marginVertical: 5 }}>{error}</Text>
@@ -113,7 +99,7 @@ const ForgetPwScreen = (props) => {
         onPress={() => {
           props.navigation.goBack();
         }}
-        style={{ position: 'absolute', top: 50, left: 20 }}
+        style={{ position: 'absolute', top: 30, left: 20 }}
       >
         <Feather
           name='arrow-left-circle'
@@ -122,12 +108,12 @@ const ForgetPwScreen = (props) => {
         />
       </TouchableOpacity>
       <View style={styles.content}>
-        <CustomText style={styles.title}> Quên mật khẩu </CustomText>
+        <CustomText style={styles.title}> Forget Password </CustomText>
         <Field
           name='email'
           keyboardType='email-address'
-          icon='email-outline'
-          placeholder='Email người của bạn'
+          icon='email'
+          label='Email'
           component={renderField}
         />
         <TouchableOpacity
@@ -138,7 +124,7 @@ const ForgetPwScreen = (props) => {
             {loading ? (
               <ActivityIndicator size='small' color='#fff' />
             ) : (
-              <CustomText style={styles.textSign}>Tiếp Tục</CustomText>
+              <CustomText style={styles.textSign}>NEXT</CustomText>
             )}
           </View>
         </TouchableOpacity>
@@ -173,6 +159,7 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 15,
     color: '#fff',
+    fontWeight: '500',
   },
 });
 const SignupForm = reduxForm({

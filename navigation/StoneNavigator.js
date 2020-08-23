@@ -18,13 +18,16 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import DetailScreen from '../screens/DetailScreen/DetailScreen';
 import IntroScreen from '../screens/IntroScreen/IntroScreen';
 import FavoriteScreen from '../screens/FavoriteScreen/FavoriteScreen';
-import SignUpScreen from '../screens/SignupScreen/SignupScreen';
+import FirstScreen from '../screens/FirstScreen/FirstScreen';
+import SignupScreen from '../screens/SignupScreen/SignupScreen';
+import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import ContactScreen from '../screens/ContactScreen/ContactScreen';
 import CartScreen from '../screens/CartScreen/CartScreen';
 import ProductScreen from '../screens/ProductScreen/ProductScreen';
 import OrderScreen from '../screens/OrderScreen/OrderScreen';
-import PreOrderScreen from '../screens/OrderScreen/PreOrderScreen';
-import FinishOrderScreen from '../screens/OrderScreen/FinishOrderScreen';
+import PreOrderScreen from '../screens/PreOrderScreen/PreOrderScreen';
+import PaymentScreen from '../screens/PaymentScreen/PaymentScreen';
+import FinishOrderScreen from '../screens/PreOrderScreen/FinishOrderScreen';
 import ForgetPwScreen from '../screens/ResetPwScreen/ForgetPwScreen';
 import ResetPwScreen from '../screens/ResetPwScreen/ResetPwScreen';
 import FinishResetPwScreen from '../screens/ResetPwScreen/FinishResetPwScreen';
@@ -48,17 +51,46 @@ export const IntroStackScreen = () => (
   </IntroStack.Navigator>
 );
 
+const LoginStack = createStackNavigator();
+export const LoginStackScreen = () => (
+  <LoginStack.Navigator
+    screenOptions={{
+      headerShown: false,
+      gestureEnabled: true,
+      cardOverlayEnabled: true,
+      ...TransitionPresets.ModalPresentationIOS,
+    }}
+    mode='modal'
+  >
+    <LoginStack.Screen
+      name='LoginScreen'
+      component={LoginScreen}
+      options={{ headerShown: false }}
+    />
+    <LoginStack.Screen
+      name='ForgetPwScreen'
+      component={ForgetPwScreen}
+      options={{ headerShown: false }}
+    />
+  </LoginStack.Navigator>
+);
+
 const AuthStack = createStackNavigator();
 export const AuthStackScreen = () => (
   <AuthStack.Navigator>
     <AuthStack.Screen
-      name='SignUpScreen'
-      component={SignUpScreen}
+      name='FirstScreen'
+      component={FirstScreen}
       options={{ headerShown: false }}
     />
     <AuthStack.Screen
-      name='ForgetPwScreen'
-      component={ForgetPwScreen}
+      name='LoginScreen'
+      component={LoginStackScreen}
+      options={{ headerShown: false }}
+    />
+    <AuthStack.Screen
+      name='SignupScreen'
+      component={SignupScreen}
       options={{ headerShown: false }}
     />
     <AuthStack.Screen
@@ -100,6 +132,11 @@ export const CartStackScreen = () => (
     <CartStack.Screen
       name='CartScreen'
       component={CartScreen}
+      options={{ headerShown: false }}
+    />
+    <CartStack.Screen
+      name='Payment'
+      component={PaymentScreen}
       options={{ headerShown: false }}
     />
     <CartStack.Screen
@@ -208,7 +245,7 @@ export const TabScreen = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           let iconName;
-          const color = focused ? Colors.light_green : Colors.grey;
+          const color = focused ? Colors.lighter_green : Colors.grey;
           if (route.name === 'HomeTab') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Favorite') {
@@ -223,7 +260,7 @@ export const TabScreen = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: Colors.light_green,
+        activeTintColor: Colors.lighter_green,
         inactiveTintColor: Colors.grey,
         labelStyle: {
           fontFamily: 'geoMetric',
@@ -301,7 +338,7 @@ export const DrawerNavigator = () => {
               title: ({ focused }) => (
                 <CustomText
                   style={{
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: '500',
                     color: focused ? Colors.lighter_green : Colors.grey,
                   }}
@@ -312,7 +349,7 @@ export const DrawerNavigator = () => {
               drawerIcon: ({ focused }) => (
                 <MaterialCommunityIcons
                   name={icon}
-                  size={25}
+                  size={23}
                   color={focused ? Colors.lighter_green : Colors.grey}
                 />
               ),
@@ -329,7 +366,7 @@ export const DrawerNavigator = () => {
             title: ({ focused }) => (
               <CustomText
                 style={{
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: '500',
                   color: focused ? Colors.lighter_green : Colors.grey,
                 }}
@@ -340,7 +377,7 @@ export const DrawerNavigator = () => {
             drawerIcon: ({ focused }) => (
               <MaterialCommunityIcons
                 name='login'
-                size={25}
+                size={23}
                 color={focused ? Colors.lighter_green : Colors.grey}
               />
             ),

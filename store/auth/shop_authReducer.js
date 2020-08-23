@@ -19,6 +19,7 @@ export default (state = initialState, action) => {
     return (state.user = parsedUser.data);
   };
   userInformation();
+
   switch (action.type) {
     case LOGIN:
       return {

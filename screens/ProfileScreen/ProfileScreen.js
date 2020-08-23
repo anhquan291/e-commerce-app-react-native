@@ -14,11 +14,12 @@ import { Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
-import Loader from '../../components/Loaders/Loader';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 //Action
 import * as AuthActions from '../../store/auth/authActions';
+//Icon
+import LottieView from 'lottie-react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -31,7 +32,6 @@ const ProfileScreen = (props) => {
   const [uploadButton, setUploadButton] = useState(true);
   const dispatch = useDispatch();
   const unmounted = useRef(false);
-  console.log(user);
   useEffect(() => {
     return () => {
       unmounted.current = true;
@@ -86,110 +86,122 @@ const ProfileScreen = (props) => {
   };
   return (
     <View style={styles.container}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <View style={styles.header}>
-            <CustomText style={styles.headerText}>Profile</CustomText>
+      <View style={styles.header}>
+        <CustomText style={styles.headerText}>Profile</CustomText>
+      </View>
+      <View style={styles.profileContainer}>
+        <View style={styles.profileBox}>
+          <View style={styles.editButton}>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('ProfileEdit', { user })}
+            >
+              <FontAwesome5
+                name='user-edit'
+                size={20}
+                color={Colors.leave_green}
+              />
+            </TouchableOpacity>
           </View>
-          <View style={styles.profileContainer}>
-            <View style={styles.profileBox}>
-              <View style={styles.editButton}>
-                <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('ProfileEdit', { user })
-                  }
-                >
-                  <FontAwesome5
-                    name='user-edit'
-                    size={20}
-                    color={Colors.leave_green}
-                  />
+          <View style={{ width: 100, height: 50 }}>
+            <Image
+              style={styles.profilePic}
+              source={
+                imageUri.length === 0
+                  ? user.profilePicture.length === 0
+                    ? require('../../assets/Images/defaultprofile.jpg')
+                    : { uri: user.profilePicture }
+                  : { uri: imageUri }
+              }
+            />
+            <View
+              style={{
+                width: '100%',
+                alignItems: 'flex-end',
+                transform: [{ translateY: -80 }],
+              }}
+            >
+              <View style={styles.cameraContainer}>
+                <TouchableOpacity onPress={_pickImage}>
+                  <FontAwesome5 name='camera' size={15} color='white' />
                 </TouchableOpacity>
-              </View>
-              <View style={{ width: 100, height: 50 }}>
-                <Image
-                  style={styles.profilePic}
-                  source={
-                    imageUri.length === 0
-                      ? user.profilePicture.length === 0
-                        ? require('../../assets/Images/defaultprofile.jpg')
-                        : { uri: user.profilePicture }
-                      : { uri: imageUri }
-                  }
-                />
-                <View
-                  style={{
-                    width: '100%',
-                    alignItems: 'flex-end',
-                    transform: [{ translateY: -80 }],
-                  }}
-                >
-                  <View style={styles.cameraContainer}>
-                    <TouchableOpacity onPress={_pickImage}>
-                      <FontAwesome5 name='camera' size={15} color='white' />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-              <CustomText style={styles.userName}>{user.name}</CustomText>
-              <View style={styles.footer}>
-                <View style={styles.infoContainer}>
-                  <CustomText style={styles.fieldText}>Email</CustomText>
-                  <CustomText style={{ fontSize: 16 }}>{user.email}</CustomText>
-                </View>
-                <View style={styles.infoContainer}>
-                  <CustomText style={styles.fieldText}>Phone</CustomText>
-                  <CustomText style={{ fontSize: 16 }}>
-                    {user.phone.length === 0 ? 'Not added yet' : user.phone}
-                  </CustomText>
-                </View>
-                <View style={styles.infoContainer}>
-                  <CustomText style={styles.fieldText}>Address</CustomText>
-                  <CustomText style={{ fontSize: 16 }}>
-                    {user.address.length === 0 ? 'Not added yet' : user.address}
-                  </CustomText>
-                </View>
-                <View style={styles.button}>
-                  <Button
-                    icon='camera'
-                    mode='contained'
-                    onPress={UploadProfile}
-                    disabled={uploadButton}
-                    style={{
-                      height: 50,
-                      justifyContent: 'center',
-                      backgroundColor: Colors.leave_green,
-                    }}
-                  >
-                    Update Profile Picture
-                  </Button>
-                  {!uploadButton ? (
-                    <Button
-                      mode='contained'
-                      onPress={() => {
-                        setUploadButton(true), setImageUri('');
-                      }}
-                      disabled={uploadButton}
-                      style={{
-                        height: 50,
-                        marginTop: 10,
-                        justifyContent: 'center',
-                        backgroundColor: Colors.leave_green,
-                      }}
-                    >
-                      Cancle
-                    </Button>
-                  ) : (
-                    <></>
-                  )}
-                </View>
               </View>
             </View>
           </View>
-        </>
-      )}
+          <CustomText style={styles.userName}>{user.name}</CustomText>
+          <View style={styles.footer}>
+            <View style={styles.infoContainer}>
+              {/* <CustomText style={styles.fieldText}>Email</CustomText> */}
+              <LottieView
+                source={require('../../components/IconAnimation/email.json')}
+                autoPlay
+                loop
+                resizeMode='contain'
+                style={{ width: 40 }}
+              />
+              <CustomText>{user.email}</CustomText>
+            </View>
+            <View style={styles.infoContainer}>
+              <LottieView
+                source={require('../../components/IconAnimation/phone1.json')}
+                autoPlay
+                loop
+                resizeMode='cover'
+                style={{ width: 40 }}
+              />
+              <CustomText>
+                {user.phone.length === 0 ? 'Not added yet' : user.phone}
+              </CustomText>
+            </View>
+            <View style={styles.infoContainer}>
+              <LottieView
+                source={require('../../components/IconAnimation/location.json')}
+                autoPlay
+                loop
+                resizeMode='contain'
+                style={{ width: 35 }}
+              />
+              <CustomText>
+                {user.address.length === 0 ? 'Not added yet' : user.address}
+              </CustomText>
+            </View>
+            <View style={styles.button}>
+              <Button
+                icon='camera'
+                mode='contained'
+                loading={loading}
+                onPress={UploadProfile}
+                disabled={uploadButton}
+                style={{
+                  height: 50,
+                  justifyContent: 'center',
+                  backgroundColor: Colors.leave_green,
+                }}
+              >
+                Update Profile Picture
+              </Button>
+              {!uploadButton ? (
+                <Button
+                  mode='contained'
+                  onPress={() => {
+                    setUploadButton(true), setImageUri('');
+                  }}
+                  disabled={uploadButton}
+                  style={{
+                    height: 50,
+                    marginTop: 10,
+                    justifyContent: 'center',
+                    backgroundColor: Colors.leave_green,
+                  }}
+                >
+                  Cancle
+                </Button>
+              ) : (
+                <></>
+              )}
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -262,10 +274,6 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.grey,
     height: 50,
     alignItems: 'center',
-  },
-  fieldText: {
-    color: Colors.grey,
-    fontSize: 16,
   },
   button: {
     marginTop: 30,

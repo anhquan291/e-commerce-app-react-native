@@ -11,10 +11,9 @@ import {
 //Icon
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../utils/Colors';
-//Address
-import Address from '../../components/UI/Address';
+
 //PreOrderItem
-import PreOrderItem from './components/PreOrderItem';
+import PreOrderItem from '../PreOrderScreen/components/PreOrderItem';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 //Action
@@ -24,40 +23,23 @@ import * as CartActions from '../../store/cart/cartActions';
 import NumberFormat from '../../components/UI/NumberFormat';
 //Text
 import CustomText from '../../components/UI/CustomText';
+//Steps
+import OrderSteps from '../../components/UI/OrderSteps';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
-const PreOrderScreen = (props) => {
+const PaymentScreen = (props) => {
+  const carts = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
+  const { fullAddress, orderItems, phone, total, cartId } = props.route.params;
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
       unmounted.current = true;
     };
   }, []);
-  const carts = useSelector((state) => state.cart.cartItems);
   const [loading, setLoading] = useState(false);
-  const { cartItems } = props.route.params;
-  const { total } = props.route.params;
-  const { cartId } = props.route.params;
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [province, setProvince] = useState('');
-  const [town, setTown] = useState('');
-  const getInfor = (name, phone, address, province, town) => {
-    setName(name);
-    setPhone(phone);
-    setAddress(address);
-    setProvince(province);
-    setTown(town);
-  };
-  let orderItems = [];
-  cartItems.map((item) => {
-    orderItems.push({ item: item.item._id, quantity: item.quantity });
-  });
 
-  const fullAddress = `${address}, ${town} ,${province}`;
   //action Add Order
   const addOrder = async () => {
     try {
@@ -78,7 +60,7 @@ const PreOrderScreen = (props) => {
         setLoading(false);
       } else {
         await dispatch(
-          OrderActions.addOrder(orderItems, total, fullAddress, parseInt(phone))
+          OrderActions.addOrder(orderItems, total, fullAddress, phone)
         );
         await dispatch(CartActions.resetCart(cartId));
         setLoading(false);
@@ -108,35 +90,30 @@ const PreOrderScreen = (props) => {
             />
           </TouchableOpacity>
         </View>
-        <CustomText style={styles.title}> Tiến Hành Đặt Hàng </CustomText>
+        <View style={styles.orderStepsContainer}>
+          <CustomText style={styles.title}> Phương Thức Thanh Toán </CustomText>
+          <View style={styles.orderSteps}>
+            <OrderSteps position={2} />
+          </View>
+        </View>
+
         <View />
       </View>
-      <Address getInfor={getInfor}>
-        {cartItems.map((item) => {
-          return (
-            <View key={item.item._id}>
-              <PreOrderItem item={item} />
-            </View>
-          );
-        })}
+      <View style={styles.total}>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             backgroundColor: '#fff',
-            marginBottom: 65,
-            marginTop: 10,
-            paddingRight: 10,
+            paddingHorizontal: 10,
+            paddingVertical: 5,
           }}
         >
           <CustomText style={{ fontSize: 15, color: Colors.text }}>
             Thành tiền
           </CustomText>
-          <NumberFormat price={total.toString()} style={{ fontSize: 15 }} />
+          <NumberFormat price={total.toString()} />
         </View>
-      </Address>
-
-      <View style={styles.total}>
         <View
           style={{
             width: '100%',
@@ -165,11 +142,9 @@ const PreOrderScreen = (props) => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   header: {
-    width: '100%',
+    width: width,
     backgroundColor: Colors.lighter_green,
-    justifyContent: 'flex-end',
-    height: Platform.OS === 'android' ? 70 : height < 668 ? 70 : 90,
-    paddingVertical: 10,
+    height: 100,
   },
   title: {
     textAlign: 'center',
@@ -182,7 +157,18 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     paddingHorizontal: 10,
+    backgroundColor: '#fff',
+  },
+  orderStepsContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
+  orderSteps: {
+    width: (width * 50) / 100,
+    marginVertical: 5,
   },
 });
 
-export default PreOrderScreen;
+export default PaymentScreen;

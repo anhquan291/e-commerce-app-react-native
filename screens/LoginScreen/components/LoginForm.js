@@ -32,16 +32,6 @@ const validate = (values) => {
   } else if (values.password.length < 6) {
     errors.password = 'Mật khẩu phải nhiều hơn hoặc bằng 6 ký tự';
   }
-  if (!values.confirmpassword) {
-    errors.confirmpassword = 'Mật khẩu không được bỏ trống';
-  } else if (values.confirmpassword !== values.password) {
-    errors.confirmpassword = 'Mật khẩu xác nhận không trùng khớp';
-  }
-  if (!values.username) {
-    errors.username = 'Tên không được bỏ trống';
-  } else if (values.username.length > 20) {
-    errors.username = 'Tên không vượt quá 20 ký tự';
-  }
 
   return errors;
 };
@@ -54,48 +44,40 @@ const renderField = ({
   showPass,
   passIcon,
   setShowPass,
-  showConfirmPass,
-  setshowConfirmPass,
   meta: { touched, error, warning },
   input: { onChange, ...restInput },
 }) => {
   return (
     <View>
-      <TextInput
-        label={label}
-        underlineColorAndroid={Colors.light_green}
-        underlineColor={Colors.light_green}
-        theme={{ colors: { primary: Colors.leave_green } }}
-        left={<TextInput.Icon name={icon} color={Colors.lighter_green} />}
-        style={{
-          backgroundColor: 'transparent',
-        }}
-        right={
-          passIcon === 'pass' ? (
-            <TextInput.Icon
-              name={showPass ? 'eye' : 'eye-off'}
-              color={Colors.light_green}
-              onPress={() => {
-                setShowPass((prev) => !prev);
-              }}
-            />
-          ) : passIcon === 'confirm' ? (
-            <TextInput.Icon
-              name={showConfirmPass ? 'eye' : 'eye-off'}
-              color={Colors.light_green}
-              onPress={() => {
-                setshowConfirmPass((prev) => !prev);
-              }}
-            />
-          ) : (
-            <></>
-          )
-        }
-        keyboardType={keyboardType}
-        onChangeText={onChange}
-        secureTextEntry={secureTextEntry}
-        {...restInput}
-      />
+      <View>
+        <TextInput
+          label={label}
+          underlineColorAndroid={Colors.light_green}
+          underlineColor={Colors.light_green}
+          theme={{ colors: { primary: Colors.leave_green } }}
+          left={<TextInput.Icon name={icon} color={Colors.lighter_green} />}
+          style={{
+            backgroundColor: 'transparent',
+          }}
+          right={
+            passIcon ? (
+              <TextInput.Icon
+                name={showPass ? 'eye' : 'eye-off'}
+                color={Colors.light_green}
+                onPress={() => {
+                  setShowPass((prev) => !prev);
+                }}
+              />
+            ) : (
+              <></>
+            )
+          }
+          keyboardType={keyboardType}
+          onChangeText={onChange}
+          secureTextEntry={secureTextEntry}
+          {...restInput}
+        />
+      </View>
 
       {touched && error && (
         <Text style={{ color: 'red', marginVertical: 5 }}>{error}</Text>
@@ -104,11 +86,10 @@ const renderField = ({
   );
 };
 
-const Signup = (props) => {
+const Login = (props) => {
   const { handleSubmit, reset } = props;
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showConfirmPass, setshowConfirmPass] = useState(false);
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
@@ -119,14 +100,9 @@ const Signup = (props) => {
   const submit = async (values) => {
     setLoading(true);
     try {
-      await dispatch(
-        AuthActions.SignUp(values.username, values.email, values.password)
-      );
-      setLoading(false);
-      reset();
-      setIsSignup(false);
+      await dispatch(AuthActions.Login(values.email, values.password));
       if (!unmounted.current) {
-        alert('Sign Up Successfully');
+        setLoading(false);
       }
     } catch (err) {
       throw err;
@@ -142,13 +118,6 @@ const Signup = (props) => {
       >
         <View>
           <Field
-            name='username'
-            keyboardType='default'
-            label='Your Name'
-            component={renderField}
-            icon='id-card'
-          />
-          <Field
             name='email'
             keyboardType='email-address'
             label='Email'
@@ -161,24 +130,23 @@ const Signup = (props) => {
             label='Password'
             component={renderField}
             secureTextEntry={showPass ? false : true}
-            passIcon='pass'
+            passIcon='eye'
             icon='lock'
             showPass={showPass}
             setShowPass={setShowPass}
           />
-          <Field
-            name='confirmpassword'
-            keyboardType='default'
-            label='Confirm Password'
-            component={renderField}
-            secureTextEntry={showConfirmPass ? false : true}
-            passIcon='confirm'
-            icon='lock'
-            showConfirmPass={showConfirmPass}
-            setshowConfirmPass={setshowConfirmPass}
-          />
         </View>
-
+        <View style={styles.group}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('ForgetPwScreen');
+            }}
+          >
+            <CustomText style={{ ...styles.textSignSmall, fontWeight: '600' }}>
+              Forget Password ?
+            </CustomText>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           onPress={handleSubmit(submit)}
           style={{ marginVertical: 10, alignItems: 'center' }}
@@ -192,7 +160,7 @@ const Signup = (props) => {
                   color='#fff'
                 />
               ) : (
-                'REGISTER'
+                'ĐĂNG NHẬP'
               )}
             </CustomText>
           </View>
@@ -202,6 +170,11 @@ const Signup = (props) => {
   );
 };
 const styles = StyleSheet.create({
+  group: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginVertical: 10,
+  },
   signIn: {
     width: '100%',
     height: 50,
@@ -210,7 +183,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     backgroundColor: Colors.lighter_green,
-    marginTop: 20,
   },
   textSign: {
     fontSize: 15,
@@ -222,9 +194,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-const SignupForm = reduxForm({
+const LoginForm = reduxForm({
   form: 'contact', // a unique identifier for this form
   validate, // <--- validation function given to redux-form
-})(Signup);
+})(Login);
 
-export default SignupForm;
+export default LoginForm;

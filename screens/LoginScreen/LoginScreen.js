@@ -5,13 +5,13 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   TouchableOpacity,
-  ScrollView,
-  Dimensions,
   ImageBackground,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
 import Colors from '../../utils/Colors';
 //Components
-import SignupForm from './components/SignupForm';
+import LoginForm from './components/LoginForm';
 //Icon
 import { Ionicons } from '@expo/vector-icons';
 
@@ -37,7 +37,7 @@ const SignUpScreen = ({ navigation }) => {
 
       <View style={styles.header}>
         <View>
-          <Text style={styles.title}>REGISTER</Text>
+          <Text style={styles.title}>LOGIN</Text>
         </View>
       </View>
       <KeyboardAvoidingView
@@ -45,7 +45,7 @@ const SignUpScreen = ({ navigation }) => {
         style={styles.footer}
       >
         <ScrollView>
-          <SignupForm navigation={navigation} />
+          <LoginForm navigation={navigation} />
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

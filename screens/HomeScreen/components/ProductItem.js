@@ -6,7 +6,6 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
 } from 'react-native';
 //Icon
 import { AntDesign } from '@expo/vector-icons';
@@ -16,10 +15,6 @@ import Colors from '../../../utils/Colors';
 import NumberFormat from '../../../components/UI/NumberFormat';
 //Text
 import CustomText from '../../../components/UI/CustomText';
-//Redux
-import { useDispatch } from 'react-redux';
-//Import Action
-import * as CartActions from '../../../store/cart/cartActions';
 //PropTypes check
 import PropTypes from 'prop-types';
 
@@ -34,32 +29,6 @@ const productItem = ({ item, navigation, user }) => {
   const toDetail = () => {
     navigation.navigate('Detail', { item });
   };
-  // const addCart = async () => {
-  //   try {
-  //     if (Object.keys(user).length === 0) {
-  //       if (!unmounted.current) {
-  //         Alert.alert('Đăng Nhập', 'Bạn cần đăng nhập để mua hàng', [
-  //           {
-  //             text: 'OK',
-  //           },
-  //         ]);
-  //       }
-  //     } else {
-  //       setisLoadAction(true);
-  //       await dispatch(CartActions.addToCart(item, user.token));
-  //       setisLoadAction(false);
-  //       if (!unmounted.current) {
-  //         Alert.alert('Thêm thành công', 'Sản phẩm đã được thêm vào giỏ hàng', [
-  //           {
-  //             text: 'OK',
-  //           },
-  //         ]);
-  //       }
-  //     }
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // };
   return (
     <View style={styles.container}>
       <View
@@ -103,18 +72,6 @@ const productItem = ({ item, navigation, user }) => {
       <View style={{ marginHorizontal: 5 }}>
         <TouchableOpacity style={styles.btn} onPress={toDetail}>
           <CustomText style={styles.detailBtn}>Xem chi tiết</CustomText>
-          {/* {isLoadAction ? (
-            <ActivityIndicator size='small' color={Colors.lighter_green} />
-          ) : (
-            <>
-              <CustomText style={styles.detailBtn}>Thêm vào giỏ</CustomText>
-              <AntDesign
-                name='shoppingcart'
-                color={Colors.lighter_green}
-                size={15}
-              />
-            </>
-          )} */}
         </TouchableOpacity>
       </View>
     </View>
@@ -130,7 +87,7 @@ const styles = StyleSheet.create({
   container: {
     width: '48%',
     height: 190,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     marginBottom: 15,
     borderRadius: 8,
     shadowColor: 'black',

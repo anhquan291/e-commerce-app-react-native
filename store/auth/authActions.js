@@ -103,6 +103,7 @@ export const EditInfo = (phone, address) => {
           body: JSON.stringify({
             phone,
             address,
+            token: user.token,
           }),
         })
       );
@@ -110,15 +111,13 @@ export const EditInfo = (phone, address) => {
         const errorResData = await response.json();
         alert(errorResData.err);
       }
-      const resData = await response.json();
-      resData.phone = await phone;
-      resData.address = await address;
-      saveDataToStorage('user', resData);
+
       dispatch({
         type: EDIT_INFO,
         phone,
         address,
       });
+      alert('Cập nhật thành công');
     } catch (err) {
       console.log(err.message);
     }
@@ -181,7 +180,6 @@ export const ForgetPassword = (email) => {
         const errorResData = await response.json();
         alert(errorResData.err);
       }
-      const resData = await response.json();
       dispatch({
         type: FORGET_PASSWORD,
       });

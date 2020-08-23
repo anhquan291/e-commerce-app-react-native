@@ -1,11 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 import { TextInput } from 'react-native-paper';
 //Select box
 import RNPickerSelect from 'react-native-picker-select';
@@ -22,7 +16,7 @@ import CustomText from './CustomText';
 const { width } = Dimensions.get('window');
 // TextInput.defaultProps.allowFontScaling = false;
 
-const Address = ({ getInfor, children }) => {
+const Address = ({ getInfor }) => {
   const [selectedProvince, setselectedProvince] = useState('');
   const [selectedTown, setselectedTown] = useState('');
   const [name, setName] = useState('');
@@ -71,84 +65,77 @@ const Address = ({ getInfor, children }) => {
     );
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View>
-          <CustomText style={styles.title}>Thông tin giao hàng</CustomText>
-          <View style={styles.info}>
-            <View style={[styles.inputBox]}>
-              <TextInput
-                label='Họ và tên'
-                mode='outlined'
-                theme={{ colors: { primary: Colors.leave_green } }}
-                selectionColor={Colors.leave_green}
-                onChangeText={(value) => setName(value)}
-                style={styles.input}
-                clearButtonMode='always'
-              />
-            </View>
-            <View style={[styles.inputBox]}>
-              <TextInput
-                label='Số điện thoại'
-                mode='outlined'
-                theme={{ colors: { primary: Colors.leave_green } }}
-                selectionColor={Colors.leave_green}
-                onChangeText={(value) => setPhone(value)}
-                style={styles.input}
-                clearButtonMode='always'
-                keyboardType='numeric'
-              />
-            </View>
-            <View style={[styles.inputBox]}>
-              <TextInput
-                label='Địa chỉ'
-                mode='outlined'
-                theme={{
-                  colors: {
-                    primary: Colors.leave_green,
-                    borderColor: Colors.light_grey,
-                  },
-                }}
-                selectionColor={Colors.leave_green}
-                onChangeText={(value) => setAddress(value)}
-                style={styles.input}
-                clearButtonMode='always'
-                keyboardType='numeric'
-              />
-            </View>
+      <View>
+        <CustomText style={styles.title}>Thông tin giao hàng</CustomText>
+        <View style={styles.info}>
+          <View style={[styles.inputBox]}>
+            <TextInput
+              label='Họ và tên'
+              mode='outlined'
+              theme={{ colors: { primary: Colors.leave_green } }}
+              selectionColor={Colors.leave_green}
+              onChangeText={(value) => setName(value)}
+              style={styles.input}
+              clearButtonMode='always'
+              autoCapitalize='words'
+            />
           </View>
-          <View style={styles.boxSelect}>
-            <View>
-              <RNPickerSelect
-                onValueChange={(value) => townsFilter(value)}
-                placeholder={{ label: 'Tỉnh/Thành phố', value: '1' }}
-                items={Provinces}
-                style={pickerSelectStyles}
-                allowFontScaling={false}
-              />
-            </View>
-            {showIconPlatform}
+          <View style={[styles.inputBox]}>
+            <TextInput
+              label='Số điện thoại'
+              mode='outlined'
+              theme={{ colors: { primary: Colors.leave_green } }}
+              selectionColor={Colors.leave_green}
+              onChangeText={(value) => setPhone(value)}
+              style={styles.input}
+              clearButtonMode='always'
+              keyboardType='numeric'
+              returnKeyType='done'
+            />
           </View>
-          <View style={styles.boxSelect}>
-            <View>
-              <RNPickerSelect
-                onValueChange={(value) => setselectedTown(value)}
-                placeholder={{ label: 'Quận/Huyện', value: '' }}
-                items={getTowns}
-                value={selectedTown}
-                style={pickerSelectStyles}
-                allowFontScaling={false}
-              />
-            </View>
-            {showIconPlatform}
+          <View style={[styles.inputBox]}>
+            <TextInput
+              label='Địa chỉ'
+              mode='outlined'
+              theme={{
+                colors: {
+                  primary: Colors.leave_green,
+                  borderColor: Colors.light_grey,
+                },
+              }}
+              selectionColor={Colors.leave_green}
+              onChangeText={(value) => setAddress(value)}
+              style={styles.input}
+              clearButtonMode='always'
+            />
           </View>
         </View>
-        <View>
-          <CustomText style={{ ...styles.title, marginVertical: 0 }}>
-            Tóm tắt đơn hàng
-          </CustomText>
-          {children}
+        <View style={styles.boxSelect}>
+          <View>
+            <RNPickerSelect
+              onValueChange={(value) => townsFilter(value)}
+              placeholder={{ label: 'Tỉnh/Thành phố', value: '1' }}
+              items={Provinces}
+              style={pickerSelectStyles}
+              allowFontScaling={false}
+            />
+          </View>
+          {showIconPlatform}
         </View>
-      </ScrollView>
+        <View style={styles.boxSelect}>
+          <View>
+            <RNPickerSelect
+              onValueChange={(value) => setselectedTown(value)}
+              placeholder={{ label: 'Quận/Huyện', value: '' }}
+              items={getTowns}
+              value={selectedTown}
+              style={pickerSelectStyles}
+              allowFontScaling={false}
+            />
+          </View>
+          {showIconPlatform}
+        </View>
+      </View>
     </View>
   );
 };
@@ -171,7 +158,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   input: {
-    height: 50,
     backgroundColor: '#fff',
   },
   boxSelect: {

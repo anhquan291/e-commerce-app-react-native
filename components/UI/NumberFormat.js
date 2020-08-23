@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: Colors.red,
-    fontSize: 14,
+    fontSize: 13,
   },
 });
 

@@ -80,26 +80,22 @@ const CartScreen = (props) => {
           <View style={styles.footer}>
             {Object.keys(user).length === 0 ? (
               <View style={styles.center}>
-                <CustomText style={{ fontSize: 16 }}>
-                  Bạn cần đăng nhập để xem giỏ hàng!
-                </CustomText>
+                <CustomText>Bạn cần đăng nhập để xem giỏ hàng!</CustomText>
                 <View
                   style={{
                     borderWidth: 1,
                     paddingHorizontal: 15,
-                    paddingVertical: 5,
-                    borderColor: Colors.lighter_green,
+                    paddingVertical: 10,
+                    backgroundColor: Colors.lighter_green,
                     borderRadius: 5,
+                    borderColor: Colors.lighter_green,
+                    marginTop: 10,
                   }}
                 >
                   <TouchableOpacity
                     onPress={() => props.navigation.navigate('SignUp')}
                   >
-                    <CustomText
-                      style={{ fontSize: 16, color: Colors.lighter_green }}
-                    >
-                      Tiếp tục
-                    </CustomText>
+                    <CustomText style={{ color: '#fff' }}>Tiếp tục</CustomText>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -230,6 +226,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontSize: 20,
+    paddingBottom: 5,
   },
   footer: {
     flex: 1,

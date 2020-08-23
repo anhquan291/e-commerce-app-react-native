@@ -28,6 +28,7 @@
     "expo-status-bar": "^1.0.0",
     "expo-updates": "~0.2.8",
     "expo-web-browser": "~8.3.1",
+    "lottie-react-native": "~2.6.1",
     "moment": "^2.27.0",
     "native-base": "^2.13.12",
     "react": "16.13.1",

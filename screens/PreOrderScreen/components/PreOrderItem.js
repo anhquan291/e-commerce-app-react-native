@@ -32,7 +32,7 @@ const PreOrderItem = ({ item }) => {
           suffix={' đ'}
           renderText={(formattedValue) => (
             <View style={styles.priceContainer}>
-              <CustomText style={{ fontSize: 14, padding: 0 }}>
+              <CustomText style={{ fontSize: 13, padding: 0 }}>
                 SL: x {item.quantity}
               </CustomText>
               <CustomText style={styles.price}>{formattedValue}</CustomText>
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   price: {
+    fontSize: 13,
     color: Colors.red,
-    fontSize: 14,
   },
 });
 

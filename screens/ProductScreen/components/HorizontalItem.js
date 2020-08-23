@@ -49,11 +49,11 @@ const HorizontalItem = ({ item, navigation }) => {
       </TouchableOpacity>
       <View style={styles.info}>
         <CustomText style={styles.title}>{item.filename}</CustomText>
-        <CustomText style={styles.subText}>{item.type}</CustomText>
+        <CustomText style={styles.subText}>Xuất xứ {item.origin}</CustomText>
         <View style={styles.rateContainer}>
           <View style={styles.rate}>
             <AntDesign name='star' color='#fed922' size={15} />
-            <CustomText style={styles.score}>4.0</CustomText>
+            <CustomText style={styles.score}>4.5</CustomText>
           </View>
           <NumberFormat price={item.price} />
         </View>
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 13,
     color: Colors.grey,
+    marginVertical: 10,
   },
   rateContainer: {
     flexDirection: 'row',

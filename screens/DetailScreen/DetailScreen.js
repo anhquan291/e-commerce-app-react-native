@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from 'react-redux';
 //Action
 import * as CartActions from '../../store/cart/cartActions';
 import * as FavoriteActions from '../../store/favorite/favoriteActions';
+//Icon
+import LottieView from 'lottie-react-native';
 import ShareItem from '../../components/UI/ShareItem';
 import Snackbar from '../../components/Notification/Snackbar';
 
@@ -74,17 +76,11 @@ const DetailScreen = (props) => {
   };
   const toggleFavorite = () => {
     if (Object.keys(user).length === 0) {
-      if (!unmounted.current) {
-        Alert.alert(
-          'Đăng Nhập',
-          'Bạn cần đăng nhập để thêm vào mục yêu thích',
-          [
-            {
-              text: 'OK',
-            },
-          ]
-        );
-      }
+      Alert.alert('Đăng Nhập', 'Bạn cần đăng nhập để thêm vào mục yêu thích', [
+        {
+          text: 'OK',
+        },
+      ]);
     } else if (FavoriteProducts) {
       Alert.alert(
         'Bỏ yêu thích',
@@ -202,7 +198,7 @@ const DetailScreen = (props) => {
               color={color}
             />
           </Animatable.View>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', marginTop: 10 }}>
             <Animatable.View animation='bounceIn' delay={1600}>
               <MaterialCommunityIcons name='star' size={20} color={color} />
             </Animatable.View>
@@ -231,6 +227,24 @@ const DetailScreen = (props) => {
             <CustomText selectable={true} style={styles.detail}>
               {item.description}
             </CustomText>
+            <View style={styles.infoContainer}>
+              <CustomText style={{ color: Colors.text }}>Màu sắc: </CustomText>
+              <CustomText style={{ color: color }}>{item.color}</CustomText>
+            </View>
+            <View style={styles.infoContainer}>
+              <CustomText style={{ color: Colors.text }}>
+                Tình trạng:{' '}
+              </CustomText>
+              <CustomText style={{ color: Colors.text }}>
+                {item.standard}
+              </CustomText>
+            </View>
+            <View style={styles.infoContainer}>
+              <CustomText style={{ color: Colors.text }}>Xuất xứ: </CustomText>
+              <CustomText style={{ color: Colors.text }}>
+                {item.origin}
+              </CustomText>
+            </View>
           </Animatable.View>
         </ScrollView>
       </Animatable.View>
@@ -244,11 +258,15 @@ const DetailScreen = (props) => {
             onPress={toggleFavorite}
             style={[styles.favorite, { borderColor: color }]}
           >
-            <MaterialCommunityIcons
-              name={FavoriteProducts ? 'heart' : 'heart-outline'}
-              size={30}
-              color={color}
-            />
+            {FavoriteProducts ? (
+              <LottieView
+                source={require('../../components/IconAnimation/heart.json')}
+                autoPlay={FavoriteProducts}
+                loop={false}
+              />
+            ) : (
+              <Ionicons name='ios-heart-empty' size={26} color={Colors.straw} />
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.addCart, { backgroundColor: color }]}
@@ -387,9 +405,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingVertical: 20,
-    // marginTop: Platform.OS === 'android' ? -StatusBar.currentHeight : 0,
-    overflow: 'hidden',
+    marginBottom: 60,
   },
   footer_header: {
     flexDirection: 'row',
@@ -410,23 +426,28 @@ const styles = StyleSheet.create({
   description: {
     marginTop: 20,
   },
+  infoContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+  },
   detail: {
-    fontSize: 16,
     color: Colors.text,
   },
   actionContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 5,
+    bottom: 0,
     width: '100%',
     zIndex: 30,
   },
   action: {
     flexDirection: 'row',
-    height: height < 668 ? 50 : 60,
+    height: height < 668 ? 60 : 70,
     justifyContent: 'space-between',
     marginHorizontal: 20,
+    backgroundColor: '#fff',
+    paddingVertical: 5,
   },
   addCart: {
     width: '75%',
