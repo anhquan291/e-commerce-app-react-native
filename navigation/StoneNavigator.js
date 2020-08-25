@@ -262,9 +262,7 @@ export const TabScreen = () => {
       tabBarOptions={{
         activeTintColor: Colors.lighter_green,
         inactiveTintColor: Colors.grey,
-        labelStyle: {
-          fontFamily: 'geoMetric',
-        },
+        labelStyle: {},
         style: {
           // borderTopLeftRadius: 15,
           // borderTopRightRadius: 15,
@@ -391,7 +389,7 @@ export const DrawerNavigator = () => {
             title: ({ focused }) => (
               <CustomText
                 style={{
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: '500',
                   color: focused ? Colors.lighter_green : Colors.grey,
                 }}

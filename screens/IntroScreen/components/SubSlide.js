@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontSize: 24,
-    fontFamily: 'geoMetricBold',
     color: Colors.text,
   },
   des: {

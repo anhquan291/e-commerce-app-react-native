@@ -32,11 +32,11 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    bottom: 0,
+    bottom: 60,
     zIndex: 1000,
   },
   snackbar: {
-    backgroundColor: Colors.bluegreen,
+    backgroundColor: Colors.blue,
     fontSize: 16,
     height: 50,
   },

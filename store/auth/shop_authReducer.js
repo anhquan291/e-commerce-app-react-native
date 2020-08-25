@@ -7,19 +7,18 @@ const initialState = {
   error: {},
   notification: {},
 };
+//set user if token doesn't expire yet
+const userInformation = async () => {
+  const getUser = await AsyncStorage.getItem('user');
+  if (!getUser) {
+    return (initialState.user = {});
+  }
+  const parsedUser = await JSON.parse(getUser);
+  return (initialState.user = parsedUser.data);
+};
+userInformation();
 
 export default (state = initialState, action) => {
-  //set user if token doesn't expire yet
-  const userInformation = async () => {
-    const getUser = await AsyncStorage.getItem('user');
-    if (!getUser) {
-      return (state.user = {});
-    }
-    const parsedUser = await JSON.parse(getUser);
-    return (state.user = parsedUser.data);
-  };
-  userInformation();
-
   switch (action.type) {
     case LOGIN:
       return {
@@ -37,13 +36,20 @@ export default (state = initialState, action) => {
     case EDIT_INFO:
       state.user.phone = action.phone;
       state.user.address = action.address;
+      //Return ...state.user make the comp rerender
       return {
         ...state,
+        user: {
+          ...state.user,
+        },
       };
     case UPLOAD_PROFILEPIC:
       state.user.profilePicture = action.profilePic;
       return {
         ...state,
+        user: {
+          ...state.user,
+        },
       };
   }
   return state;

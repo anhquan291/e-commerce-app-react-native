@@ -56,6 +56,7 @@ const renderField = ({
   setShowPass,
   showConfirmPass,
   setshowConfirmPass,
+  autoCapitalize,
   meta: { touched, error, warning },
   input: { onChange, ...restInput },
 }) => {
@@ -66,6 +67,8 @@ const renderField = ({
         underlineColorAndroid={Colors.light_green}
         underlineColor={Colors.light_green}
         theme={{ colors: { primary: Colors.leave_green } }}
+        autoCapitalize={autoCapitalize ? 'words' : 'none'}
+        clearButtonMode={passIcon ? 'never' : 'always'}
         left={<TextInput.Icon name={icon} color={Colors.lighter_green} />}
         style={{
           backgroundColor: 'transparent',
@@ -147,6 +150,7 @@ const Signup = (props) => {
             label='Your Name'
             component={renderField}
             icon='id-card'
+            autoCapitalize={true}
           />
           <Field
             name='email'

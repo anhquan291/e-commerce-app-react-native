@@ -58,7 +58,7 @@ class FBSearchBar extends React.Component {
     // animation config
     // input box
     const input_box_translate_x_config = {
-      duration: 50,
+      duration: 200,
       toValue: 0,
       easing: Easing.inOut(Easing.ease),
     };
@@ -92,12 +92,12 @@ class FBSearchBar extends React.Component {
     // animation config
     // input box
     const input_box_translate_x_config = {
-      duration: 50,
+      duration: 100,
       toValue: width,
       easing: Easing.inOut(Easing.ease),
     };
     const back_button_opacity_config = {
-      duration: 50,
+      duration: 200,
       toValue: 0,
       easing: Easing.inOut(Easing.ease),
     };
@@ -276,7 +276,7 @@ export default FBSearchBar;
 
 const styles = StyleSheet.create({
   header_safe_area: {
-    zIndex: 1000,
+    zIndex: 100,
     backgroundColor: '#fff',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },

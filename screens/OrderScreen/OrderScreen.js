@@ -55,7 +55,11 @@ const OrderScreen = (props) => {
               props.navigation.toggleDrawer();
             }}
           >
-            <MaterialCommunityIcons name='menu' size={25} color='#fff' />
+            <MaterialCommunityIcons
+              name='menu'
+              size={25}
+              color={Colors.light_green}
+            />
           </TouchableOpacity>
         </View>
         <CustomText style={styles.titleHeader}>Tra cứu đơn hàng</CustomText>
@@ -76,17 +80,17 @@ const OrderScreen = (props) => {
                 style={{
                   borderWidth: 1,
                   paddingHorizontal: 15,
-                  paddingVertical: 5,
-                  borderColor: Colors.lighter_green,
+                  paddingVertical: 10,
+                  backgroundColor: Colors.lighter_green,
                   borderRadius: 5,
+                  borderColor: Colors.lighter_green,
+                  marginTop: 10,
                 }}
               >
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('SignUp')}
                 >
-                  <CustomText
-                    style={{ fontSize: 16, color: Colors.lighter_green }}
-                  >
+                  <CustomText style={{ fontSize: 16, color: '#fff' }}>
                     Tiếp tục
                   </CustomText>
                 </TouchableOpacity>
@@ -118,7 +122,6 @@ const OrderScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   centerLoader: {
     alignItems: 'center',
@@ -131,14 +134,15 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   header: {
     width: '100%',
-    backgroundColor: Colors.lighter_green,
+    backgroundColor: '#fff',
     justifyContent: 'flex-end',
     height: Platform.OS === 'android' ? 70 : height < 668 ? 70 : 90,
     paddingVertical: 10,
+    fontWeight: '500',
   },
   titleHeader: {
     textAlign: 'center',
-    color: '#fff',
+    color: Colors.light_green,
     fontSize: 20,
   },
   footer: {

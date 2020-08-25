@@ -17,41 +17,28 @@ import Carousel from './components/Carousel';
 import CategorySection from './components/CategorySection';
 import Skeleton from '../../components/Loaders/SkeletonLoading';
 import Snackbar from '../../components/Notification/Snackbar';
-//Message
+//FloatButton
+import { Portal, Provider } from 'react-native-paper';
+import FloatButton from './components/FloatButton';
 
 //height
 const { height } = Dimensions.get('window');
 
 const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
-  const products = useSelector((state) => state.store.products);
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const products = useSelector((state) => state.store.products);
   const notification = useSelector((state) => state.auth.notification);
+  const dispatch = useDispatch();
 
   //fetch Api
   useEffect(() => {
     setLoading(true);
     const fetching = async () => {
-      try {
-        await dispatch(ProductActions.fetchProducts());
-      } catch (err) {
-        throw err;
-      }
-    };
-    fetching();
-    setLoading(false);
-  }, []);
-  useEffect(() => {
-    setLoading(true);
-    const fetching = async () => {
-      try {
-        await dispatch(FavoriteActions.fetchFavorite());
-        await dispatch(CartActions.fetchCart());
-        setLoading(false);
-      } catch (err) {
-        throw err;
-      }
+      await dispatch(ProductActions.fetchProducts());
+      await dispatch(FavoriteActions.fetchFavorite());
+      await dispatch(CartActions.fetchCart());
+      setLoading(false);
     };
     fetching();
   }, [user.userid]);
@@ -67,61 +54,64 @@ const HomeScreen = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
-      <Header
-        scrollPoint={scrollY}
-        navigation={navigation}
-        products={products}
-      ></Header>
-      {Object.keys(notification).length === 0 ? (
-        <View />
-      ) : (
-        <Snackbar
-          checkVisible={true}
-          message={
-            Object.keys(user).length === 0
-              ? notification
-              : notification + ' ' + user.name
-          }
-        />
-      )}
-
-      <Animated.ScrollView
-        style={{ width: '100%' }}
-        showsVerticalScrollIndicator={false}
-        bounces={Platform.OS === 'android' ? true : false}
-        scrollEventThrottle={16}
-        onScroll={Animated.event([
-          {
-            nativeEvent: { contentOffset: { y: scrollY } },
-          },
-          { useNativeDriver: true },
-        ])}
-      >
-        <View style={styles.banner}>
-          <Carousel products={Banners} />
-        </View>
-        <CategorySection
-          data={products}
-          user={user}
+      <Provider>
+        <Header
+          scrollPoint={scrollY}
           navigation={navigation}
-          name='Vòng Thạch Anh'
-          bg={require('../../assets/Images/bg1.jpg')}
-        />
-        <CategorySection
-          data={products}
-          user={user}
-          navigation={navigation}
-          name='Nhẫn Đá Quý'
-          bg={require('../../assets/Images/bg2.jpg')}
-        />
-        <CategorySection
-          data={products}
-          user={user}
-          navigation={navigation}
-          name='Đá Ruby'
-          bg={require('../../assets/Images/bg3.jpg')}
-        />
-      </Animated.ScrollView>
+          products={products}
+        ></Header>
+        <Portal>
+          <FloatButton />
+        </Portal>
+        <Animated.ScrollView
+          style={{ width: '100%' }}
+          showsVerticalScrollIndicator={false}
+          bounces={Platform.OS === 'android' ? true : false}
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: { contentOffset: { y: scrollY } },
+              },
+            ],
+            { useNativeDriver: true }
+          )}
+        >
+          <View style={styles.banner}>
+            <Carousel products={Banners} />
+          </View>
+          <CategorySection
+            data={products}
+            navigation={navigation}
+            name='Vòng Thạch Anh'
+            bg={require('../../assets/Images/bg1.jpg')}
+          />
+          <CategorySection
+            data={products}
+            navigation={navigation}
+            name='Nhẫn Đá Quý'
+            bg={require('../../assets/Images/bg2.jpg')}
+          />
+          <CategorySection
+            data={products}
+            navigation={navigation}
+            name='Đá Ruby'
+            bg={require('../../assets/Images/bg3.jpg')}
+          />
+        </Animated.ScrollView>
+        {Object.keys(notification).length === 0 ? (
+          <View />
+        ) : (
+          <Snackbar
+            checkVisible={true}
+            message={
+              Object.keys(user).length === 0
+                ? notification
+                : notification + ' ' + user.name
+            }
+          />
+        )}
+      </Provider>
     </View>
   );
 };

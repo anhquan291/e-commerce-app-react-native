@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signinContainer: {
-    height: 65,
+    height: 60,
     width: width - 40,
     borderRadius: 30,
     backgroundColor: '#ffffff',

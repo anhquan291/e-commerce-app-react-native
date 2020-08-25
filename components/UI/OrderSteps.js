@@ -15,7 +15,7 @@ const secondIndicatorStyles = {
   stepStrokeFinishedColor: '#ffffff',
   stepStrokeUnFinishedColor: Colors.lighter_green,
   separatorFinishedColor: Colors.lighter_green,
-  separatorUnFinishedColor: '#ffffff',
+  separatorUnFinishedColor: Colors.lighter_green,
   stepIndicatorFinishedColor: Colors.lighter_green,
   stepIndicatorUnFinishedColor: '#ffffff',
   stepIndicatorCurrentColor: '#ffffff',

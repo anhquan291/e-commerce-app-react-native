@@ -14,7 +14,7 @@ const PreOrderItem = ({ item }) => {
         <Image
           style={{
             width: '100%',
-            height: 60,
+            height: 50,
             resizeMode: 'stretch',
             borderRadius: 5,
           }}
@@ -52,20 +52,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 10,
-    height: 80,
     borderBottomWidth: 1,
     borderBottomColor: Colors.light_grey,
+    backgroundColor: '#fff',
     flexDirection: 'row',
     paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    marginBottom: 5,
   },
   left: {
-    width: '30%',
+    width: '20%',
     height: '100%',
     alignItems: 'center',
   },
   right: {
-    width: '70%',
+    width: '80%',
     paddingLeft: 15,
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 14,

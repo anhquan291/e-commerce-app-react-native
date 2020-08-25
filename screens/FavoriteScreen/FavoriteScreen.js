@@ -23,7 +23,6 @@ const { height } = Dimensions.get('window');
 const FavoriteScreen = (props) => {
   const user = useSelector((state) => state.auth.user);
   const FavoriteProducts = useSelector((state) => state.fav.favoriteList);
-  // console.log(FavoriteProducts);
 
   return (
     <View style={styles.container}>
@@ -33,10 +32,9 @@ const FavoriteScreen = (props) => {
             onPress={() => props.navigation.navigate('HomeTab')}
           >
             <Ionicons
-              style={{ marginBottom: 10 }}
-              name='md-arrow-back'
-              size={25}
-              color='#fff'
+              name='ios-arrow-back'
+              size={28}
+              color={Colors.lighter_green}
             />
           </TouchableOpacity>
         </View>
@@ -97,20 +95,20 @@ const FavoriteScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   header: {
     width: '100%',
-    backgroundColor: Colors.lighter_green,
+    backgroundColor: '#fff',
     justifyContent: 'flex-end',
     height: Platform.OS === 'android' ? 70 : height < 668 ? 70 : 90,
     paddingVertical: 10,
   },
   title: {
     textAlign: 'center',
-    color: '#fff',
+    color: Colors.lighter_green,
     fontSize: 20,
+    fontWeight: '500',
   },
 });
 export default FavoriteScreen;

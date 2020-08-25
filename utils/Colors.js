@@ -17,5 +17,6 @@ export default {
   green: '#1baa43',
   straw: '#e55d4b',
   red: '#e53b32',
+  blue: '#1A91DA',
   bluegreen: '#2CB9B0',
 };

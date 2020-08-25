@@ -108,10 +108,9 @@ const PreOrderScreen = (props) => {
         <View style={{ position: 'absolute', bottom: 5, left: 15, zIndex: 10 }}>
           <TouchableOpacity onPress={() => props.navigation.goBack()}>
             <Ionicons
-              style={{ marginBottom: 10 }}
-              name='md-arrow-back'
-              size={25}
-              color='#fff'
+              name='ios-arrow-back'
+              size={28}
+              color={Colors.lighter_green}
             />
           </TouchableOpacity>
         </View>
@@ -128,7 +127,7 @@ const PreOrderScreen = (props) => {
       <ScrollView>
         <Address getInfor={getInfor} />
         <View>
-          <CustomText style={{ ...styles.title, marginVertical: 0 }}>
+          <CustomText style={{ ...styles.title, marginVertical: 5 }}>
             Tóm tắt đơn hàng
           </CustomText>
           {cartItems.map((item) => {
@@ -142,13 +141,18 @@ const PreOrderScreen = (props) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              backgroundColor: '#fff',
               marginBottom: 65,
               marginTop: 10,
-              paddingHorizontal: 10,
+              paddingHorizontal: 20,
             }}
           >
-            <CustomText style={{ fontSize: 15, color: Colors.text }}>
+            <CustomText
+              style={{
+                fontSize: 15,
+                color: Colors.lighter_green,
+                fontWeight: '500',
+              }}
+            >
               Thành tiền
             </CustomText>
             <NumberFormat price={total.toString()} />
@@ -182,16 +186,17 @@ const PreOrderScreen = (props) => {
   );
 };
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1 },
   header: {
     width: width,
-    backgroundColor: Colors.lighter_green,
-    height: 100,
+    backgroundColor: '#fff',
+    height: 120,
   },
   title: {
     textAlign: 'center',
-    color: '#fff',
+    color: Colors.lighter_green,
     fontSize: 18,
+    fontWeight: '500',
   },
   total: {
     width: '100%',
@@ -199,7 +204,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
   },
   orderStepsContainer: {
     flexDirection: 'column',

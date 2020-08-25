@@ -93,7 +93,6 @@ const ProductScreen = (props) => {
           tabBarActiveTextColor={Colors.light_green}
           tabBarInactiveTextColor={Colors.grey}
           tabBarTextStyle={{
-            fontFamily: 'geoMetricBold',
             fontSize: 15,
             paddingTop: 3,
           }}
@@ -143,7 +142,6 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: height < 668 ? 30 : 37,
-    fontFamily: 'geoMetricBold',
     color: Colors.text,
   },
   inputBox: {

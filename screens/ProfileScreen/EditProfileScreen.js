@@ -14,26 +14,35 @@ const EditProfileScreen = (props) => {
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState(user.address);
   const [phone, setPhone] = useState(user.phone);
-  const [disableButton, setDisableBottom] = useState(false);
+  const [disableButton, setDisableBottom] = useState(true);
   const dispatch = useDispatch();
-  console.log(user);
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
       unmounted.current = true;
     };
   }, []);
-  // useEffect(() => {
-  //   if (address.length >= 6 && user.address !== address) {
-  //     return setDisableBottom(false);
-  //   }
-  // }, [address, phone]);
+  useEffect(() => {
+    if (user.phone !== phone || user.address !== address) {
+      setDisableBottom(false);
+    }
+  }, [address, phone]);
 
   const updateInfoHandler = async () => {
-    setLoading(true);
-
-    await dispatch(AuthActions.EditInfo(phone, address));
-    setLoading(false);
+    if (phone.length === 10 && address.length >= 6) {
+      setLoading(true);
+      await dispatch(AuthActions.EditInfo(phone, address));
+      props.navigation.navigate('Profile');
+      if (!unmounted) {
+        setLoading(false);
+      }
+    } else {
+      return Alert.alert('Error', 'Thông tin không hợp lệ. Vui lòng nhập lại', [
+        {
+          text: 'OK',
+        },
+      ]);
+    }
   };
 
   return (

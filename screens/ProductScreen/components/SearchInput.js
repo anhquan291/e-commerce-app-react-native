@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: Platform.OS === 'android' ? 30 : height < 668 ? 30 : 37,
-    fontFamily: 'geoMetricBold',
     color: Colors.text,
   },
   inputBox: {

@@ -6,6 +6,7 @@ import {
   Dimensions,
   Image,
   Alert,
+  ActionSheetIOS,
 } from 'react-native';
 import Colors from '../../utils/Colors';
 import CustomText from '../../components/UI/CustomText';
@@ -19,7 +20,11 @@ import { useDispatch, useSelector } from 'react-redux';
 //Action
 import * as AuthActions from '../../store/auth/authActions';
 //Icon
-import LottieView from 'lottie-react-native';
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -30,6 +35,24 @@ const ProfileScreen = (props) => {
   const [filename, setFilename] = useState('');
   const [type, setType] = useState('');
   const [uploadButton, setUploadButton] = useState(true);
+
+  const UploadProfileHandler = () =>
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Cancel', 'Take Photo', 'Choose From Library'],
+        // destructiveButtonIndex: 2,
+        cancelButtonIndex: 0,
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 0) {
+          // cancel action
+        } else if (buttonIndex === 1) {
+          _pickImage('camera');
+        } else if (buttonIndex === 2) {
+          _pickImage('library');
+        }
+      }
+    );
   const dispatch = useDispatch();
   const unmounted = useRef(false);
   useEffect(() => {
@@ -54,10 +77,27 @@ const ProfileScreen = (props) => {
       throw err;
     }
   };
-  const _pickImage = async () => {
+  const _pickImage = async (action) => {
+    const type =
+      action === 'library'
+        ? ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+          })
+        : ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+          });
     try {
       if (Constants.platform.ios) {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        const { status } = await Permissions.askAsync(
+          Permissions.CAMERA_ROLL,
+          Permissions.CAMERA
+        );
         if (status !== 'granted') {
           return alert(
             'Sorry, we need camera roll permissions to make this work!'
@@ -65,12 +105,7 @@ const ProfileScreen = (props) => {
         }
       }
 
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 4],
-        quality: 1,
-      });
+      let result = await type;
       if (!result.cancelled) {
         let localUri = result.uri;
         let filename = localUri.split('/').pop();
@@ -87,7 +122,7 @@ const ProfileScreen = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <CustomText style={styles.headerText}>Profile</CustomText>
+        {/* <CustomText style={styles.headerText}>Profile</CustomText> */}
       </View>
       <View style={styles.profileContainer}>
         <View style={styles.profileBox}>
@@ -102,7 +137,7 @@ const ProfileScreen = (props) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{ width: 100, height: 50 }}>
+          <View style={{ width: 120, height: 50 }}>
             <Image
               style={styles.profilePic}
               source={
@@ -117,11 +152,11 @@ const ProfileScreen = (props) => {
               style={{
                 width: '100%',
                 alignItems: 'flex-end',
-                transform: [{ translateY: -80 }],
+                transform: [{ translateY: -110 }],
               }}
             >
               <View style={styles.cameraContainer}>
-                <TouchableOpacity onPress={_pickImage}>
+                <TouchableOpacity onPress={UploadProfileHandler}>
                   <FontAwesome5 name='camera' size={15} color='white' />
                 </TouchableOpacity>
               </View>
@@ -129,38 +164,34 @@ const ProfileScreen = (props) => {
           </View>
           <CustomText style={styles.userName}>{user.name}</CustomText>
           <View style={styles.footer}>
-            <View style={styles.infoContainer}>
-              {/* <CustomText style={styles.fieldText}>Email</CustomText> */}
-              <LottieView
-                source={require('../../components/IconAnimation/email.json')}
-                autoPlay
-                loop
-                resizeMode='contain'
-                style={{ width: 40 }}
-              />
-              <CustomText>{user.email}</CustomText>
+            <View style={styles.titleContainer}>
+              <CustomText style={styles.title}>Thông tin cá nhân</CustomText>
             </View>
             <View style={styles.infoContainer}>
-              <LottieView
-                source={require('../../components/IconAnimation/phone1.json')}
-                autoPlay
-                loop
-                resizeMode='cover'
-                style={{ width: 40 }}
+              <FontAwesome name='id-card-o' size={22} color={Colors.grey} />
+              <CustomText style={styles.detailText}>{user.name}</CustomText>
+            </View>
+            <View style={styles.infoContainer}>
+              <MaterialCommunityIcons
+                name='email-outline'
+                size={28}
+                color={Colors.grey}
               />
-              <CustomText>
+              <CustomText style={styles.detailText}>{user.email}</CustomText>
+            </View>
+            <View style={styles.infoContainer}>
+              <MaterialCommunityIcons
+                name='phone'
+                size={28}
+                color={Colors.grey}
+              />
+              <CustomText style={styles.detailText}>
                 {user.phone.length === 0 ? 'Not added yet' : user.phone}
               </CustomText>
             </View>
             <View style={styles.infoContainer}>
-              <LottieView
-                source={require('../../components/IconAnimation/location.json')}
-                autoPlay
-                loop
-                resizeMode='contain'
-                style={{ width: 35 }}
-              />
-              <CustomText>
+              <MaterialIcons name='location-on' size={28} color={Colors.grey} />
+              <CustomText style={styles.detailText}>
                 {user.address.length === 0 ? 'Not added yet' : user.address}
               </CustomText>
             </View>
@@ -209,40 +240,37 @@ const ProfileScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light_grey,
   },
   header: {
-    // width,
+    width,
     flexDirection: 'row',
-    height: 0.3 * height,
-    backgroundColor: Colors.leave_green,
+    height: 0.15 * height,
     justifyContent: 'center',
   },
   headerText: {
     marginTop: 50,
     fontSize: 30,
-    color: '#fff',
+    color: Colors.lighter_green,
   },
   profileContainer: {
     width,
-    height: 0.7 * height,
     justifyContent: 'center',
     alignItems: 'center',
-    transform: [{ translateY: height > 667 ? -100 : -50 }],
   },
   profileBox: {
     backgroundColor: '#fff',
     borderRadius: 20,
-    height: '100%',
-    width: width - 40,
+    width,
     alignItems: 'center',
   },
   profilePic: {
     resizeMode: 'contain',
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    transform: [{ translateY: -50 }],
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    transform: [{ translateY: -70 }],
+    borderWidth: 3,
+    borderColor: '#fff',
   },
   userName: {
     fontSize: 20,
@@ -265,15 +293,27 @@ const styles = StyleSheet.create({
   footer: {
     width: '100%',
     marginTop: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
+  },
+  titleContainer: {
+    height: 30,
+  },
+
+  title: {
+    fontWeight: '600',
+    textTransform: 'uppercase',
   },
   infoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderBottomColor: Colors.grey,
-    height: 50,
+    height: 60,
     alignItems: 'center',
+  },
+  detailText: {
+    fontWeight: '500',
+    color: Colors.text,
   },
   button: {
     marginTop: 30,

@@ -62,10 +62,12 @@ const styles = StyleSheet.create({
   },
   titleHeader: {
     marginHorizontal: 10,
+    marginBottom: 5,
   },
   title: {
     fontSize: 18,
     color: Colors.light_green,
+    fontWeight: '500',
   },
   productList: {
     marginTop: 10,

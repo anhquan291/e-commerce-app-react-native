@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     color: Colors.lighter_green,
     textAlign: 'center',
+    fontWeight: '500',
   },
   info: {
     flexDirection: 'row',

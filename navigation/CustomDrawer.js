@@ -143,9 +143,7 @@ export default (props) => {
       <View style={styles.version}>
         <DrawerItem
           label={() => (
-            <CustomText
-              style={{ fontFamily: 'geoMetricItalic', color: Colors.grey }}
-            >
+            <CustomText style={{ color: Colors.grey }}>
               CatTuong App Version 1.0
             </CustomText>
           )}

@@ -16,7 +16,7 @@ import * as CartActions from '../../store/cart/cartActions';
 //Colors
 import Colors from '../../utils/Colors';
 //Icon
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 //component
 import CartItem from './components/CartItem';
 import NumberFormat from '../../components/UI/NumberFormat';
@@ -50,6 +50,19 @@ const CartScreen = (props) => {
   useEffect(() => {
     loadCarts();
   }, [user.userid]);
+  const onRemove = () => {
+    Alert.alert('Bỏ giỏ hàng', 'Bạn có chắc bỏ sản phẩm khỏi giỏ hàng?', [
+      {
+        text: 'Hủy',
+      },
+      {
+        text: 'Đồng ý',
+        onPress: () => {
+          dispatch(CartActions.removeFromCart(carts._id, item.item._id));
+        },
+      },
+    ]);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -57,9 +70,12 @@ const CartScreen = (props) => {
           onPress={() => {
             props.navigation.goBack();
           }}
-          style={{ paddingBottom: 8 }}
         >
-          <MaterialCommunityIcons name='close' size={25} color='#fff' />
+          <Ionicons
+            name='ios-arrow-back'
+            size={28}
+            color={Colors.lighter_green}
+          />
         </TouchableOpacity>
         <CustomText style={styles.titleHeader}>
           Giỏ Hàng{' '}
@@ -115,28 +131,7 @@ const CartScreen = (props) => {
                   return (
                     <CartItem
                       item={item}
-                      onRemove={() => {
-                        Alert.alert(
-                          'Bỏ giỏ hàng',
-                          'Bạn có chắc bỏ sản phẩm khỏi giỏ hàng?',
-                          [
-                            {
-                              text: 'Hủy',
-                            },
-                            {
-                              text: 'Đồng ý',
-                              onPress: () => {
-                                dispatch(
-                                  CartActions.removeFromCart(
-                                    carts._id,
-                                    item.item._id
-                                  )
-                                );
-                              },
-                            },
-                          ]
-                        );
-                      }}
+                      onRemove={onRemove}
                       onAdd={() => {
                         dispatch(CartActions.addToCart(item.item, user.token));
                       }}
@@ -196,17 +191,16 @@ const CartScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   header: {
     width: '100%',
-    backgroundColor: Colors.lighter_green,
+    backgroundColor: '#fff',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     height: Platform.OS === 'android' ? 70 : height < 668 ? 70 : 90,
     paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   centerLoader: {
     alignItems: 'center',
@@ -224,12 +218,14 @@ const styles = StyleSheet.create({
   },
   titleHeader: {
     textAlign: 'center',
-    color: '#fff',
+    color: Colors.lighter_green,
     fontSize: 20,
     paddingBottom: 5,
+    fontWeight: '500',
   },
   footer: {
     flex: 1,
+    marginTop: 10,
   },
   total: {
     width: '100%',

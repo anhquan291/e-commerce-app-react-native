@@ -5,13 +5,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
-  Text,
   Dimensions,
 } from 'react-native';
 //Text
 import CustomText from '../../components/UI/CustomText';
 //Icon
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 //Color
 import Colors from '../../utils/Colors';
 
@@ -43,41 +43,49 @@ const ContactScreen = (props) => {
         />
       </View>
       <View style={styles.footer}>
-        <CustomText style={styles.title}>Liên hệ với chúng tôi</CustomText>
+        <CustomText style={styles.title}>contact us</CustomText>
         <View style={styles.info}>
-          <CustomText style={styles.text}>Địa chỉ: 14 Phan Ngữ</CustomText>
-          <View style={{ flexDirection: 'row' }}>
-            <CustomText style={styles.text}>Email: </CustomText>
+          <View style={styles.detailContainer}>
+            <LottieView
+              source={require('../../components/IconAnimation/location.json')}
+              autoPlay
+              loop
+              resizeMode='contain'
+              style={{ height: 50, marginRight: 20 }}
+            />
+            <CustomText style={styles.text}>14 Phan Ngữ</CustomText>
+          </View>
+
+          <View style={styles.detailContainer}>
+            <LottieView
+              source={require('../../components/IconAnimation/email3.json')}
+              autoPlay
+              loop
+              resizeMode='contain'
+              style={{ height: 50, marginRight: 20 }}
+            />
             <TouchableOpacity
               onPress={() => {
                 Linking.openURL('mailto: anhquan291@gmail.com');
               }}
             >
-              <CustomText
-                style={{
-                  ...styles.text,
-                  color: Colors.lighter_green,
-                }}
-              >
-                anhquan291@gmail.com
-              </CustomText>
+              <CustomText style={styles.text}>Anhquan291@gmail.com</CustomText>
             </TouchableOpacity>
           </View>
-          <View style={{ flexDirection: 'row' }}>
-            <CustomText style={styles.text}>Số điện thoại: </CustomText>
+          <View style={styles.detailContainer}>
+            <LottieView
+              source={require('../../components/IconAnimation/phone2.json')}
+              autoPlay
+              loop
+              resizeMode='contain'
+              style={{ height: 50, marginRight: 20 }}
+            />
             <TouchableOpacity
               onPress={() => {
-                Linking.openURL('tel:0944942540');
+                Linking.openURL('tel:0968729194');
               }}
             >
-              <CustomText
-                style={{
-                  ...styles.text,
-                  color: Colors.lighter_green,
-                }}
-              >
-                0944942540
-              </CustomText>
+              <CustomText style={styles.text}>0968729194</CustomText>
             </TouchableOpacity>
           </View>
         </View>
@@ -102,7 +110,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     textAlign: 'center',
-    color: Colors.text,
+    fontWeight: '500',
+    textTransform: 'uppercase',
   },
   footer: {
     flex: 1,
@@ -113,9 +122,17 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginTop: -20,
   },
+  info: {
+    marginTop: 20,
+  },
+  detailContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   text: {
-    marginTop: 5,
-    fontSize: 17,
+    fontSize: 16,
+    fontWeight: '500',
   },
 });
 

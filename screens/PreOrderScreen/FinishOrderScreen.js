@@ -5,6 +5,8 @@ import { AntDesign } from '@expo/vector-icons';
 import CustomText from '../../components/UI/CustomText';
 import Colors from '../../utils/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+//Icon
+import LottieView from 'lottie-react-native';
 const { height } = Dimensions.get('window');
 
 const FinishOrderScreen = (props) => {
@@ -12,11 +14,18 @@ const FinishOrderScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.info}>
         <View>
-          <AntDesign
+          {/* <AntDesign
             name='checkcircleo'
             size={24}
             size={100}
             color={Colors.blue}
+          /> */}
+          <LottieView
+            source={require('../../components/IconAnimation/done.json')}
+            autoPlay
+            loop={false}
+            resizeMode='contain'
+            style={{ height: 115 }}
           />
         </View>
         <CustomText style={styles.title}>
@@ -25,18 +34,8 @@ const FinishOrderScreen = (props) => {
       </View>
       <View style={styles.id}>
         <CustomText style={styles.title}>
-          Chúng tôi sẽ xác nhận đơn hàng của bạn sớm nhất có thể.
+          Chúng tôi sẽ xác nhận đơn hàng của bạn sớm nhất.
         </CustomText>
-        {/* <CustomText
-          style={{
-            fontSize: 16,
-            color: Colors.blue,
-            textDecorationLine: 'underline',
-          }}
-          selectable={true}
-        >
-          {id}
-        </CustomText> */}
       </View>
       <View style={styles.buttom}>
         <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>

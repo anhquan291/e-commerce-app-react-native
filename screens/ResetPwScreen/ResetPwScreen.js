@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ import { Feather } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 //Import Action
 import * as AuthActions from '../../store/auth/authActions';
+import Snackbar from '../../components/Notification/Snackbar';
 
 //Validation
 const validate = (values) => {
@@ -126,6 +127,7 @@ const ResetPwScreen = (props) => {
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showConfirmPass, setshowConfirmPass] = useState(false);
+  const [showSnack, setSnowSnack] = useState(false);
   const url = props.route.params;
   const dispatch = useDispatch();
   const submit = async (values) => {
@@ -134,18 +136,9 @@ const ResetPwScreen = (props) => {
       await dispatch(AuthActions(values.password, url));
       await setLoading(false);
       reset();
+
       if (!unmounted.current) {
-        Alert.alert(
-          'Đổi Thành công',
-          'Bạn đã đổi mật khẩu thành công !',
-          [
-            {
-              text: 'Trang chủ',
-              onPress: () => props.navigation.navigate('Home'),
-            },
-          ],
-          { cancelable: false }
-        );
+        setSnowSnack(true);
       }
     } catch (err) {
       throw err;
@@ -166,7 +159,7 @@ const ResetPwScreen = (props) => {
         />
       </TouchableOpacity>
       <View style={styles.content}>
-        <CustomText style={styles.title}> Đặt lại mật khẩu </CustomText>
+        <CustomText style={styles.title}> Reset Password </CustomText>
         <Field
           name='password'
           keyboardType='default'
@@ -204,6 +197,10 @@ const ResetPwScreen = (props) => {
           </View>
         </TouchableOpacity>
       </View>
+      <Snackbar
+        checkVisible={showSnack}
+        message={'Reset password successfully'}
+      />
     </SafeAreaView>
   );
 };
@@ -220,6 +217,7 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.lighter_green,
     fontSize: 30,
+    marginBottom: 10,
   },
   signIn: {
     width: '100%',

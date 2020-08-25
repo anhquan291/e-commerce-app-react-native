@@ -54,6 +54,8 @@ const renderField = ({
           label={label}
           underlineColorAndroid={Colors.light_green}
           underlineColor={Colors.light_green}
+          autoCapitalize='none'
+          clearButtonMode={passIcon ? 'never' : 'always'}
           theme={{ colors: { primary: Colors.leave_green } }}
           left={<TextInput.Icon name={icon} color={Colors.lighter_green} />}
           style={{

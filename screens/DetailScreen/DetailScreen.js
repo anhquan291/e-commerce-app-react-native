@@ -13,7 +13,11 @@ import {
 //Animatable
 import * as Animatable from 'react-native-animatable';
 //icon
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  AntDesign,
+} from '@expo/vector-icons';
 //Color
 import Colors from '../../utils/Colors';
 //number format
@@ -76,11 +80,14 @@ const DetailScreen = (props) => {
   };
   const toggleFavorite = () => {
     if (Object.keys(user).length === 0) {
-      Alert.alert('Đăng Nhập', 'Bạn cần đăng nhập để thêm vào mục yêu thích', [
-        {
-          text: 'OK',
-        },
-      ]);
+      setMessage('Bạn cần đăng nhập thêm yêu thích');
+      setShowSnackbar(true);
+      const interval = setInterval(() => {
+        setShowSnackbar(false);
+      }, 5000);
+      if (!unmounted.current) {
+        return () => clearInterval(interval);
+      }
     } else if (FavoriteProducts) {
       Alert.alert(
         'Bỏ yêu thích',
@@ -198,52 +205,54 @@ const DetailScreen = (props) => {
               color={color}
             />
           </Animatable.View>
-          <View style={{ flexDirection: 'row', marginTop: 10 }}>
-            <Animatable.View animation='bounceIn' delay={1600}>
-              <MaterialCommunityIcons name='star' size={20} color={color} />
-            </Animatable.View>
-            <Animatable.View animation='bounceIn' delay={1700}>
-              <MaterialCommunityIcons name='star' size={20} color={color} />
-            </Animatable.View>
-            <Animatable.View animation='bounceIn' delay={1800}>
-              <MaterialCommunityIcons name='star' size={20} color={color} />
-            </Animatable.View>
-            <Animatable.View animation='bounceIn' delay={1900}>
-              <MaterialCommunityIcons name='star' size={20} color={color} />
-            </Animatable.View>
-            <Animatable.View animation='bounceIn' delay={2000}>
-              <MaterialCommunityIcons
-                name='star-half'
-                size={20}
-                color={color}
-              />
-            </Animatable.View>
-          </View>
+          <Animatable.View
+            animation='fadeInUpBig'
+            delay={800}
+            style={{ flexDirection: 'row', marginTop: 10 }}
+          >
+            <AntDesign name='star' size={15} color={color} />
+            <CustomText style={{ color: Colors.grey }}> 4.5</CustomText>
+          </Animatable.View>
           <Animatable.View
             animation='fadeInUpBig'
             delay={1000}
             style={styles.description}
           >
+            <CustomText
+              style={{
+                ...styles.title,
+                textDecorationLine: 'underline',
+                fontWeight: '500',
+                marginBottom: 10,
+              }}
+            >
+              Miêu tả
+            </CustomText>
             <CustomText selectable={true} style={styles.detail}>
               {item.description}
             </CustomText>
+            <CustomText
+              style={{
+                ...styles.title,
+                fontWeight: '500',
+                marginTop: 20,
+                marginBottom: 10,
+                textDecorationLine: 'underline',
+              }}
+            >
+              Chi tiết
+            </CustomText>
             <View style={styles.infoContainer}>
-              <CustomText style={{ color: Colors.text }}>Màu sắc: </CustomText>
+              <CustomText>Màu sắc: </CustomText>
               <CustomText style={{ color: color }}>{item.color}</CustomText>
             </View>
             <View style={styles.infoContainer}>
-              <CustomText style={{ color: Colors.text }}>
-                Tình trạng:{' '}
-              </CustomText>
-              <CustomText style={{ color: Colors.text }}>
-                {item.standard}
-              </CustomText>
+              <CustomText>Tình trạng: </CustomText>
+              <CustomText>{item.standard}</CustomText>
             </View>
             <View style={styles.infoContainer}>
-              <CustomText style={{ color: Colors.text }}>Xuất xứ: </CustomText>
-              <CustomText style={{ color: Colors.text }}>
-                {item.origin}
-              </CustomText>
+              <CustomText>Xuất xứ: </CustomText>
+              <CustomText>{item.origin}</CustomText>
             </View>
           </Animatable.View>
         </ScrollView>
@@ -265,7 +274,7 @@ const DetailScreen = (props) => {
                 loop={false}
               />
             ) : (
-              <Ionicons name='ios-heart-empty' size={26} color={Colors.straw} />
+              <Ionicons name='ios-heart-empty' size={27} color={color} />
             )}
           </TouchableOpacity>
           <TouchableOpacity
@@ -427,12 +436,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   infoContainer: {
-    marginTop: 20,
+    marginBottom: 10,
     flexDirection: 'row',
   },
-  detail: {
-    color: Colors.text,
-  },
+  detail: {},
   actionContainer: {
     position: 'absolute',
     left: 0,
@@ -480,7 +487,7 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: Colors.light_grey,
     width: '100%',
-    height: height * 0.4,
+    height: height * 0.3,
     bottom: 0,
     position: 'absolute',
     zIndex: 10,

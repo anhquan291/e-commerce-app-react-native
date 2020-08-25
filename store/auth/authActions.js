@@ -103,7 +103,6 @@ export const EditInfo = (phone, address) => {
           body: JSON.stringify({
             phone,
             address,
-            token: user.token,
           }),
         })
       );
@@ -117,7 +116,6 @@ export const EditInfo = (phone, address) => {
         phone,
         address,
       });
-      alert('Cập nhật thành công');
     } catch (err) {
       console.log(err.message);
     }

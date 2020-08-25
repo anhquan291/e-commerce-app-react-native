@@ -41,7 +41,6 @@
     "react-native-paper": "^4.0.1",
     "react-native-picker-select": "^7.0.0",
     "react-native-reanimated": "~1.9.0",
-    "react-native-redash": "^14.2.3",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-scrollable-tab-view": "^1.0.0",
@@ -55,8 +54,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-form": "^8.3.6",
-    "redux-thunk": "^2.3.0",
-    "return": "^1.0.0"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

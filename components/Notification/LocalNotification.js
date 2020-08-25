@@ -11,21 +11,22 @@ Notifications.setNotificationHandler({
 
 const LocalNotification = () => {
   useEffect(() => {
-    const triggerNotificationHandler = () => {
-      Notifications.scheduleNotificationAsync({
+    const triggerNotificationHandler = async () => {
+      const LocalNoti = await Notifications.scheduleNotificationAsync({
         content: {
           title: 'Ngày mới tốt lành bạn nhé ^^',
           body: 'Hãy lựa chọn sự may mắn, mua sự thành công cùng với CatTuong',
           data: { mySpecialData: 'Some text' },
         },
         trigger: {
-          type: 'daily',
           hour: 7,
-          minute: 30,
+          minute: 45,
         },
       });
+      await Notifications.dismissNotificationAsync(LocalNoti);
     };
     triggerNotificationHandler();
+
     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
       (response) => {
         // console.log(response);
