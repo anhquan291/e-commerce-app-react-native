@@ -32,14 +32,7 @@ const store = createStore(
 );
 
 const fetchFonts = () => {
-  return Font.loadAsync({
-    geoMetric: require('./assets/Fonts/GMV_URW_Geometric-Regular.otf'),
-    geoMetricBold: require('./assets/Fonts/GMV_URW_Geometric-Bold.otf'),
-    geoMetricBoldItalic: require('./assets/Fonts/GMV_URW_Geometric-Bold_Italic.otf'),
-    geoMetricSemiBold: require('./assets/Fonts/GMV_URW_Geometric-SemiBold.otf'),
-    geoMetricMedium: require('./assets/Fonts/GMV_URW_Geometric-Medium.otf'),
-    geoMetricItalic: require('./assets/Fonts/GMV_URW_Geometric-Italic.otf'),
-  });
+  return Font.loadAsync({});
 };
 
 export default function App(props) {

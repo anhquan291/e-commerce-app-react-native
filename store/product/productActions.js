@@ -1,4 +1,4 @@
-import { API_URL } from '../../constants/Config';
+import { API_URL } from '../../utils/Config';
 import { timeoutPromise } from '../../utils/Tools';
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
 

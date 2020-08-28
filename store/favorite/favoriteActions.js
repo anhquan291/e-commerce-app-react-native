@@ -1,5 +1,5 @@
-import { API_URL } from '../../constants/Config';
-
+import { API_URL } from '../../utils/Config';
+import { timeoutPromise } from '../../utils/Tools';
 export const FETCH_FAVORITE = 'FETCH_FAVORITE';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
@@ -10,14 +10,16 @@ export const fetchFavorite = () => {
     const user = getState().auth.user;
     if (user.userid != undefined) {
       try {
-        const response = await fetch(`${API_URL}/favoriteList`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
-          },
-          method: 'GET',
-        });
+        const response = await timeoutPromise(
+          fetch(`${API_URL}/favoriteList`, {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'auth-token': user.token,
+            },
+            method: 'GET',
+          })
+        );
         if (!response.ok) {
           throw new Error("Something went wrong!, can't get favorite list");
         }
@@ -47,22 +49,24 @@ export const addFavorite = (item) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
-      const response = await fetch(`${API_URL}/favoriteList/post`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': user.token,
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          userId: user.userid,
-          items: [
-            {
-              item: item._id,
-            },
-          ],
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/favoriteList/post`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            userId: user.userid,
+            items: [
+              {
+                item: item._id,
+              },
+            ],
+          }),
+        })
+      );
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
@@ -81,17 +85,19 @@ export const removeFavorite = (id) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
-      const response = await fetch(`${API_URL}/favoriteList/${user.userid}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': user.token,
-        },
-        method: 'PATCH',
-        body: JSON.stringify({
-          item: id,
-        }),
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/favoriteList/${user.userid}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
+          },
+          method: 'PATCH',
+          body: JSON.stringify({
+            item: id,
+          }),
+        })
+      );
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }

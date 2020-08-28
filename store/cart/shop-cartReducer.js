@@ -6,12 +6,12 @@ import {
   DES_CART_QUANTITY,
   RESET_CART,
 } from './cartActions';
+import { LOGOUT } from '../auth/authActions';
 
 const emptyCart = {
   items: [],
 };
 const initialState = {
-  items: {},
   cartItems: emptyCart,
 };
 
@@ -74,6 +74,11 @@ export default (state = initialState, action) => {
         ...state,
         cartItems: { ...state.cartItems },
       };
+    case LOGOUT: {
+      return {
+        cartItems: emptyCart,
+      };
+    }
   }
   return state;
 };

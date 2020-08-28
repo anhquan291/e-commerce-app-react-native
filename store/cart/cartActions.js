@@ -1,4 +1,4 @@
-import { API_URL } from '../../constants/Config';
+import { API_URL } from '../../utils/Config';
 import { timeoutPromise } from '../../utils/Tools';
 export const FETCH_CART = 'FETCH_CART';
 export const ADD_CART = 'ADD_CART';
@@ -85,11 +85,6 @@ export const addToCart = (item) => {
       // console.log(resData);
     } catch (err) {
       console.log(err.message);
-      Alert.alert('Error', err.message, [
-        {
-          text: 'OK',
-        },
-      ]);
     }
   };
 };
