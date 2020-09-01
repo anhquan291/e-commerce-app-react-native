@@ -1,7 +1,12 @@
-import React, { useCallback } from 'react';
-import * as RootNavigation from '../navigation/RootNavigation';
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import * as Linking from 'expo-linking';
+import React, { useCallback } from "react";
+import * as RootNavigation from "../navigation/RootNavigation";
+import { TouchableOpacity } from "react-native";
+import * as Linking from "expo-linking";
+import Colors from "./Colors";
+//Upload Image
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
 
 export const OpenURL = ({ url, children }) => {
   const handlePress = useCallback(async () => {
@@ -39,8 +44,8 @@ export const urlRedirect = (url) => {
 export const timeoutPromise = (url) => {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
-      reject(new alert('Timeout'));
-    }, 10000);
+      reject(new alert("Timeout"));
+    }, 10 * 1000);
     url.then(
       (res) => {
         clearTimeout(timeoutId);
@@ -58,20 +63,72 @@ export const uploadProfilePic = async (id, token, imageUri, filename, type) => {
   try {
     let formData = new FormData();
     // Infer the type of the image
-    await formData.append('profilePic', {
+    await formData.append("profilePic", {
       uri: imageUri,
       name: filename,
       type,
     });
     await fetch(`http://192.168.0.27:8080/api/v1/user/photo/${id}`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
       },
       body: formData,
     });
   } catch (err) {
     throw err;
+  }
+};
+
+export const _pickImage = async (action) => {
+  const type =
+    action === "library"
+      ? ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 4],
+          quality: 1,
+        })
+      : ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 4],
+          quality: 1,
+        });
+  try {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(
+        Permissions.CAMERA_ROLL,
+        Permissions.CAMERA
+      );
+      if (status !== "granted") {
+        return alert(
+          "Sorry, we need camera roll permissions to make this work!"
+        );
+      }
+    }
+
+    let result = await type;
+    return result;
+  } catch (E) {
+    console.log(E);
+  }
+};
+
+export const colorCheck = (colorCode) => {
+  switch (colorCode) {
+    case "yellow":
+      return Colors.yellow;
+    case "green":
+      return Colors.green;
+    case "purple":
+      return Colors.purple;
+    case "blue":
+      return Colors.water;
+    case "pink":
+      return Colors.straw;
+    default:
+      return Colors.lighter_green;
   }
 };

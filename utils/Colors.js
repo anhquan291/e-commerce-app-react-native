@@ -1,7 +1,7 @@
 export default {
   primary: '#2da7bc',
   text: '#707070',
-  grey: '#c9c9c9',
+  grey: '#b5b5b5',
   blue: '#3c82fc',
   light_grey: '#f8f8f8',
   dark: '#2a2c5c',

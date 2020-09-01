@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 //Redux
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import ReduxThunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import ReduxThunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 //Reducer
-import Reducers from './store/reducers';
+import Reducers from "./store/reducers";
 //Navigator
-import AppNavigator from './navigation/AppNavigator';
+import AppNavigator from "./navigation/AppNavigator";
 //redux form
-import { reducer as formReducer } from 'redux-form';
+import { reducer as formReducer } from "redux-form";
 //Fonts
-import * as Font from 'expo-font';
-import { AppLoading } from 'expo';
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
 
 //Notification
-import LocalNotication from './components/Notification/LocalNotification';
+import LocalNotication from "./components/Notification/LocalNotification";
 
 const rootReducer = combineReducers({
   store: Reducers.ProductReducer,

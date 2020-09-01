@@ -110,7 +110,7 @@ const FavoriteItem = ({ navigation, item }) => {
               style={{
                 height: 70,
                 width: '100%',
-                resizeMode: 'stretch',
+                resizeMode: 'contain',
                 borderRadius: 10,
               }}
               source={{ uri: item.thumb }}
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     height: 90,
     flexDirection: 'row',
     backgroundColor: Colors.light_grey,
-    marginVertical: 6,
+    marginTop: 5,
     borderRadius: 0,
     alignItems: 'center',
   },
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     paddingVertical: 10,
-    width: '70%',
+    width: '75%',
   },
   title: {
     fontSize: 15,

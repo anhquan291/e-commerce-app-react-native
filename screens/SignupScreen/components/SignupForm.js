@@ -8,9 +8,13 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
-//Animation
-import { TextInput } from 'react-native-paper';
+
+import { Input } from 'react-native-elements';
+//Icon
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 //Colors
 import Colors from '../../../utils/Colors';
 import CustomText from '../../../components/UI/CustomText';
@@ -62,38 +66,47 @@ const renderField = ({
 }) => {
   return (
     <View>
-      <TextInput
-        label={label}
-        underlineColorAndroid={Colors.light_green}
-        underlineColor={Colors.light_green}
-        theme={{ colors: { primary: Colors.leave_green } }}
+      <Input
+        placeholder={label}
         autoCapitalize={autoCapitalize ? 'words' : 'none'}
         clearButtonMode={passIcon ? 'never' : 'always'}
-        left={<TextInput.Icon name={icon} color={Colors.lighter_green} />}
-        style={{
-          backgroundColor: 'transparent',
-        }}
-        right={
+        leftIcon={
+          <MaterialCommunityIcons
+            name={icon}
+            size={24}
+            color={Colors.lighter_green}
+          />
+        }
+        rightIcon={
           passIcon === 'pass' ? (
-            <TextInput.Icon
-              name={showPass ? 'eye' : 'eye-off'}
-              color={Colors.light_green}
+            <TouchableOpacity
               onPress={() => {
                 setShowPass((prev) => !prev);
               }}
-            />
+            >
+              <MaterialCommunityIcons
+                name={showPass ? 'eye' : 'eye-off'}
+                size={24}
+                color={Colors.lighter_green}
+              />
+            </TouchableOpacity>
           ) : passIcon === 'confirm' ? (
-            <TextInput.Icon
-              name={showConfirmPass ? 'eye' : 'eye-off'}
-              color={Colors.light_green}
+            <TouchableOpacity
               onPress={() => {
                 setshowConfirmPass((prev) => !prev);
               }}
-            />
+            >
+              <MaterialCommunityIcons
+                name={showConfirmPass ? 'eye' : 'eye-off'}
+                size={24}
+                color={Colors.lighter_green}
+              />
+            </TouchableOpacity>
           ) : (
             <></>
           )
         }
+        inputStyle={{ fontSize: 14 }}
         keyboardType={keyboardType}
         onChangeText={onChange}
         secureTextEntry={secureTextEntry}
@@ -136,73 +149,77 @@ const Signup = (props) => {
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View
-        style={{
-          flexDirection: 'column',
-          marginHorizontal: 20,
-        }}
-      >
-        <View>
-          <Field
-            name='username'
-            keyboardType='default'
-            label='Your Name'
-            component={renderField}
-            icon='id-card'
-            autoCapitalize={true}
-          />
-          <Field
-            name='email'
-            keyboardType='email-address'
-            label='Email'
-            icon='email'
-            component={renderField}
-          />
-          <Field
-            name='password'
-            keyboardType='default'
-            label='Password'
-            component={renderField}
-            secureTextEntry={showPass ? false : true}
-            passIcon='pass'
-            icon='lock'
-            showPass={showPass}
-            setShowPass={setShowPass}
-          />
-          <Field
-            name='confirmpassword'
-            keyboardType='default'
-            label='Confirm Password'
-            component={renderField}
-            secureTextEntry={showConfirmPass ? false : true}
-            passIcon='confirm'
-            icon='lock'
-            showConfirmPass={showConfirmPass}
-            setshowConfirmPass={setshowConfirmPass}
-          />
-        </View>
+    <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : null}>
+      <ScrollView>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View
+            style={{
+              flexDirection: 'column',
+              marginHorizontal: 20,
+            }}
+          >
+            <View>
+              <Field
+                name='username'
+                keyboardType='default'
+                label='Your Name'
+                component={renderField}
+                icon='id-card'
+                autoCapitalize={true}
+              />
+              <Field
+                name='email'
+                keyboardType='email-address'
+                label='Email'
+                icon='email'
+                component={renderField}
+              />
+              <Field
+                name='password'
+                keyboardType='default'
+                label='Password'
+                component={renderField}
+                secureTextEntry={showPass ? false : true}
+                passIcon='pass'
+                icon='lock'
+                showPass={showPass}
+                setShowPass={setShowPass}
+              />
+              <Field
+                name='confirmpassword'
+                keyboardType='default'
+                label='Confirm Password'
+                component={renderField}
+                secureTextEntry={showConfirmPass ? false : true}
+                passIcon='confirm'
+                icon='lock'
+                showConfirmPass={showConfirmPass}
+                setshowConfirmPass={setshowConfirmPass}
+              />
+            </View>
 
-        <TouchableOpacity
-          onPress={handleSubmit(submit)}
-          style={{ marginVertical: 10, alignItems: 'center' }}
-        >
-          <View style={styles.signIn}>
-            <CustomText style={styles.textSign}>
-              {loading ? (
-                <ActivityIndicator
-                  style={{ paddingTop: 10 }}
-                  size='small'
-                  color='#fff'
-                />
-              ) : (
-                'REGISTER'
-              )}
-            </CustomText>
+            <TouchableOpacity
+              onPress={handleSubmit(submit)}
+              style={{ marginVertical: 10, alignItems: 'center' }}
+            >
+              <View style={styles.signIn}>
+                <CustomText style={styles.textSign}>
+                  {loading ? (
+                    <ActivityIndicator
+                      style={{ paddingTop: 10 }}
+                      size='small'
+                      color='#fff'
+                    />
+                  ) : (
+                    'REGISTER'
+                  )}
+                </CustomText>
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

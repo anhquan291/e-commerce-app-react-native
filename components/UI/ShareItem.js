@@ -1,7 +1,7 @@
-import React from 'react';
-import { TouchableOpacity, Share } from 'react-native';
+import React from "react";
+import { TouchableOpacity, Share } from "react-native";
 //icon
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 
 const ShareItem = ({ imageURL, title, message }) => {
   const onShare = async () => {
@@ -26,7 +26,7 @@ const ShareItem = ({ imageURL, title, message }) => {
   };
   return (
     <TouchableOpacity onPress={onShare}>
-      <MaterialCommunityIcons name='share' size={23} color='black' />
+      <FontAwesome name="share-square-o" size={28} color="#fff" />
     </TouchableOpacity>
   );
 };

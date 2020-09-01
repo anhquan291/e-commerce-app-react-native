@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
@@ -11,17 +10,9 @@ import {
 } from 'react-native';
 //redux
 import { useSelector } from 'react-redux';
-//icon
-import { Ionicons } from '@expo/vector-icons';
 //Component
-import HorizontalItem from './components/HorizontalItem';
-import SearchInput from './components/SearchInput';
-//Color
-import Colors from '../../utils/Colors';
-import ScrollableTabView, {
-  ScrollableTabBar,
-} from 'react-native-scrollable-tab-view';
-import ShareItem from '../../components/UI/ShareItem';
+import ProductBody from './components/ProductBody';
+import Header from './components/Header';
 //width height
 const { height } = Dimensions.get('window');
 
@@ -38,51 +29,17 @@ const ProductScreen = (props) => {
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
-          <View style={styles.header}>
-            <View
-              style={{ position: 'absolute', left: 0, top: 40, zIndex: 10 }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  props.navigation.goBack();
-                }}
-                style={{
-                  width: 40,
-                  height: 40,
-                  backgroundColor: Colors.light_grey,
-                  borderRadius: 12,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Ionicons name='ios-arrow-back' size={20} color='black' />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                position: 'absolute',
-                right: 0,
-                top: 40,
-                zIndex: 10,
-                width: 40,
-                height: 40,
-                backgroundColor: Colors.light_grey,
-                borderRadius: 12,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <ShareItem
-                imageURL='https://www.facebook.com/daquyankhangthinhvuong/'
-                title='Facebook Link'
-                message='Facebook Link'
-              />
-            </View>
-            <SearchInput inputValue={searchFilterFunction} />
-          </View>
+          <Header
+            navigation={props.navigation}
+            searchFilterFunction={searchFilterFunction}
+          />
         </View>
       </TouchableWithoutFeedback>
-      <View style={styles.footer}>
+      <ProductBody
+        navigation={props.navigation}
+        productsFilter={productsFilter}
+      />
+      {/* <View style={styles.footer}>
         <ScrollableTabView
           initialPage={0}
           renderTabBar={() => <ScrollableTabBar />}
@@ -120,7 +77,7 @@ const ProductScreen = (props) => {
           <View tabLabel='Đá quý'></View>
           <View tabLabel='Khác'></View>
         </ScrollableTabView>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -130,34 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    marginHorizontal: 20,
-  },
-  center: {
-    alignItems: 'center',
-    marginTop: 30,
-  },
-  title: {
-    marginTop: height < 668 ? 90 : 110,
-  },
-  titleText: {
-    fontSize: height < 668 ? 30 : 37,
-    color: Colors.text,
-  },
-  inputBox: {
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    height: height < 668 ? 45 : 60,
-    alignItems: 'center',
-    backgroundColor: Colors.light_grey,
-    borderRadius: 15,
-  },
-  input: {
-    marginLeft: 10,
-    borderWidth: 0,
-    fontSize: 16,
-    width: '97%',
-  },
+
   footer: {
     marginTop: 5,
     flex: 1,
