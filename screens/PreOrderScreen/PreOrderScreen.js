@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 //Steps
 import Header from "./components/Header";
 import SummaryOrder from "./components/SummaryOrder";
-import TotalButtom from "./components/TotalButtom";
+import TotalButton from "./components/TotalButton";
 import UserForm from "./components/UserForm";
 import Loader from "../../components/Loaders/Loader";
 
@@ -46,23 +46,26 @@ const PreOrderScreen = (props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setLoading(false);
-    }, 1500);
+    }, 1000);
     if (!unmounted.current) {
       return () => clearInterval(interval);
     }
-  }, []);
+  });
   const fullAddress = `${address}, ${town} ,${province}`;
   const toPayment = async () => {
     // try {
     //   if (error == undefined && province.length !== 0 && town.length !== 0) {
     //     props.navigation.navigate("Payment", {
-    //       fullAddress,
-    //       orderItems,
-    //       name,
-    //       phone,
-    //       total,
-    //       cartId,
-    //       carts,
+    //       screen: "PaymentScreen",
+    //       params: {
+    //         fullAddress,
+    //         orderItems,
+    //         name,
+    //         phone,
+    //         total,
+    //         cartId,
+    //         carts,
+    //       },
     //     });
     //   } else {
     //     alert("Vui lòng nhập đầy đủ thông tin.");
@@ -71,13 +74,16 @@ const PreOrderScreen = (props) => {
     //   throw err;
     // }
     props.navigation.navigate("Payment", {
-      fullAddress,
-      orderItems,
-      name,
-      phone,
-      total,
-      cartId,
-      carts,
+      screen: "PaymentScreen",
+      params: {
+        fullAddress,
+        orderItems,
+        name,
+        phone,
+        total,
+        cartId,
+        carts,
+      },
     });
   };
   useEffect(() => {
@@ -100,7 +106,7 @@ const PreOrderScreen = (props) => {
             <Address getInfo={getInfo} />
             <SummaryOrder cartItems={cartItems} total={total} />
           </ScrollView>
-          <TotalButtom toPayment={toPayment} />
+          <TotalButton toPayment={toPayment} />
         </>
       )}
     </View>

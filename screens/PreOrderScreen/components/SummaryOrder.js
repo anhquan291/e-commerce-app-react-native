@@ -14,13 +14,15 @@ const SummaryOrder = ({ cartItems, total }) => {
       <CustomText style={{ ...styles.title, marginVertical: 5 }}>
         Tóm tắt đơn hàng
       </CustomText>
-      {cartItems.map((item) => {
-        return (
-          <View key={item.item.createdAt}>
-            <PreOrderItem item={item} />
-          </View>
-        );
-      })}
+      <View style={{ backgroundColor: "#fff" }}>
+        {cartItems.map((item) => {
+          return (
+            <View key={item.item.createdAt}>
+              <PreOrderItem item={item} />
+            </View>
+          );
+        })}
+      </View>
       <View style={styles.total}>
         <CustomText
           style={{
