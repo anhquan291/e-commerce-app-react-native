@@ -13,6 +13,8 @@ import CustomText from "../../../components/UI/CustomText";
 import OrderSteps from "../../../components/UI/OrderSteps";
 //Colors
 import Colors from "../../../utils/Colors";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const { width, height } = Dimensions.get("window");
 
@@ -39,6 +41,10 @@ const Header = ({ navigation }) => {
       <View />
     </View>
   );
+};
+
+Header.propTypes = {
+  navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

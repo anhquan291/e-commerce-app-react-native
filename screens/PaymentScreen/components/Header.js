@@ -12,6 +12,9 @@ import CustomText from "../../../components/UI/CustomText";
 //Steps
 import OrderSteps from "../../../components/UI/OrderSteps";
 import { Ionicons } from "@expo/vector-icons";
+//PropTypes check
+import PropTypes from "prop-types";
+
 const { width } = Dimensions.get("window");
 
 const Header = ({ navigation }) => {
@@ -35,6 +38,10 @@ const Header = ({ navigation }) => {
       <View />
     </View>
   );
+};
+
+Header.propTypes = {
+  navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

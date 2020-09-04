@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Animated, StyleSheet, Dimensions } from 'react-native';
-import Colors from '../../../utils/Colors';
+import React from "react";
+import { View, Animated, StyleSheet, Dimensions } from "react-native";
+import Colors from "../../../utils/Colors";
+//PropTypes check
+import PropTypes from "prop-types";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 const DOT_SIZE = 20;
 
@@ -16,9 +18,9 @@ const Pagination = ({ scrollX, slides }) => {
     <View style={[styles.pagination]}>
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
           width,
         }}
       >
@@ -26,7 +28,7 @@ const Pagination = ({ scrollX, slides }) => {
           style={[
             styles.paginationIndicator,
             {
-              position: 'absolute',
+              position: "absolute",
               transform: [{ translateX }],
             },
           ]}
@@ -47,26 +49,32 @@ const Pagination = ({ scrollX, slides }) => {
     </View>
   );
 };
+
+Pagination.propTypes = {
+  scrollX: PropTypes.object.isRequired,
+  slides: PropTypes.array.isRequired,
+};
+
 const styles = StyleSheet.create({
   pagination: {
-    position: 'absolute',
+    position: "absolute",
 
     top: 10,
-    flexDirection: 'row',
+    flexDirection: "row",
     height: DOT_SIZE,
     zIndex: 1000,
-    alignItems: 'center',
+    alignItems: "center",
   },
   paginationDot: {
     width: DOT_SIZE * 0.5,
     height: DOT_SIZE * 0.5,
     borderRadius: DOT_SIZE * 0.3,
-    borderColor: '#000',
+    borderColor: "#000",
   },
   paginationDotContainer: {
     width: DOT_SIZE,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   paginationIndicator: {
     width: DOT_SIZE,

@@ -3,6 +3,8 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "../../../utils/Colors";
 //Text
 import CustomText from "../../../components/UI/CustomText";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const TotalButton = ({ toPayment }) => {
   return (
@@ -16,6 +18,10 @@ const TotalButton = ({ toPayment }) => {
       </TouchableOpacity>
     </View>
   );
+};
+
+TotalButton.propTypes = {
+  toPayment: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

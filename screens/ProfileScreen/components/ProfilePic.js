@@ -12,8 +12,10 @@ import Colors from "../../../utils/Colors";
 import { _pickImage } from "../../../utils/Tools";
 import CustomText from "../../../components/UI/CustomText";
 import { useActionSheet } from "@expo/react-native-action-sheet";
+//PropTypes check
+import PropTypes from "prop-types";
 
-const EditButton = ({
+const ProfilePic = ({
   user,
   imageUri,
   setImageUri,
@@ -85,6 +87,15 @@ const EditButton = ({
     </View>
   );
 };
+
+ProfilePic.propTypes = {
+  user: PropTypes.object.isRequired,
+  imageUri: PropTypes.string.isRequired,
+  setImageUri: PropTypes.func.isRequired,
+  setFilename: PropTypes.func.isRequired,
+  setType: PropTypes.func.isRequired,
+  setUploadButton: PropTypes.func.isRequired,
+};
 const styles = StyleSheet.create({
   profilePic: {
     resizeMode: "contain",
@@ -110,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditButton;
+export default ProfilePic;

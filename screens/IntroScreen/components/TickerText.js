@@ -8,6 +8,8 @@ import {
   StatusBar,
 } from "react-native";
 import slides from "../../../db/IntroSlides";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const TICKER_HEIGHT = 50;
 const { height, width } = Dimensions.get("window");
@@ -31,6 +33,10 @@ const Ticker = ({ scrollX }) => {
       </Animated.View>
     </View>
   );
+};
+
+Ticker.propTypes = {
+  scrollX: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

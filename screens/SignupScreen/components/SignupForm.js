@@ -3,7 +3,6 @@ import { Field, reduxForm } from "redux-form";
 import {
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
@@ -12,9 +11,6 @@ import {
   ScrollView,
 } from "react-native";
 
-import { Input } from "react-native-elements";
-//Icon
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
@@ -22,6 +18,9 @@ import CustomText from "../../../components/UI/CustomText";
 import { useDispatch } from "react-redux";
 //Action
 import * as AuthActions from "../../../store/auth/authActions";
+//PropTypes check
+import PropTypes from "prop-types";
+import renderField from "./RenderField";
 
 //Validation
 const validate = (values) => {
@@ -48,76 +47,6 @@ const validate = (values) => {
   }
 
   return errors;
-};
-
-const renderField = ({
-  label,
-  keyboardType,
-  secureTextEntry,
-  icon,
-  showPass,
-  passIcon,
-  setShowPass,
-  showConfirmPass,
-  setshowConfirmPass,
-  autoCapitalize,
-  meta: { touched, error, warning },
-  input: { onChange, ...restInput },
-}) => {
-  return (
-    <View>
-      <Input
-        placeholder={label}
-        autoCapitalize={autoCapitalize ? "words" : "none"}
-        clearButtonMode={passIcon ? "never" : "always"}
-        leftIcon={
-          <MaterialCommunityIcons
-            name={icon}
-            size={24}
-            color={Colors.lighter_green}
-          />
-        }
-        rightIcon={
-          passIcon === "pass" ? (
-            <TouchableOpacity
-              onPress={() => {
-                setShowPass((prev) => !prev);
-              }}
-            >
-              <MaterialCommunityIcons
-                name={showPass ? "eye" : "eye-off"}
-                size={24}
-                color={Colors.lighter_green}
-              />
-            </TouchableOpacity>
-          ) : passIcon === "confirm" ? (
-            <TouchableOpacity
-              onPress={() => {
-                setshowConfirmPass((prev) => !prev);
-              }}
-            >
-              <MaterialCommunityIcons
-                name={showConfirmPass ? "eye" : "eye-off"}
-                size={24}
-                color={Colors.lighter_green}
-              />
-            </TouchableOpacity>
-          ) : (
-            <></>
-          )
-        }
-        inputStyle={{ fontSize: 14 }}
-        keyboardType={keyboardType}
-        onChangeText={onChange}
-        secureTextEntry={secureTextEntry}
-        {...restInput}
-      />
-
-      {touched && error && (
-        <Text style={{ color: "red", marginVertical: 5 }}>{error}</Text>
-      )}
-    </View>
-  );
 };
 
 const Signup = (props) => {
@@ -154,7 +83,7 @@ const Signup = (props) => {
           <View
             style={{
               flexDirection: "column",
-              marginHorizontal: 20,
+              marginHorizontal: 10,
             }}
           >
             <View>
@@ -221,6 +150,11 @@ const Signup = (props) => {
     </KeyboardAvoidingView>
   );
 };
+
+Signup.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+};
 const styles = StyleSheet.create({
   signIn: {
     width: "100%",
@@ -243,7 +177,7 @@ const styles = StyleSheet.create({
   },
 });
 const SignupForm = reduxForm({
-  form: "contact", // a unique identifier for this form
+  form: "signup", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(Signup);
 

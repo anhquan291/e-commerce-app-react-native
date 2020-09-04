@@ -16,6 +16,8 @@ import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
 import CartItem from "./CartItem";
 import Messages from "../../../messages/user";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const CartBody = ({ navigation, user, carts, loadCarts, isRefreshing }) => {
   const dispatch = useDispatch();
@@ -75,6 +77,14 @@ const CartBody = ({ navigation, user, carts, loadCarts, isRefreshing }) => {
       )}
     </View>
   );
+};
+
+CartBody.propTypes = {
+  user: PropTypes.object.isRequired,
+  carts: PropTypes.object.isRequired,
+  loadCarts: PropTypes.func.isRequired,
+  isRefreshing: PropTypes.bool.isRequired,
+  navigation: PropTypes.object.isRequired,
 };
 const styles = StyleSheet.create({
   footer: {

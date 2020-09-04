@@ -5,6 +5,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 //Text
 import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const { width } = Dimensions.get("window");
 
@@ -60,6 +62,12 @@ const PaymentBody = ({ navigation, payByCard, setPayByCard }) => {
       </View>
     </View>
   );
+};
+
+PaymentBody.propTypes = {
+  setPayByCard: PropTypes.func.isRequired,
+  payByCard: PropTypes.bool.isRequired,
+  navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

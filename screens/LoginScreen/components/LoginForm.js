@@ -21,6 +21,9 @@ import CustomText from "../../../components/UI/CustomText";
 import { useDispatch } from "react-redux";
 //Action
 import * as AuthActions from "../../../store/auth/authActions";
+//PropTypes check
+import PropTypes from "prop-types";
+import renderField from "./RenderField";
 
 //Validation
 const validate = (values) => {
@@ -36,62 +39,6 @@ const validate = (values) => {
     errors.password = "Mật khẩu phải nhiều hơn hoặc bằng 6 ký tự";
   }
   return errors;
-};
-
-const renderField = ({
-  label,
-  keyboardType,
-  secureTextEntry,
-  icon,
-  showPass,
-  passIcon,
-  setShowPass,
-  meta: { touched, error, warning },
-  input: { onChange, ...restInput },
-}) => {
-  return (
-    <View>
-      <View>
-        <Input
-          placeholder={label}
-          autoCapitalize="none"
-          clearButtonMode={passIcon ? "never" : "always"}
-          leftIcon={
-            <MaterialCommunityIcons
-              name={icon}
-              size={24}
-              color={Colors.lighter_green}
-            />
-          }
-          rightIcon={
-            passIcon ? (
-              <TouchableOpacity
-                onPress={() => {
-                  setShowPass((prev) => !prev);
-                }}
-              >
-                <MaterialCommunityIcons
-                  name={showPass ? "eye" : "eye-off"}
-                  size={24}
-                  color={Colors.lighter_green}
-                />
-              </TouchableOpacity>
-            ) : (
-              <></>
-            )
-          }
-          inputStyle={{ fontSize: 14 }}
-          keyboardType={keyboardType}
-          onChangeText={onChange}
-          secureTextEntry={secureTextEntry}
-          {...restInput}
-        />
-      </View>
-      {touched && error && (
-        <Text style={{ color: "red", marginVertical: 5 }}>{error}</Text>
-      )}
-    </View>
-  );
 };
 
 const Login = (props) => {
@@ -124,7 +71,7 @@ const Login = (props) => {
           <View
             style={{
               flexDirection: "column",
-              marginHorizontal: 20,
+              marginHorizontal: 10,
             }}
           >
             <View>
@@ -177,6 +124,11 @@ const Login = (props) => {
       </ScrollView>
     </KeyboardAvoidingView>
   );
+};
+
+Login.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 const styles = StyleSheet.create({
   group: {

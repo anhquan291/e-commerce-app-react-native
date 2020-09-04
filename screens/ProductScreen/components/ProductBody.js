@@ -1,11 +1,13 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 //Color
-import Colors from '../../../utils/Colors';
+import Colors from "../../../utils/Colors";
 import ScrollableTabView, {
   ScrollableTabBar,
-} from 'react-native-scrollable-tab-view';
-import HorizontalItem from './HorizontalItem';
+} from "react-native-scrollable-tab-view";
+import HorizontalItem from "./HorizontalItem";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const ProductBody = ({ navigation, productsFilter }) => {
   return (
@@ -24,7 +26,7 @@ const ProductBody = ({ navigation, productsFilter }) => {
           paddingTop: 3,
         }}
       >
-        <View tabLabel='Vòng chuỗi'>
+        <View tabLabel="Vòng chuỗi">
           {productsFilter.length === 0 ? (
             <View style={styles.center}>
               <Text style={{ color: Colors.grey }}>
@@ -41,12 +43,18 @@ const ProductBody = ({ navigation, productsFilter }) => {
             />
           )}
         </View>
-        <View tabLabel='Nhẫn'></View>
-        <View tabLabel='Đá quý'></View>
+        <View tabLabel="Nhẫn"></View>
+        <View tabLabel="Đá quý"></View>
       </ScrollableTabView>
     </View>
   );
 };
+
+ProductBody.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  productsFilter: PropTypes.array.isRequired,
+};
+
 const styles = StyleSheet.create({
   footer: {
     marginTop: 5,

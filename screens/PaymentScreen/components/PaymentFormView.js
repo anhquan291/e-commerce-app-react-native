@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import { CreditCardInput } from "react-native-input-credit-card";
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../../../utils/Colors";
+//PropTypes check
+import PropTypes from "prop-types";
 
 export default class PaymentFormView extends React.Component {
   constructor(props) {
@@ -54,6 +56,13 @@ export default class PaymentFormView extends React.Component {
     );
   }
 }
+
+PaymentFormView.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  submitted: PropTypes.bool.isRequired,
+  error: PropTypes.object.isRequired,
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

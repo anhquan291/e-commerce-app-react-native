@@ -20,6 +20,9 @@ import * as CartActions from "../../../store/cart/cartActions";
 import * as FavoriteActions from "../../../store/favorite/favoriteActions";
 import Messages from "../../../messages/user";
 
+//PropTypes check
+import PropTypes from "prop-types";
+
 const ActionButton = ({
   user,
   item,
@@ -123,6 +126,18 @@ const ActionButton = ({
       </View>
     </Animatable.View>
   );
+};
+
+ActionButton.propTypes = {
+  item: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  color: PropTypes.string.isRequired,
+  setShowSnackbar: PropTypes.func.isRequired,
+  setIsAddingCart: PropTypes.func.isRequired,
+  FavoriteProducts: PropTypes.bool.isRequired,
+  isAddingCart: PropTypes.bool.isRequired,
+  setModalVisible: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

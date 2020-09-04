@@ -5,17 +5,15 @@ import PaymentFormView from "./PaymentFormView";
 /**
  * The class renders a view with PaymentFormView
  */
-export default class AddSubscriptionView extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.cardFormWrapper}>
-          <PaymentFormView {...this.props} />
-        </View>
+export default AddSubscriptionView = () => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.cardFormWrapper}>
+        <PaymentFormView {...this.props} />
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

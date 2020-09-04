@@ -1,12 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 //Icon
 import { AntDesign } from "@expo/vector-icons";
 //Colors
@@ -18,7 +11,7 @@ import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
 
-class productItem extends React.PureComponent {
+class ProductItem extends React.PureComponent {
   render() {
     const { navigation, item } = this.props;
     const toDetail = () => {
@@ -29,30 +22,14 @@ class productItem extends React.PureComponent {
         <View
           style={{
             width: "100%",
-            height: 100,
-
             justifyContent: "center",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
           <TouchableOpacity onPress={toDetail}>
-            <Image
-              source={{ uri: item.thumb }}
-              style={styles.image}
-              // onLoadStart={() => {
-              //   setIsLoading(true);
-              // }}
-              // onLoadEnd={() => setIsLoading(false)}
-            />
+            <Image source={{ uri: item.thumb }} style={styles.image} />
           </TouchableOpacity>
-          {/* {isLoading && (
-            <ActivityIndicator
-              size="small"
-              color={Colors.grey}
-              style={{ position: "absolute", left: 0, right: 0, top: 40 }}
-            />
-          )} */}
         </View>
         <View style={styles.center}>
           <CustomText style={styles.name}>{item.filename}</CustomText>
@@ -74,7 +51,7 @@ class productItem extends React.PureComponent {
   }
 }
 
-productItem.propTypes = {
+ProductItem.propTypes = {
   item: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
 };
@@ -142,4 +119,4 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
 });
-export default productItem;
+export default ProductItem;

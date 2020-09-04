@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { Input } from "react-native-elements";
 import { Field, reduxForm } from "redux-form";
+import renderField from "./RenderField";
 //Colors
 import Colors from "../../../utils/Colors";
+import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
-import CustomText from "../../../components/UI/CustomText";
 
 //Validation
-
 const validate = (values) => {
   const errors = {};
   if (!values.name) {
@@ -35,47 +34,6 @@ const validate = (values) => {
   }
 
   return errors;
-};
-
-const renderField = ({
-  label,
-  keyboardType,
-  onChangeText,
-  returnKeyType,
-  checkFocus,
-  checkValidation,
-  meta: { touched, error, warning },
-  input: { ...restInput },
-}) => {
-  useEffect(() => {
-    checkValidation(error);
-  }, [checkFocus]);
-  return (
-    <View>
-      <View>
-        <Input
-          placeholder={label}
-          autoCapitalize={label === "Họ Tên" ? "words" : "none"}
-          inputStyle={{ fontSize: 14 }}
-          inputContainerStyle={{
-            borderBottomColor: checkFocus ? Colors.lighter_green : Colors.grey,
-            borderBottomWidth: checkFocus ? 1.5 : 1,
-          }}
-          returnKeyType={returnKeyType ? returnKeyType : "next"}
-          keyboardType={keyboardType}
-          onChangeText={onChangeText}
-          {...restInput}
-        />
-      </View>
-      {touched && error && (
-        <CustomText
-          style={{ color: "red", marginBottom: 5, paddingHorizontal: 5 }}
-        >
-          {error}
-        </CustomText>
-      )}
-    </View>
-  );
 };
 
 const User = ({ getReceiver, checkValidation }) => {
@@ -135,6 +93,11 @@ const User = ({ getReceiver, checkValidation }) => {
       </View>
     </View>
   );
+};
+
+User.propTypes = {
+  getReceiver: PropTypes.func.isRequired,
+  checkValidation: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

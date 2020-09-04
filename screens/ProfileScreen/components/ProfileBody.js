@@ -3,6 +3,9 @@ import { View, StyleSheet } from "react-native";
 import CustomText from "../../../components/UI/CustomText";
 import UploadButton from "./UploadButton";
 import Detail from "./Detail";
+//PropTypes check
+import PropTypes from "prop-types";
+
 const ProfileBody = ({
   user,
   uploadButton,
@@ -35,6 +38,15 @@ const ProfileBody = ({
       />
     </View>
   );
+};
+
+ProfileBody.propTypes = {
+  user: PropTypes.object.isRequired,
+  uploadButton: PropTypes.bool.isRequired,
+  setUploadButton: PropTypes.func.isRequired,
+  setImageUri: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  UploadProfile: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

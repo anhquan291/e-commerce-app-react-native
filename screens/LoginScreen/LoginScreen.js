@@ -1,28 +1,26 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableOpacity,
   ImageBackground,
   Dimensions,
-  ScrollView,
-} from 'react-native';
-import Colors from '../../utils/Colors';
+} from "react-native";
+import Colors from "../../utils/Colors";
 //Components
-import LoginForm from './components/LoginForm';
+import LoginForm from "./components/LoginForm";
 //Icon
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 const SignUpScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{ flex: 1, position: 'absolute', height, width }}
-        source={require('../../assets/Images/flower3.jpg')}
+        style={{ flex: 1, position: "absolute", height, width }}
+        source={require("../../assets/Images/flower3.jpg")}
         blurRadius={10}
       ></ImageBackground>
 
@@ -30,9 +28,9 @@ const SignUpScreen = ({ navigation }) => {
         onPress={() => {
           navigation.goBack();
         }}
-        style={{ position: 'absolute', top: 50, left: 20 }}
+        style={{ position: "absolute", top: 50, left: 20 }}
       >
-        <Ionicons name='ios-arrow-back' size={35} color={Colors.light_green} />
+        <Ionicons name="ios-arrow-back" size={35} color={Colors.light_green} />
       </TouchableOpacity>
 
       <View style={styles.header}>
@@ -58,11 +56,11 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.light_green,
     fontSize: 40,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     letterSpacing: 5,
   },
   text: {
-    color: '#fff',
+    color: "#fff",
   },
 });
 

@@ -7,6 +7,8 @@ import PreOrderItem from "./PreOrderItem";
 //Text
 import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const SummaryOrder = ({ cartItems, total }) => {
   return (
@@ -37,6 +39,11 @@ const SummaryOrder = ({ cartItems, total }) => {
       </View>
     </View>
   );
+};
+
+SummaryOrder.propTypes = {
+  cartItems: PropTypes.array.isRequired,
+  total: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({

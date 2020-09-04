@@ -11,6 +11,8 @@ import {
 import Colors from "../../../utils/Colors";
 //Icon
 import LottieView from "lottie-react-native";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const { height, width } = Dimensions.get("window");
 
@@ -56,6 +58,10 @@ const FirstBody = ({ navigation }) => {
       </TouchableOpacity>
     </>
   );
+};
+
+FirstBody.propTypes = {
+  navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
