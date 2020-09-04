@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: Platform.OS === 'android' ? 30 : height < 668 ? 30 : 37,
-    color: Colors.text,
+    color: Colors.lighter_green,
   },
   inputBox: {
     flexDirection: 'row',

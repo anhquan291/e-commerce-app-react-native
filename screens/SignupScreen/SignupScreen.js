@@ -3,9 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  ScrollView,
   Dimensions,
   ImageBackground,
 } from 'react-native';
@@ -40,14 +38,7 @@ const SignUpScreen = ({ navigation }) => {
           <Text style={styles.title}>REGISTER</Text>
         </View>
       </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : null}
-        style={styles.footer}
-      >
-        <ScrollView>
-          <SignupForm navigation={navigation} />
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <SignupForm navigation={navigation} />
     </View>
   );
 };
@@ -57,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    marginTop: height * 0.2,
+    marginTop: height > 667 ? height * 0.2 : height * 0.15,
     marginBottom: 40,
     marginHorizontal: 20,
   },
@@ -67,10 +58,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     letterSpacing: 5,
-  },
-  footer: {},
-  text: {
-    color: '#fff',
   },
 });
 

@@ -1,28 +1,30 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React from "react";
+import { View, StyleSheet } from "react-native";
 //Color
-import Colors from '../../utils/Colors';
+import Colors from "../../utils/Colors";
 //number format
-import NumberFormat from 'react-number-format';
+import NumberFormat from "react-number-format";
 //Text
-import CustomText from './CustomText';
+import CustomText from "./CustomText";
 
 const Number = ({ price, color }, props) => {
   return (
     <NumberFormat
       value={price}
-      displayType={'text'}
+      displayType={"text"}
       thousandSeparator={true}
-      suffix={' đ'}
+      suffix={" đ"}
       renderText={(formattedValue) => (
         <View
           style={
             color
-              ? { ...styles.priceContainer, backgroundColor: props.color }
+              ? { ...styles.priceContainer, backgroundColor: color }
               : styles.container
           }
         >
-          <CustomText style={{ ...styles.price, ...props.style }}>
+          <CustomText
+            style={{ ...props.style, color: color ? "#fff" : Colors.red }}
+          >
             {formattedValue}
           </CustomText>
         </View>
@@ -35,14 +37,14 @@ const styles = StyleSheet.create({
   container: {},
   priceContainer: {
     paddingHorizontal: 7,
-    paddingTop: 4,
+    paddingVertical: 5,
     borderRadius: 5,
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
+    elevation: 1,
   },
   price: {
-    color: Colors.red,
     fontSize: 13,
   },
 });

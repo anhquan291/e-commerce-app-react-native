@@ -1,5 +1,5 @@
 // Import react
-import React from 'react';
+import React from "react";
 // Import react-native components
 import {
   SafeAreaView,
@@ -14,19 +14,19 @@ import {
   FlatList,
   Platform,
   StatusBar,
-} from 'react-native';
+} from "react-native";
 
 //icon
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { Ionicons, Feather } from "@expo/vector-icons";
 //Colors
-import Colors from '../../../utils/Colors';
+import Colors from "../../../utils/Colors";
 // Import react-native-reanimated
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { Easing } from "react-native-reanimated";
 const { Value, timing } = Animated;
 //Search Item component
-import SearchItem from './SearchItem';
+import SearchItem from "./SearchItem";
 // Calculate window size
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 // Declare component
 class FBSearchBar extends React.Component {
@@ -35,8 +35,8 @@ class FBSearchBar extends React.Component {
     // state
     this.state = {
       isFocused: false,
-      keyword: '',
-      productsFilter: '',
+      keyword: "",
+      productsFilter: "",
     };
     // animation values
     this._input_box_translate_x = new Value(width);
@@ -129,17 +129,17 @@ class FBSearchBar extends React.Component {
     const _header_height = Animated.interpolate(_diff_clamp_scroll_y, {
       inputRange: [0, headerPlatform],
       outputRange: [headerPlatform, 0],
-      extrapolate: 'clamp',
+      extrapolate: "clamp",
     });
     const _header_translate_y = Animated.interpolate(_diff_clamp_scroll_y, {
       inputRange: [0, headerPlatform],
       outputRange: [0, -headerPlatform],
-      extrapolate: 'clamp',
+      extrapolate: "clamp",
     });
     const _header_opacity = Animated.interpolate(_diff_clamp_scroll_y, {
       inputRange: [0, headerPlatform],
       outputRange: [1, 0],
-      extrapolate: 'clamp',
+      extrapolate: "clamp",
     });
     // const ViewPlatForm = Platform.OS === "android" ? SafeAreaView : View;
     return (
@@ -151,13 +151,13 @@ class FBSearchBar extends React.Component {
             style={[
               styles.header,
               {
-                height: Platform.OS === 'ios' ? _header_height : 50,
+                height: Platform.OS === "ios" ? _header_height : 50,
                 transform: [
                   {
-                    translateY: Platform.OS === 'ios' ? _header_translate_y : 0,
+                    translateY: Platform.OS === "ios" ? _header_translate_y : 0,
                   },
                 ],
-                opacity: Platform.OS === 'ios' ? _header_opacity : 1,
+                opacity: Platform.OS === "ios" ? _header_opacity : 1,
               },
             ]}
           >
@@ -165,24 +165,24 @@ class FBSearchBar extends React.Component {
               <TouchableOpacity
                 onPress={() => this.props.navigation.toggleDrawer()}
               >
-                <Feather name='menu' size={25} color={Colors.light_green} />
+                <Feather name="menu" size={25} color={Colors.light_green} />
               </TouchableOpacity>
               <View>
                 <Image
-                  source={require('../../../assets/Images/logoNoText.png')}
+                  source={require("../../../assets/Images/logoNoText.png")}
                   style={{
                     width: height < 668 ? 130 : 120,
-                    resizeMode: 'contain',
+                    resizeMode: "contain",
                   }}
                 />
               </View>
               <TouchableHighlight
                 activeOpacity={1}
-                underlayColor={'#ccd0d5'}
+                underlayColor={"#ccd0d5"}
                 onPress={this._onFocus}
                 style={styles.search_icon_box}
               >
-                <Ionicons name='ios-search' size={20} color='#fff' />
+                <Ionicons name="ios-search" size={20} color="#fff" />
               </TouchableHighlight>
               <Animated.View
                 style={[
@@ -193,21 +193,21 @@ class FBSearchBar extends React.Component {
                 <Animated.View style={{ opacity: this._back_button_opacity }}>
                   <TouchableHighlight
                     activeOpacity={1}
-                    underlayColor={'#ccd0d5'}
+                    underlayColor={"#ccd0d5"}
                     onPress={this._onBlur}
                     style={styles.back_icon_box}
                   >
                     <Ionicons
-                      name='ios-arrow-back'
+                      name="ios-arrow-back"
                       size={22}
                       color={Colors.light_green}
                     />
                   </TouchableHighlight>
                 </Animated.View>
                 <TextInput
-                  ref='input'
-                  placeholder='Tìm kiếm sản phẩm'
-                  clearButtonMode='always'
+                  ref="input"
+                  placeholder="Tìm kiếm sản phẩm"
+                  clearButtonMode="always"
                   value={this.state.keyword}
                   onChangeText={(value) => this.searchFilterFunction(value)}
                   style={styles.input}
@@ -226,14 +226,14 @@ class FBSearchBar extends React.Component {
           ]}
         >
           <View style={styles.content_safe_area}>
-            {this.state.keyword === '' ? (
+            {this.state.keyword === "" ? (
               <View style={styles.image_placeholder_container}>
                 <Image
-                  source={require('../../../assets/Images/logo1.png')}
+                  source={require("../../../assets/Images/logo1.png")}
                   style={styles.image_placeholder}
                 />
                 <Text style={styles.image_placeholder_text}>
-                  Nhập vào từ khóa{'\n'}
+                  Nhập vào từ khóa{"\n"}
                   để tìm kiếm :D
                 </Text>
               </View>
@@ -242,7 +242,7 @@ class FBSearchBar extends React.Component {
                 style={{
                   marginHorizontal: 20,
                   marginTop:
-                    Platform.OS === 'android' ? 0 : height < 668 ? 0 : 60,
+                    Platform.OS === "android" ? 0 : height < 668 ? 0 : 60,
                 }}
               >
                 {this.state.productsFilter.length === 0 ? (
@@ -277,17 +277,17 @@ export default FBSearchBar;
 const styles = StyleSheet.create({
   header_safe_area: {
     zIndex: 100,
-    backgroundColor: '#fff',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: "#fff",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header_inner: {
     // paddingBottom: 5,
     flex: 1,
-    overflow: 'hidden',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'relative',
+    overflow: "hidden",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "relative",
     paddingHorizontal: 10,
   },
   search_icon_box: {
@@ -296,29 +296,29 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     backgroundColor: Colors.lighter_green,
     borderWidth: 1,
-    borderColor: '#fff',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderColor: "#fff",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   input_box: {
     height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
     top: 0,
     left: 0,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     width: width,
   },
   back_icon_box: {
     width: 40,
     height: 40,
     borderRadius: 40,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   input: {
     flex: 1,
@@ -332,41 +332,41 @@ const styles = StyleSheet.create({
   content: {
     width: width,
     height: height,
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     bottom: 0,
     zIndex: 999,
   },
   content_safe_area: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingTop: 150,
   },
   content_inner: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderTopWidth: 1,
     borderTopColor: Colors.light_grey,
   },
   image_placeholder_container: {
-    flexDirection: 'column',
+    flexDirection: "column",
     marginTop: 100,
   },
   image_placeholder: {
     height: 80,
-    resizeMode: 'contain',
-    alignSelf: 'center',
+    resizeMode: "contain",
+    alignSelf: "center",
   },
   image_placeholder_text: {
-    textAlign: 'center',
-    color: 'gray',
+    textAlign: "center",
+    color: "gray",
     marginTop: 5,
   },
   search_item: {
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 40,
-    alignItems: 'center',
+    alignItems: "center",
     borderBottomWidth: 1,
-    borderBottomColor: '#e6e4eb',
+    borderBottomColor: "#e6e4eb",
     marginLeft: 16,
   },
   item_icon: {

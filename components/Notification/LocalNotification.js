@@ -1,5 +1,5 @@
-import * as Notifications from 'expo-notifications';
-import React, { useEffect } from 'react';
+import * as Notifications from "expo-notifications";
+import React, { useEffect } from "react";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -14,16 +14,17 @@ const LocalNotification = () => {
     const triggerNotificationHandler = async () => {
       const LocalNoti = await Notifications.scheduleNotificationAsync({
         content: {
-          title: 'Ngày mới tốt lành bạn nhé ^^',
-          body: 'Hãy lựa chọn sự may mắn, mua sự thành công cùng với CatTuong',
-          data: { mySpecialData: 'Some text' },
+          title: "Ngày mới tốt lành bạn nhé ^^",
+          body: "Hãy lựa chọn sự may mắn, mua sự thành công cùng với CatTuong",
+          data: { mySpecialData: "Some text" },
         },
         trigger: {
-          hour: 7,
-          minute: 45,
+          hour: 8,
+          minute: 0,
+          repeats: true,
         },
       });
-      await Notifications.dismissNotificationAsync(LocalNoti);
+      Notifications.cancelScheduledNotificationAsync(LocalNoti);
     };
     triggerNotificationHandler();
 

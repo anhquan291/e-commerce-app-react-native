@@ -40,14 +40,7 @@ const SignUpScreen = ({ navigation }) => {
           <Text style={styles.title}>LOGIN</Text>
         </View>
       </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : null}
-        style={styles.footer}
-      >
-        <ScrollView>
-          <LoginForm navigation={navigation} />
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <LoginForm navigation={navigation} />
     </View>
   );
 };
@@ -68,7 +61,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 5,
   },
-  footer: {},
   text: {
     color: '#fff',
   },

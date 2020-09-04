@@ -1,23 +1,24 @@
-import React from 'react';
-import { View, Dimensions } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import React from "react";
+import { View, Dimensions } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import Colors from "../../utils/Colors";
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const Loader = () => {
   return (
     <View
       style={{
-        position: 'absolute',
+        position: "absolute",
         flex: 1,
         width,
         height,
-        backgroundColor: 'rgba(12,13,52,0.3)',
+        backgroundColor: "rgba(128, 129, 130,0.5)",
         zIndex: 1001,
-        justifyContent: 'center',
+        justifyContent: "center",
       }}
     >
-      <ActivityIndicator size='large' color='#2CB9B0' />
+      <ActivityIndicator size="large" color={Colors.lighter_green} />
     </View>
   );
 };

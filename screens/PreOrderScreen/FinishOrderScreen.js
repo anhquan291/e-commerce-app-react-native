@@ -14,12 +14,6 @@ const FinishOrderScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.info}>
         <View>
-          {/* <AntDesign
-            name='checkcircleo'
-            size={24}
-            size={100}
-            color={Colors.blue}
-          /> */}
           <LottieView
             source={require('../../components/IconAnimation/done.json')}
             autoPlay

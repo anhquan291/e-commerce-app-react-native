@@ -1,7 +1,8 @@
-import { API_URL } from '../../utils/Config';
-import { timeoutPromise } from '../../utils/Tools';
-export const FETCH_ORDER = 'FETCH_ORDER';
-export const ADD_ORDER = 'ADD_ORDER';
+import { API_URL } from "../../utils/Config";
+import { timeoutPromise } from "../../utils/Tools";
+export const FETCH_ORDER = "FETCH_ORDER";
+export const ADD_ORDER = "ADD_ORDER";
+export const ERROR = "ERROR";
 
 //Fetch order
 export const fetchOrder = () => {
@@ -14,23 +15,22 @@ export const fetchOrder = () => {
       const response = await timeoutPromise(
         fetch(`${API_URL}/order`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": user.token,
           },
-          method: 'GET',
+          method: "GET",
         })
       );
       if (!response.ok) {
-        alert('Order Error');
-        return;
+        alert("Can't get Orders");
       }
       const resData = await response.json();
       const filterUserOrder = resData.content.filter(
         (userOrder) => userOrder.userId._id === user.userid
       );
       dispatch({
-        type: 'FETCH_ORDER',
+        type: "FETCH_ORDER",
         orderData: filterUserOrder,
       });
     } catch (err) {
@@ -40,35 +40,49 @@ export const fetchOrder = () => {
 };
 
 //Add order
-export const addOrder = (orderItems, name, totalAmount, fullAddress, phone) => {
+export const addOrder = (
+  token,
+  orderItems,
+  name,
+  totalAmount,
+  paymentMethod,
+  fullAddress,
+  phone
+) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/order/post`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": user.token,
           },
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
-            userId: user.userid,
-            items: orderItems,
-            name,
-            totalAmount,
-            address: fullAddress,
-            phone,
+            token,
+            orderInfo: {
+              userId: user.userid,
+              items: orderItems,
+              name,
+              totalAmount,
+              paymentMethod,
+              address: fullAddress,
+              phone,
+            },
           }),
         })
       );
       if (!response.ok) {
-        alert('Order Error');
-        return;
+        return dispatch({
+          type: "ERROR",
+          error: "Ordering Error",
+        });
       }
       const resData = await response.json();
       dispatch({
-        type: 'ADD_ORDER',
+        type: "ADD_ORDER",
         orderItem: resData.content,
       });
     } catch (err) {
