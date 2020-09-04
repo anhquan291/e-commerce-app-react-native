@@ -11,7 +11,7 @@ import AppNavigator from "./navigation/AppNavigator";
 //redux form
 import { reducer as formReducer } from "redux-form";
 //Fonts
-import * as Font from "expo-font";
+import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 import { AppLoading } from "expo";
 
 //Notification
@@ -31,20 +31,12 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(ReduxThunk))
 );
 
-const fetchFonts = () => {
-  return Font.loadAsync({});
-};
-
 export default function App(props) {
-  const [fontLoaded, setFontLoaded] = useState(false);
-
-  if (!fontLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setFontLoaded(true)}
-      />
-    );
+  let [fontsLoaded] = useFonts({
+    Inter_900Black,
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
   return (
     <Provider store={store}>

@@ -55,7 +55,7 @@ const renderField = ({
       <View>
         <Input
           placeholder={label}
-          autoCapitalize={label === "name" ? "words" : "none"}
+          autoCapitalize={label === "Họ Tên" ? "words" : "none"}
           inputStyle={{ fontSize: 14 }}
           inputContainerStyle={{
             borderBottomColor: checkFocus ? Colors.lighter_green : Colors.grey,
@@ -67,7 +67,6 @@ const renderField = ({
           {...restInput}
         />
       </View>
-
       {touched && error && (
         <CustomText
           style={{ color: "red", marginBottom: 5, paddingHorizontal: 5 }}

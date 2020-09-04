@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Image, StyleSheet, Dimensions } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -8,19 +8,21 @@ import Colors from "../../../utils/Colors";
 
 const { width } = Dimensions.get("window");
 
-const PaymentBody = () => {
-  const [checked, setCheck] = useState(true);
+const PaymentBody = ({ navigation, payByCard, setPayByCard }) => {
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>Chọn Hình Thức Thanh Toán</CustomText>
       <View style={styles.optionContainer}>
         <View style={styles.option}>
           <CheckBox
-            checkedIcon="dot-circle-o"
-            uncheckedIcon="circle-o"
+            checkedIcon="dot-circle"
+            uncheckedIcon="circle"
+            iconType="font-awesome-5"
             checkedColor={Colors.lighter_green}
-            checked={checked}
-            onPress={() => setCheck((prev) => !prev)}
+            checked={!payByCard}
+            onPress={() => {
+              setPayByCard(false);
+            }}
             containerStyle={{ padding: 5 }}
           />
           <MaterialCommunityIcons
@@ -32,11 +34,12 @@ const PaymentBody = () => {
         </View>
         <View style={styles.option}>
           <CheckBox
-            checkedIcon="dot-circle-o"
-            uncheckedIcon="circle-o"
+            checkedIcon="dot-circle"
+            uncheckedIcon="circle"
+            iconType="font-awesome-5"
             checkedColor={Colors.lighter_green}
-            checked={!checked}
-            onPress={() => setCheck((prev) => !prev)}
+            checked={payByCard}
+            onPress={() => navigation.navigate("AddCreditCardScreen")}
             containerStyle={{ padding: 5 }}
           />
           <MaterialCommunityIcons

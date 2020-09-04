@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import React, { useState } from "react";
+import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 //Colors
-import Colors from '../../../utils/Colors';
+import Colors from "../../../utils/Colors";
 //Item
-import ItemList from '../../PreOrderScreen/components/PreOrderItem';
+import ItemList from "../../PreOrderScreen/components/PreOrderItem";
 //Number format
-import NumberFormat from '../../../components/UI/NumberFormat';
+import NumberFormat from "../../../components/UI/NumberFormat";
 //Moment
-import moment from 'moment';
-import 'moment/min/locales';
+import moment from "moment";
+import "moment/min/locales";
 //PropTypes check
-import PropTypes from 'prop-types';
-import CustomText from '../../../components/UI/CustomText';
-import Steps from '../../../components/UI/Steps';
+import PropTypes from "prop-types";
+import CustomText from "../../../components/UI/CustomText";
+import Steps from "../../../components/UI/Steps";
 
-moment.locale('vi');
+moment.locale("vi");
 
 const OrderItem = ({ order }) => {
   const [showDetails, setShowDetails] = useState(false);
   const status = () => {
     switch (order.status) {
-      case 'waiting':
+      case "waiting":
         return 0;
-      case 'confirmed':
+      case "confirmed":
         return 1;
-      case 'delivery':
+      case "delivery":
         return 2;
       default:
         return 3;
@@ -43,13 +43,13 @@ const OrderItem = ({ order }) => {
         <View style={styles.textContainer}>
           <CustomText style={styles.text}>Ngày đặt: </CustomText>
           <CustomText style={styles.detail}>
-            {moment(order.date).format('Do MMMM  YYYY, hh:mm a ')}
+            {moment(order.date).format("Do MMMM  YYYY, hh:mm a ")}
           </CustomText>
         </View>
         <View style={styles.detailButtom}>
           <TouchableOpacity onPress={() => setShowDetails((prev) => !prev)}>
-            <CustomText style={{ fontSize: 15, color: '#fff' }}>
-              {showDetails ? 'Ẩn đơn hàng' : 'Chi tiết đơn hàng'}
+            <CustomText style={{ fontSize: 15, color: "#fff" }}>
+              {showDetails ? "Ẩn đơn hàng" : "Chi tiết đơn hàng"}
             </CustomText>
           </TouchableOpacity>
         </View>
@@ -68,6 +68,14 @@ const OrderItem = ({ order }) => {
               <CustomText style={styles.text}>Số điện thoại: </CustomText>
               <CustomText style={styles.detail}>0{order.phone}</CustomText>
             </View>
+            <View style={styles.textContainer}>
+              <CustomText style={styles.text}>
+                Phương thức thanh toán:{" "}
+              </CustomText>
+              <CustomText style={styles.detail}>
+                {order.paymentMethod}
+              </CustomText>
+            </View>
             <View style={styles.steps}>
               <Steps position={status()} />
             </View>
@@ -84,7 +92,7 @@ const OrderItem = ({ order }) => {
               style={{
                 ...styles.textContainer,
                 marginTop: 10,
-                justifyContent: 'space-between',
+                justifyContent: "space-between",
               }}
             >
               <CustomText style={styles.text}>Tổng tiền:</CustomText>
@@ -111,6 +119,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderColor: Colors.grey,
+    backgroundColor: Colors.white,
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -118,23 +127,20 @@ const styles = StyleSheet.create({
   },
   detailButtom: {
     backgroundColor: Colors.lighter_green,
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: 10,
     borderRadius: 5,
-    marginBottom: 5,
+    marginVertical: 15,
   },
   textContainer: {
-    flexDirection: 'row',
-  },
-  text: {
-    fontSize: 16,
+    flexDirection: "row",
+    marginVertical: 5,
   },
   detail: {
     color: Colors.lighter_green,
-    fontSize: 16,
   },
   steps: {
-    width: '100%',
+    width: "100%",
     height: 100,
   },
 });

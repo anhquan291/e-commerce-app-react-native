@@ -43,11 +43,10 @@ const Address = ({ getInfo }) => {
     },
     [selectedProvince]
   );
-
   //get Address
-  // useEffect(() => {
-  //   getInfo(selectedProvince, selectedTown);
-  // }, [selectedProvince, selectedTown]);
+  useEffect(() => {
+    getInfo(selectedProvince, selectedTown);
+  }, [selectedProvince, selectedTown]);
   //Show Icon
   const showIconPlatform =
     Platform.OS === "android" ? (

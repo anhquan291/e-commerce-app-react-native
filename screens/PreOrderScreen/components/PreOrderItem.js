@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginBottom: 5,
   },
   left: {
     width: "20%",

@@ -20,31 +20,57 @@ import Header from "./components/Header";
 import PaymentBody from "./components/PaymentBody";
 import SummaryOrder from "../PreOrderScreen/components/SummaryOrder";
 
-const PaymentScreen = ({ navigation, route }) => {
+const PaymentScreen = (props) => {
+  const [loading, setLoading] = useState(false);
   const carts = useSelector((state) => state.cart.cartItems);
-  const user = useSelector((state) => state.auth.user);
+  const error = useSelector((state) => state.order.error);
+  let token = props.route.params.token;
+  const [payByCard, setPayByCard] = useState(false);
+  const paymentMethod = payByCard ? "Credit Card" : "Cash";
+
+  useEffect(() => {
+    setPayByCard(token ? true : false);
+  }, [token]);
+
   const dispatch = useDispatch();
-  const { fullAddress, orderItems, phone, total, cartId } = route.params;
+  const {
+    orderItems,
+    name,
+    phone,
+    total,
+    cartId,
+    fullAddress,
+  } = props.route.params;
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
       unmounted.current = true;
     };
   }, []);
-  const [loading, setLoading] = useState(false);
-
   //action Add Order
   const addOrder = async () => {
     try {
       setLoading(true);
-
+      token = payByCard ? token : {};
       await dispatch(
-        OrderActions.addOrder(orderItems, total, fullAddress, phone)
+        OrderActions.addOrder(
+          token,
+          orderItems,
+          name,
+          total,
+          paymentMethod,
+          fullAddress,
+          phone
+        )
       );
       await dispatch(CartActions.resetCart(cartId));
       setLoading(false);
-      if (!unmounted.current) {
-        navigation.navigate("FinishOrder");
+      if (Object.keys(error).length === 0) {
+        if (!unmounted.current) {
+          props.navigation.navigate("FinishOrder");
+        }
+      } else {
+        alert(error);
       }
     } catch (err) {
       throw err;
@@ -52,31 +78,19 @@ const PaymentScreen = ({ navigation, route }) => {
   };
   useEffect(() => {
     if (carts.items.length === 0) {
-      navigation.goBack();
+      props.navigation.navigate("Home");
     }
   }, [carts.items]);
 
-  const PayByCard = (user, total, phone, fullAddress) => {
-    fetch("http://192.168.0.27:8080/api/v1/order/post", {
-      method: "POST",
-      body: JSON.stringify({
-        email: user.email,
-        total,
-        phone,
-        fullAddress,
-      }),
-    }).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-      });
-    });
-  };
-
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
+      <Header navigation={props.navigation} />
       <ScrollView>
-        <PaymentBody />
+        <PaymentBody
+          navigation={props.navigation}
+          payByCard={payByCard}
+          setPayByCard={setPayByCard}
+        />
         <SummaryOrder cartItems={carts.items} total={total} />
       </ScrollView>
       <View style={styles.total}>
@@ -89,17 +103,7 @@ const PaymentScreen = ({ navigation, route }) => {
             paddingVertical: 5,
           }}
         ></View>
-        <View
-          style={{
-            width: "100%",
-            height: 50,
-            backgroundColor: Colors.red,
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 5,
-            marginBottom: 5,
-          }}
-        >
+        <View style={styles.orderButton}>
           <TouchableOpacity onPress={addOrder}>
             {loading ? (
               <ActivityIndicator size="small" color="#fff" />
@@ -123,6 +127,15 @@ const styles = StyleSheet.create({
     left: 0,
     paddingHorizontal: 10,
     backgroundColor: "transparent",
+  },
+  orderButton: {
+    width: "100%",
+    height: 50,
+    backgroundColor: Colors.red,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    marginBottom: 5,
   },
 });
 
