@@ -10,6 +10,11 @@ import HorizontalItem from "./HorizontalItem";
 import PropTypes from "prop-types";
 
 const ProductBody = ({ navigation, productsFilter }) => {
+  const rings = productsFilter.filter((ring) => ring.type === "ring");
+  const bracelets = productsFilter.filter(
+    (bracelet) => bracelet.type === "bracelet"
+  );
+  const stones = productsFilter.filter((stone) => stone.type === "stone");
   return (
     <View style={styles.footer}>
       <ScrollableTabView
@@ -26,8 +31,8 @@ const ProductBody = ({ navigation, productsFilter }) => {
           paddingTop: 3,
         }}
       >
-        <View tabLabel="Vòng chuỗi">
-          {productsFilter.length === 0 ? (
+        <View tabLabel='Vòng chuỗi'>
+          {bracelets.length === 0 ? (
             <View style={styles.center}>
               <Text style={{ color: Colors.grey }}>
                 Không tìm thấy sản phầm
@@ -35,7 +40,7 @@ const ProductBody = ({ navigation, productsFilter }) => {
             </View>
           ) : (
             <FlatList
-              data={productsFilter}
+              data={bracelets}
               keyExtractor={(item) => item._id}
               renderItem={({ item }) => {
                 return <HorizontalItem item={item} navigation={navigation} />;
@@ -43,8 +48,40 @@ const ProductBody = ({ navigation, productsFilter }) => {
             />
           )}
         </View>
-        <View tabLabel="Nhẫn"></View>
-        <View tabLabel="Đá quý"></View>
+        <View tabLabel='Nhẫn'>
+          {rings.length === 0 ? (
+            <View style={styles.center}>
+              <Text style={{ color: Colors.grey }}>
+                Không tìm thấy sản phầm
+              </Text>
+            </View>
+          ) : (
+            <FlatList
+              data={rings}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => {
+                return <HorizontalItem item={item} navigation={navigation} />;
+              }}
+            />
+          )}
+        </View>
+        <View tabLabel='Đá quý'>
+          {stones.length === 0 ? (
+            <View style={styles.center}>
+              <Text style={{ color: Colors.grey }}>
+                Không tìm thấy sản phầm
+              </Text>
+            </View>
+          ) : (
+            <FlatList
+              data={stones}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => {
+                return <HorizontalItem item={item} navigation={navigation} />;
+              }}
+            />
+          )}
+        </View>
       </ScrollableTabView>
     </View>
   );
