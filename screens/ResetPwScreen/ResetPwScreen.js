@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   View,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
+  Keyboard,
 } from "react-native";
 import { Field, reduxForm } from "redux-form";
 import CustomText from "../../components/UI/CustomText";
@@ -17,7 +18,6 @@ import { Feather } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 //Import Action
 import * as AuthActions from "../../store/auth/authActions";
-import Snackbar from "../../components/Notification/Snackbar";
 
 //Validation
 const validate = (values) => {
@@ -28,9 +28,7 @@ const validate = (values) => {
   } else if (values.password.length < 6) {
     errors.password = "Mật khẩu phải nhiều hơn hoặc bằng 6 ký tự";
   }
-  if (!values.confirmpassword) {
-    errors.confirmpassword = "Mật khẩu không được bỏ trống";
-  } else if (values.confirmpassword !== values.password) {
+  if (values.confirmpassword !== values.password) {
     errors.confirmpassword = "Mật khẩu xác nhận không trùng khớp";
   }
 
@@ -39,28 +37,18 @@ const validate = (values) => {
 
 const ResetPwScreen = (props) => {
   const { handleSubmit, reset } = props;
-  const unmounted = useRef(false);
-  useEffect(() => {
-    return () => {
-      unmounted.current = true;
-    };
-  }, []);
+  const dispatch = useDispatch();
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showConfirmPass, setshowConfirmPass] = useState(false);
-  const [showSnack, setSnowSnack] = useState(false);
   const url = props.route.params;
-  const dispatch = useDispatch();
   const submit = async (values) => {
     setLoading(true);
+    Keyboard.dismiss;
+    reset();
     try {
-      await dispatch(AuthActions(values.password, url));
-      await setLoading(false);
-      reset();
-
-      if (!unmounted.current) {
-        setSnowSnack(true);
-      }
+      await dispatch(AuthActions.ResetPassword(values.password, url));
+      setLoading(false);
     } catch (err) {
       throw err;
     }
@@ -74,7 +62,7 @@ const ResetPwScreen = (props) => {
         style={{ position: "absolute", top: 50, left: 20 }}
       >
         <Feather
-          name="arrow-left-circle"
+          name='arrow-left-circle'
           size={30}
           color={Colors.lighter_green}
         />
@@ -82,26 +70,26 @@ const ResetPwScreen = (props) => {
       <View style={styles.content}>
         <CustomText style={styles.title}> Reset Password </CustomText>
         <Field
-          name="password"
-          keyboardType="default"
-          label="Mật Khẩu"
+          name='password'
+          keyboardType='default'
+          label='Mật Khẩu'
           component={renderField}
           secureTextEntry={!showPass ? true : false}
-          placeholder="Mật khẩu của bạn"
-          icon="lock-outline"
-          passIcon="pass"
+          placeholder='Mật khẩu của bạn'
+          icon='lock-outline'
+          passIcon='pass'
           showPass={showPass}
           setShowPass={setShowPass}
         />
         <Field
-          name="confirmpassword"
-          keyboardType="default"
-          label="Xác Nhận Mật Khẩu"
+          name='confirmpassword'
+          keyboardType='default'
+          label='Xác Nhận Mật Khẩu'
           component={renderField}
           secureTextEntry={!showConfirmPass ? true : false}
-          placeholder="Xác nhận mật khẩu"
-          passIcon="confirm"
-          icon="lock-outline"
+          placeholder='Xác nhận mật khẩu'
+          passIcon='confirm'
+          icon='lock-outline'
           showConfirmPass={showConfirmPass}
           setshowConfirmPass={setshowConfirmPass}
         />
@@ -111,17 +99,15 @@ const ResetPwScreen = (props) => {
         >
           <View style={styles.signIn}>
             {loading ? (
-              <ActivityIndicator size="small" color="#fff" />
+              <ActivityIndicator size='small' color='#fff' />
             ) : (
-              <CustomText style={styles.textSign}>Đặt Lại Mật Khẩu</CustomText>
+              <CustomText style={styles.textSign}>
+                Reset Your Password
+              </CustomText>
             )}
           </View>
         </TouchableOpacity>
       </View>
-      <Snackbar
-        checkVisible={showSnack}
-        message={"Reset password successfully"}
-      />
     </SafeAreaView>
   );
 };

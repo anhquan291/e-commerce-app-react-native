@@ -3,7 +3,6 @@ import { Field, reduxForm } from "redux-form";
 import {
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
@@ -11,9 +10,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import { Input } from "react-native-elements";
-//Icon
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
@@ -76,20 +72,20 @@ const Login = (props) => {
           >
             <View>
               <Field
-                name="email"
-                keyboardType="email-address"
-                label="Email"
-                icon="email"
+                name='email'
+                keyboardType='email-address'
+                label='Email'
+                icon='email'
                 component={renderField}
               />
               <Field
-                name="password"
-                keyboardType="default"
-                label="Password"
+                name='password'
+                keyboardType='default'
+                label='Password'
                 component={renderField}
                 secureTextEntry={showPass ? false : true}
-                passIcon="eye"
-                icon="lock"
+                passIcon='eye'
+                icon='lock'
                 showPass={showPass}
                 setShowPass={setShowPass}
               />
@@ -113,7 +109,7 @@ const Login = (props) => {
             >
               <View style={styles.signIn}>
                 {loading ? (
-                  <ActivityIndicator size="small" color="#fff" />
+                  <ActivityIndicator size='small' color='#fff' />
                 ) : (
                   <CustomText style={styles.textSign}>ĐĂNG NHẬP</CustomText>
                 )}

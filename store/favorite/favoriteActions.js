@@ -1,8 +1,8 @@
-import { API_URL } from '../../utils/Config';
-import { timeoutPromise } from '../../utils/Tools';
-export const FETCH_FAVORITE = 'FETCH_FAVORITE';
-export const ADD_FAVORITE = 'ADD_FAVORITE';
-export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
+import { API_URL } from "../../utils/Config";
+import { timeoutPromise } from "../../utils/Tools";
+export const FETCH_FAVORITE = "FETCH_FAVORITE";
+export const ADD_FAVORITE = "ADD_FAVORITE";
+export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 
 //Fetch Favorite
 export const fetchFavorite = () => {
@@ -13,11 +13,11 @@ export const fetchFavorite = () => {
         const response = await timeoutPromise(
           fetch(`${API_URL}/favoriteList`, {
             headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              'auth-token': user.token,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "auth-token": user.token,
             },
-            method: 'GET',
+            method: "GET",
           })
         );
         if (!response.ok) {
@@ -52,11 +52,11 @@ export const addFavorite = (item) => {
       const response = await timeoutPromise(
         fetch(`${API_URL}/favoriteList/post`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": user.token,
           },
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
             userId: user.userid,
             items: [
@@ -68,12 +68,12 @@ export const addFavorite = (item) => {
         })
       );
       if (!response.ok) {
-        throw new Error('Something went wrong!');
+        throw new Error("Something went wrong!");
       }
       const resData = await response.json();
 
       dispatch({
-        type: 'ADD_FAVORITE',
+        type: "ADD_FAVORITE",
         addItem: item,
       });
     } catch (err) {
@@ -88,23 +88,23 @@ export const removeFavorite = (id) => {
       const response = await timeoutPromise(
         fetch(`${API_URL}/favoriteList/${user.userid}`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": user.token,
           },
-          method: 'PATCH',
+          method: "PATCH",
           body: JSON.stringify({
             item: id,
           }),
         })
       );
       if (!response.ok) {
-        throw new Error('Something went wrong!');
+        throw new Error("Something went wrong!");
       }
       const resData = await response.json();
 
       dispatch({
-        type: 'REMOVE_FAVORITE',
+        type: "REMOVE_FAVORITE",
         itemId: id,
       });
     } catch (err) {

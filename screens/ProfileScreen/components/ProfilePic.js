@@ -73,12 +73,12 @@ const ProfilePic = ({
           style={{
             width: "100%",
             alignItems: "flex-end",
-            transform: [{ translateY: -110 }, { translateX: -20 }],
+            transform: [{ translateY: -110 }, { translateX: -5 }],
           }}
         >
           <View style={styles.cameraContainer}>
             <TouchableOpacity onPress={UploadProfileHandler}>
-              <FontAwesome name="camera" size={15} color="white" />
+              <FontAwesome name='camera' size={15} color='white' />
             </TouchableOpacity>
           </View>
         </View>

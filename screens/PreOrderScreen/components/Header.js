@@ -24,7 +24,7 @@ const Header = ({ navigation }) => {
       <View style={{ position: "absolute", bottom: 20, left: 15, zIndex: 10 }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons
-            name="ios-arrow-back"
+            name='ios-arrow-back'
             size={30}
             color={Colors.lighter_green}
           />
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   header: {
     width: width,
     backgroundColor: "#fff",
-    height: Platform.OS === "ios" ? 120 : 100,
+    height: Platform.OS === "android" ? 100 : height > 667 ? 110 : 100,
     shadowColor: "black",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },

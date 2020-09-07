@@ -19,9 +19,12 @@ import PropTypes from "prop-types";
 
 class CartItem extends React.PureComponent {
   render() {
-    const { item, onAdd, onDes, onRemove } = this.props;
+    const { item, onAdd, onDes, onRemove, setAddLoading } = this.props;
+    const AddItemHandler = async () => {
+      await onAdd();
+    };
     const sum = +item.item.price * +item.quantity;
-    const checkDesQuantity = () => {
+    const checkDesQuantity = async () => {
       if (item.quantity == 1) {
         Alert.alert(
           "Xóa giỏ hàng",
@@ -37,7 +40,7 @@ class CartItem extends React.PureComponent {
           ]
         );
       } else {
-        onDes();
+        await onDes();
       }
     };
     return (
@@ -60,7 +63,7 @@ class CartItem extends React.PureComponent {
             <CustomText style={styles.title}>{item.item.filename}</CustomText>
             <View>
               <TouchableOpacity onPress={onRemove}>
-                <MaterialCommunityIcons name="close" size={20} color="#000" />
+                <MaterialCommunityIcons name='close' size={20} color='#000' />
               </TouchableOpacity>
             </View>
           </View>
@@ -70,13 +73,13 @@ class CartItem extends React.PureComponent {
           <NumberFormat price={sum.toString()} />
           <View style={styles.box}>
             <TouchableOpacity onPress={checkDesQuantity} style={styles.boxMin}>
-              <MaterialCommunityIcons name="minus" size={16} />
+              <MaterialCommunityIcons name='minus' size={16} />
             </TouchableOpacity>
             <View>
               <CustomText style={styles.boxText}>{item.quantity}</CustomText>
             </View>
-            <TouchableOpacity onPress={onAdd} style={styles.boxMin}>
-              <MaterialCommunityIcons name="plus" size={16} />
+            <TouchableOpacity onPress={AddItemHandler} style={styles.boxMin}>
+              <MaterialCommunityIcons name='plus' size={16} />
             </TouchableOpacity>
           </View>
         </View>

@@ -1,15 +1,22 @@
-import { LOGIN, LOGOUT, EDIT_INFO, UPLOAD_PROFILEPIC } from './authActions';
-import { AsyncStorage } from 'react-native';
-import UserMessages from '../../messages/user';
+import {
+  LOGIN,
+  LOGOUT,
+  EDIT_INFO,
+  UPLOAD_PROFILEPIC,
+  LOGIN_ERROR,
+  SIGN_UP,
+} from "./authActions";
+import { AsyncStorage } from "react-native";
+import UserMessages from "../../messages/user";
 
 const initialState = {
   user: {},
-  error: {},
+  error: "",
   notification: {},
 };
 //set user if token doesn't expire yet
 const userInformation = async () => {
-  const getUser = await AsyncStorage.getItem('user');
+  const getUser = await AsyncStorage.getItem("user");
   if (!getUser) {
     return (initialState.user = {});
   }
@@ -24,15 +31,27 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.user,
-        notification: UserMessages['user.login.success'],
+        notification: UserMessages["user.login.success"],
       };
-
+    case LOGIN_ERROR: {
+      return {
+        ...state,
+        error: action.error,
+      };
+    }
+    case SIGN_UP: {
+      return {
+        ...state,
+        error: action.error,
+      };
+    }
     case LOGOUT:
       return {
         user: {},
         error: {},
-        notification: UserMessages['user.logout.sucesss'],
+        notification: UserMessages["user.logout.sucesss"],
       };
+
     case EDIT_INFO:
       state.user.phone = action.phone;
       state.user.address = action.address;

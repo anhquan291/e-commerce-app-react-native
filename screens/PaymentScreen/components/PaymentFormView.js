@@ -58,9 +58,9 @@ export default class PaymentFormView extends React.Component {
 }
 
 PaymentFormView.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  submitted: PropTypes.bool.isRequired,
-  error: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func,
+  submitted: PropTypes.bool,
+  error: PropTypes.object,
 };
 
 const styles = StyleSheet.create({

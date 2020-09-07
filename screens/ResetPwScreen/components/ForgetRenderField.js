@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { TextInput } from "react-native-paper";
+import { Input } from "react-native-elements";
 import CustomText from "../../../components/UI/CustomText";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 //Colors
@@ -14,11 +14,11 @@ export default renderField = ({
   input: { onChange, ...restInput },
 }) => {
   return (
-    <View>
-      <TextInput
+    <View style={{ marginTop: 30 }}>
+      <Input
         placeholder={label}
-        autoCapitalize="none"
-        clearButtonMode={passIcon ? "never" : "always"}
+        autoCapitalize='none'
+        clearButtonMode='always'
         leftIcon={
           <MaterialCommunityIcons
             name={icon}
@@ -29,15 +29,14 @@ export default renderField = ({
         inputStyle={{ fontSize: 14, paddingLeft: 10 }}
         keyboardType={keyboardType}
         onChangeText={onChange}
-        secureTextEntry={secureTextEntry}
         {...restInput}
       />
       {touched &&
         ((error && (
-          <CustomText style={{ color: "CustomText" }}>{error}</CustomText>
+          <CustomText style={{ color: Colors.red }}>{error}</CustomText>
         )) ||
           (warning && (
-            <CustomText style={{ color: "orange" }}>{warning}</CustomText>
+            <CustomText style={{ color: Colors.red }}>{warning}</CustomText>
           )))}
     </View>
   );

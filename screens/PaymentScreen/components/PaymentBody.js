@@ -71,13 +71,16 @@ PaymentBody.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.grey,
+  },
   title: {
     fontSize: 15,
     color: Colors.text,
     fontWeight: "500",
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
   },
   optionContainer: {
     width,

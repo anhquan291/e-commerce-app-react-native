@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Field, reduxForm } from "redux-form";
 import CustomText from "../../components/UI/CustomText";
-import renderField from "./components/ResetRenderFileld";
+import renderField from "./components/ForgetRenderField";
 //Colors
 import Colors from "../../utils/Colors";
 //Icon
@@ -64,7 +64,7 @@ const ForgetPwScreen = (props) => {
         style={{ position: "absolute", top: 30, left: 20 }}
       >
         <Feather
-          name="arrow-left-circle"
+          name='arrow-left-circle'
           size={30}
           color={Colors.lighter_green}
         />
@@ -72,10 +72,10 @@ const ForgetPwScreen = (props) => {
       <View style={styles.content}>
         <CustomText style={styles.title}> Forget Password </CustomText>
         <Field
-          name="email"
-          keyboardType="email-address"
-          icon="email"
-          label="Email"
+          name='email'
+          keyboardType='email-address'
+          icon='email'
+          label='Email'
           component={renderField}
         />
         <TouchableOpacity
@@ -84,7 +84,7 @@ const ForgetPwScreen = (props) => {
         >
           <View style={styles.signIn}>
             {loading ? (
-              <ActivityIndicator size="small" color="#fff" />
+              <ActivityIndicator size='small' color='#fff' />
             ) : (
               <CustomText style={styles.textSign}>NEXT</CustomText>
             )}

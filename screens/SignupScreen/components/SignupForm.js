@@ -9,13 +9,14 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from "react-native";
 
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //Action
 import * as AuthActions from "../../../store/auth/authActions";
 //PropTypes check
@@ -51,29 +52,46 @@ const validate = (values) => {
 
 const Signup = (props) => {
   const { handleSubmit, reset } = props;
+  const err = useSelector((state) => state.auth.error);
+  const [error, setError] = useState(err);
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showConfirmPass, setshowConfirmPass] = useState(false);
+  const dispatch = useDispatch();
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
       unmounted.current = true;
     };
   }, []);
-  const dispatch = useDispatch();
+
   const submit = async (values) => {
     setLoading(true);
     try {
       await dispatch(
         AuthActions.SignUp(values.username, values.email, values.password)
       );
-      setLoading(false);
-      reset();
-      if (!unmounted.current) {
-        alert("Sign Up Successfully");
+      if (error.length > 0) {
+        alert(error);
+        setError("");
+        reset();
+      } else {
+        reset();
+        if (!unmounted.current) {
+          Alert.alert("Signup Successfully", "You can login now", [
+            {
+              text: "Okay",
+              onPress: () => {
+                props.navigation.goBack();
+              },
+            },
+          ]);
+        }
       }
+      setLoading(false);
     } catch (err) {
-      throw err;
+      setError(err);
+      setLoading(false);
     }
   };
   return (
@@ -88,39 +106,39 @@ const Signup = (props) => {
           >
             <View>
               <Field
-                name="username"
-                keyboardType="default"
-                label="Your Name"
+                name='username'
+                keyboardType='default'
+                label='Your Name'
                 component={renderField}
-                icon="id-card"
+                icon='id-card'
                 autoCapitalize={true}
               />
               <Field
-                name="email"
-                keyboardType="email-address"
-                label="Email"
-                icon="email"
+                name='email'
+                keyboardType='email-address'
+                label='Email'
+                icon='email'
                 component={renderField}
               />
               <Field
-                name="password"
-                keyboardType="default"
-                label="Password"
+                name='password'
+                keyboardType='default'
+                label='Password'
                 component={renderField}
                 secureTextEntry={showPass ? false : true}
-                passIcon="pass"
-                icon="lock"
+                passIcon='pass'
+                icon='lock'
                 showPass={showPass}
                 setShowPass={setShowPass}
               />
               <Field
-                name="confirmpassword"
-                keyboardType="default"
-                label="Confirm Password"
+                name='confirmpassword'
+                keyboardType='default'
+                label='Confirm Password'
                 component={renderField}
                 secureTextEntry={showConfirmPass ? false : true}
-                passIcon="confirm"
-                icon="lock"
+                passIcon='confirm'
+                icon='lock'
                 showConfirmPass={showConfirmPass}
                 setshowConfirmPass={setshowConfirmPass}
               />
@@ -131,17 +149,15 @@ const Signup = (props) => {
               style={{ marginVertical: 10, alignItems: "center" }}
             >
               <View style={styles.signIn}>
-                <CustomText style={styles.textSign}>
-                  {loading ? (
-                    <ActivityIndicator
-                      style={{ paddingTop: 10 }}
-                      size="small"
-                      color="#fff"
-                    />
-                  ) : (
-                    "REGISTER"
-                  )}
-                </CustomText>
+                {loading ? (
+                  <ActivityIndicator
+                    style={{ paddingTop: 10 }}
+                    size='small'
+                    color='#fff'
+                  />
+                ) : (
+                  <CustomText style={styles.textSign}>REGISTER</CustomText>
+                )}
               </View>
             </TouchableOpacity>
           </View>

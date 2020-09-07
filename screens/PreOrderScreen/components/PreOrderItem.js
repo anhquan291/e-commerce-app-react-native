@@ -54,13 +54,11 @@ PreOrderItem.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: Colors.light_grey,
     backgroundColor: "#fff",
     flexDirection: "row",
     paddingVertical: 10,
-    paddingHorizontal: 10,
     borderRadius: 5,
   },
   left: {

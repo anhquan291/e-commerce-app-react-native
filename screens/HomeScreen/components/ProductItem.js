@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 //Icon
 import { AntDesign } from "@expo/vector-icons";
 //Colors
@@ -12,6 +19,10 @@ import CustomText from "../../../components/UI/CustomText";
 import PropTypes from "prop-types";
 
 class ProductItem extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { loading: true };
+  }
   render() {
     const { navigation, item } = this.props;
     const toDetail = () => {
@@ -28,15 +39,35 @@ class ProductItem extends React.PureComponent {
           }}
         >
           <TouchableOpacity onPress={toDetail}>
-            <Image source={{ uri: item.thumb }} style={styles.image} />
+            <Image
+              source={{ uri: item.url }}
+              style={styles.image}
+              onLoadStart={() => {
+                this.setState({ loading: true });
+              }}
+              onLoadEnd={() => this.setState({ loading: false })}
+            />
           </TouchableOpacity>
+          {this.state.loading && (
+            <View
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ActivityIndicator size='small' color={Colors.grey} />
+            </View>
+          )}
         </View>
         <View style={styles.center}>
           <CustomText style={styles.name}>{item.filename}</CustomText>
         </View>
         <View style={styles.info}>
           <View style={styles.rate}>
-            <AntDesign name="star" color="#fed922" size={15} />
+            <AntDesign name='star' color='#fed922' size={15} />
             <Text style={styles.score}>5.0</Text>
           </View>
           <NumberFormat price={item.price} />

@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const Header = ({ navigation }) => {
   return (
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   header: {
     width: width,
     backgroundColor: "#fff",
-    height: Platform.OS === "ios" ? 120 : 100,
+    height: Platform.OS === "android" ? 100 : height > 667 ? 110 : 100,
     shadowColor: "black",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },

@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import * as CartActions from "../../../store/cart/cartActions";
 import * as FavoriteActions from "../../../store/favorite/favoriteActions";
 import Messages from "../../../messages/user";
+import Colors from "../../../utils/Colors";
 
 //PropTypes check
 import PropTypes from "prop-types";
@@ -50,7 +51,7 @@ const ActionButton = ({
         if (!unmounted.current) {
           const interval = setInterval(() => {
             setShowSnackbar(false);
-          }, 8000);
+          }, 7500);
           return () => clearInterval(interval);
         }
       } else {
@@ -69,7 +70,7 @@ const ActionButton = ({
       setShowSnackbar(true);
       const interval = setInterval(() => {
         setShowSnackbar(false);
-      }, 5000);
+      }, 7500);
       if (!unmounted.current) {
         return () => clearInterval(interval);
       }
@@ -95,7 +96,7 @@ const ActionButton = ({
   return (
     <Animatable.View
       delay={1500}
-      animation="fadeInUp"
+      animation='fadeInUp'
       style={styles.actionContainer}
     >
       <View style={styles.action}>
@@ -110,7 +111,7 @@ const ActionButton = ({
               loop={false}
             />
           ) : (
-            <Ionicons name="ios-heart-empty" size={27} color={color} />
+            <Ionicons name='ios-heart-empty' size={27} color={color} />
           )}
         </TouchableOpacity>
         <TouchableOpacity
@@ -118,7 +119,7 @@ const ActionButton = ({
           onPress={addToCart}
         >
           {isAddingCart ? (
-            <ActivityIndicator size="small" color="#fff" />
+            <ActivityIndicator size='small' color='#fff' />
           ) : (
             <CustomText style={styles.actionText}>Thêm vào giỏ hàng</CustomText>
           )}
@@ -143,11 +144,13 @@ ActionButton.propTypes = {
 const styles = StyleSheet.create({
   action: {
     flexDirection: "row",
-    height: 65,
+    height: 80,
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
     backgroundColor: "#fff",
+    borderTopWidth: 1,
+    borderTopColor: Colors.grey,
   },
   addCart: {
     width: "75%",

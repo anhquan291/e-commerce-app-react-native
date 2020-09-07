@@ -1,13 +1,13 @@
-import { API_URL } from '../../utils/Config';
-import { timeoutPromise } from '../../utils/Tools';
-export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
+import { API_URL } from "../../utils/Config";
+import { timeoutPromise } from "../../utils/Tools";
+export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 
 export const fetchProducts = () => {
   return async (dispatch) => {
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/product`, {
-          method: 'GET',
+          method: "GET",
         })
       );
 

@@ -26,6 +26,13 @@ const AppNavigator = () => {
       [urlRedirect]
     );
     Linking.getInitialURL().then(urlRedirect);
+    Linking.removeEventListener(
+      "url",
+      (event) => {
+        urlRedirect(event.url);
+      },
+      [urlRedirect]
+    );
   }, [urlRedirect]);
 
   useEffect(() => {

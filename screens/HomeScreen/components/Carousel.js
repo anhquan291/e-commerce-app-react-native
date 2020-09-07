@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, Dimensions, Image } from 'react-native';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import Colors from '../../../utils/Colors';
+import React, { Component } from "react";
+import { View, StyleSheet, Dimensions, Image } from "react-native";
+import Carousel, { Pagination } from "react-native-snap-carousel";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import Colors from "../../../utils/Colors";
 
 export default class MyCarousel extends Component {
   constructor(props) {
@@ -17,8 +17,13 @@ export default class MyCarousel extends Component {
     return (
       <TouchableWithoutFeedback style={styles.slide}>
         <Image
-          style={{ height: 130, borderRadius: 10, resizeMode: 'cover' }}
-          source={{ uri: item.url }}
+          style={{
+            height: 130,
+            width: "100%",
+            borderRadius: 10,
+            resizeMode: "stretch",
+          }}
+          source={item.imageUrl}
         ></Image>
       </TouchableWithoutFeedback>
     );
@@ -29,9 +34,9 @@ export default class MyCarousel extends Component {
         dotsLength={this.props.products.length}
         activeDotIndex={this.state.activeSlide}
         containerStyle={{
-          backgroundColor: 'transparent',
+          backgroundColor: "transparent",
           paddingVertical: 10,
-          position: 'absolute',
+          position: "absolute",
           bottom: 5,
           right: 3,
         }}
@@ -53,7 +58,7 @@ export default class MyCarousel extends Component {
   }
 
   render() {
-    const { width } = Dimensions.get('window');
+    const { width } = Dimensions.get("window");
     return (
       <View style={{ ...styles.banner, ...this.props.style }}>
         <Carousel
@@ -78,14 +83,14 @@ export default class MyCarousel extends Component {
 }
 const styles = StyleSheet.create({
   banner: {
-    position: 'relative',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
+    position: "relative",
+    alignItems: "center",
+    backgroundColor: "transparent",
   },
   slide: {
     marginTop: 10,
     marginHorizontal: 5,
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 3 },
     height: 140,

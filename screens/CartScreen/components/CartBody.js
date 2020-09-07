@@ -19,7 +19,14 @@ import Messages from "../../../messages/user";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const CartBody = ({ navigation, user, carts, loadCarts, isRefreshing }) => {
+const CartBody = ({
+  navigation,
+  user,
+  carts,
+  loadCarts,
+  isRefreshing,
+  setAddLoading,
+}) => {
   const dispatch = useDispatch();
   const onRemove = (itemId) => {
     Alert.alert("Bỏ giỏ hàng", "Bạn có chắc bỏ sản phẩm khỏi giỏ hàng?", [
@@ -61,6 +68,7 @@ const CartBody = ({ navigation, user, carts, loadCarts, isRefreshing }) => {
             return (
               <CartItem
                 item={item}
+                setAddLoading={setAddLoading}
                 onRemove={() => onRemove(item.item._id)}
                 onAdd={() => {
                   dispatch(CartActions.addToCart(item.item, user.token));

@@ -1,12 +1,11 @@
 {
   "expo": {
     "scheme": "cattuong",
-    "name": "Cat Tuong UI font Fixed",
-    "slug": "newfont",
+    "name": "Stone App v1",
+    "slug": "stoneappv1",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",

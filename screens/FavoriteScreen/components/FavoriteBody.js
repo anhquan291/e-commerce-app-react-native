@@ -9,7 +9,13 @@ import Messages from "../../../messages/user";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const FavoriteBody = ({ navigation, FavoriteProducts, user }) => {
+const FavoriteBody = ({
+  navigation,
+  FavoriteProducts,
+  user,
+  loadFavoriteProducts,
+  isRefreshing,
+}) => {
   return (
     <>
       {Object.keys(user).length === 0 ? (
@@ -43,6 +49,8 @@ const FavoriteBody = ({ navigation, FavoriteProducts, user }) => {
       ) : (
         <FlatList
           data={FavoriteProducts}
+          onRefresh={loadFavoriteProducts}
+          refreshing={isRefreshing}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => {
             return <FavoriteItem navigation={navigation} item={item} />;

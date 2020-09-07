@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 //Animatable
@@ -16,8 +17,11 @@ import CustomText from "../../../components/UI/CustomText";
 //Color
 import Colors from "../../../utils/Colors";
 
+const { height } = Dimensions.get("window");
+
 const HEADER_MAX_HEIGHT = 320;
-const HEADER_MIN_HEIGHT = Platform.OS === "ios" ? 90 : 70;
+const HEADER_MIN_HEIGHT =
+  Platform.OS === "android" ? 70 : height > 667 ? 80 : 70;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 const Header = ({ navigation, scrollY, item }) => {
@@ -38,7 +42,7 @@ const Header = ({ navigation, scrollY, item }) => {
     extrapolate: "clamp",
   });
   return (
-    <Animatable.View delay={500} animation="fadeInDown">
+    <Animatable.View delay={500} animation='fadeInDown'>
       <View style={styles.topBar}>
         <TouchableOpacity
           onPress={() => {
@@ -47,7 +51,7 @@ const Header = ({ navigation, scrollY, item }) => {
           style={styles.goBackIcon}
         >
           <View>
-            <Ionicons name="ios-arrow-back" size={32} color="#fff" />
+            <Ionicons name='ios-arrow-back' size={32} color='#fff' />
           </View>
         </TouchableOpacity>
 
@@ -94,14 +98,14 @@ const Header = ({ navigation, scrollY, item }) => {
         }}
         onLoadEnd={() => setIsLoading(false)}
       />
-      {isLoading && <ActivityIndicator size="small" color={Colors.grey} />}
+      {isLoading && <ActivityIndicator size='small' color={Colors.grey} />}
     </Animatable.View>
   );
 };
 
 const styles = StyleSheet.create({
   topBar: {
-    paddingTop: 20,
+    paddingTop: 30,
     width: "100%",
     display: "flex",
     flexDirection: "row",

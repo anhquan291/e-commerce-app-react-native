@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 //Redux
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -10,9 +10,7 @@ import Reducers from "./store/reducers";
 import AppNavigator from "./navigation/AppNavigator";
 //redux form
 import { reducer as formReducer } from "redux-form";
-//Fonts
-import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
-import { AppLoading } from "expo";
+import { StatusBar } from "expo-status-bar";
 
 //Notification
 import LocalNotication from "./components/Notification/LocalNotification";
@@ -31,15 +29,10 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(ReduxThunk))
 );
 
-export default function App(props) {
-  let [fontsLoaded] = useFonts({
-    Inter_900Black,
-  });
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
+export default function App() {
   return (
     <Provider store={store}>
+      <StatusBar />
       <LocalNotication />
       <AppNavigator />
     </Provider>

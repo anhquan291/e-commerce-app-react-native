@@ -45,7 +45,7 @@ export const timeoutPromise = (url) => {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
       reject(new alert("Timeout"));
-    }, 10 * 1000);
+    }, 15 * 1000);
     url.then(
       (res) => {
         clearTimeout(timeoutId);
@@ -82,20 +82,6 @@ export const uploadProfilePic = async (id, token, imageUri, filename, type) => {
 };
 
 export const _pickImage = async (action) => {
-  const type =
-    action === "library"
-      ? ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 4],
-          quality: 1,
-        })
-      : ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 4],
-          quality: 1,
-        });
   try {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(
@@ -108,6 +94,20 @@ export const _pickImage = async (action) => {
         );
       }
     }
+    const type =
+      action === "library"
+        ? ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+          })
+        : ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+          });
 
     let result = await type;
     return result;

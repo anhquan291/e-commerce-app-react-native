@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 //Icon
 import Colors from "../../utils/Colors";
 import Loader from "../../components/Loaders/Loader";
@@ -21,13 +14,20 @@ import PaymentBody from "./components/PaymentBody";
 import SummaryOrder from "../PreOrderScreen/components/SummaryOrder";
 
 const PaymentScreen = (props) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const carts = useSelector((state) => state.cart.cartItems);
   const error = useSelector((state) => state.order.error);
   let token = props.route.params.token;
   const [payByCard, setPayByCard] = useState(false);
   const paymentMethod = payByCard ? "Credit Card" : "Cash";
-
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLoading(false);
+    }, 1000);
+    if (!unmounted.current) {
+      return () => clearInterval(interval);
+    }
+  });
   useEffect(() => {
     setPayByCard(token ? true : false);
   }, [token]);
@@ -85,41 +85,34 @@ const PaymentScreen = (props) => {
   return (
     <View style={styles.container}>
       <Header navigation={props.navigation} />
-      <ScrollView>
-        <PaymentBody
-          navigation={props.navigation}
-          payByCard={payByCard}
-          setPayByCard={setPayByCard}
-        />
-        <SummaryOrder cartItems={carts.items} total={total} />
-      </ScrollView>
-      <View style={styles.total}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-          }}
-        ></View>
-        <View style={styles.orderButton}>
-          <TouchableOpacity onPress={addOrder}>
-            {loading ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <CustomText style={{ color: "#fff", fontSize: 16 }}>
-                Tiến hành đặt hàng
-              </CustomText>
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <ScrollView>
+            <PaymentBody
+              navigation={props.navigation}
+              payByCard={payByCard}
+              setPayByCard={setPayByCard}
+            />
+            <SummaryOrder cartItems={carts.items} total={total} />
+          </ScrollView>
+          <View style={styles.total}>
+            <View style={styles.orderButton}>
+              <TouchableOpacity onPress={addOrder}>
+                <CustomText style={{ color: "#fff", fontSize: 16 }}>
+                  Tiến hành đặt hàng
+                </CustomText>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, backgroundColor: Colors.white },
   total: {
     width: "100%",
     position: "absolute",
