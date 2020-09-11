@@ -7,6 +7,7 @@ import Colors from "./Colors";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
+import { STRIPE_PUBLISHABLE_KEY } from "./Config";
 
 export const OpenURL = ({ url, children }) => {
   const handlePress = useCallback(async () => {
@@ -44,8 +45,8 @@ export const urlRedirect = (url) => {
 export const timeoutPromise = (url) => {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
-      reject(new alert("Timeout"));
-    }, 15 * 1000);
+      reject(new alert("Timeout, Server is not responding"));
+    }, 10 * 1000);
     url.then(
       (res) => {
         clearTimeout(timeoutId);
@@ -149,7 +150,7 @@ export const getCreditCardToken = (creditCardData) => {
       // Use the correct Content Type to send data to Stripe
       "Content-Type": "application/x-www-form-urlencoded",
       // Use the Stripe publishable key as Bearer
-      Authorization: `Bearer ${process.env.STRIPE_PUBLISHABLE_KEY}`,
+      Authorization: `Bearer ${STRIPE_PUBLISHABLE_KEY}`,
     },
     // Use a proper HTTP method
     method: "post",

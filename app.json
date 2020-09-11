@@ -1,8 +1,8 @@
 {
   "expo": {
     "scheme": "cattuong",
-    "name": "Stone App v1",
-    "slug": "stoneappv1",
+    "name": "Stone App v2",
+    "slug": "stoneappv2",
     "platforms": [
       "ios",
       "android"

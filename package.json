@@ -38,7 +38,6 @@
     "react-native-animatable": "^1.3.3",
     "react-native-config": "^1.3.3",
     "react-native-dotenv": "^2.4.0",
-    "react-native-elements": "^2.3.0",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-input-credit-card": "^0.5.5",
     "react-native-keyboard-spacer": "^0.4.1",

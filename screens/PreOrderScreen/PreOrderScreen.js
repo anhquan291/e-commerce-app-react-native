@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { View, StyleSheet, ScrollView } from "react-native";
 //Address
 import Address from "./components/Address";
@@ -14,6 +15,7 @@ import Loader from "../../components/Loaders/Loader";
 
 const PreOrderScreen = (props) => {
   const unmounted = useRef(false);
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
   const carts = useSelector((state) => state.cart.cartItems);
   const { cartItems, total, cartId } = props.route.params;
@@ -29,13 +31,15 @@ const PreOrderScreen = (props) => {
     };
   }, []);
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLoading(false);
-    }, 1000);
-    if (!unmounted.current) {
+    if (isFocused) {
+      setLoading(true);
+      const interval = setInterval(() => {
+        setLoading(false);
+      }, 1000);
       return () => clearInterval(interval);
     }
-  });
+    return;
+  }, [isFocused]);
   const getInfo = (province, town) => {
     setProvince(province);
     setTown(town);
@@ -55,38 +59,38 @@ const PreOrderScreen = (props) => {
 
   const fullAddress = `${address}, ${town} ,${province}`;
   const toPayment = async () => {
-    try {
-      if (error == undefined && province.length !== 0 && town.length !== 0) {
-        props.navigation.navigate("Payment", {
-          screen: "PaymentScreen",
-          params: {
-            fullAddress,
-            orderItems,
-            name,
-            phone,
-            total,
-            cartId,
-            carts,
-          },
-        });
-      } else {
-        alert("Vui lòng nhập đầy đủ thông tin.");
-      }
-    } catch (err) {
-      throw err;
-    }
-    // props.navigation.navigate("Payment", {
-    //   screen: "PaymentScreen",
-    //   params: {
-    //     fullAddress,
-    //     orderItems,
-    //     name,
-    //     phone,
-    //     total,
-    //     cartId,
-    //     carts,
-    //   },
-    // });
+    // try {
+    //   if (error == undefined && province.length !== 0 && town.length !== 0) {
+    //     props.navigation.navigate("Payment", {
+    //       screen: "PaymentScreen",
+    //       params: {
+    //         fullAddress,
+    //         orderItems,
+    //         name,
+    //         phone,
+    //         total,
+    //         cartId,
+    //         carts,
+    //       },
+    //     });
+    //   } else {
+    //     alert("Vui lòng nhập đầy đủ thông tin.");
+    //   }
+    // } catch (err) {
+    //   throw err;
+    // }
+    props.navigation.navigate("Payment", {
+      screen: "PaymentScreen",
+      params: {
+        fullAddress,
+        orderItems,
+        name,
+        phone,
+        total,
+        cartId,
+        carts,
+      },
+    });
   };
   useEffect(() => {
     if (carts.items.length === 0) {

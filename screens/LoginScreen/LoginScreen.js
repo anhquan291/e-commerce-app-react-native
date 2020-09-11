@@ -30,7 +30,7 @@ const SignUpScreen = ({ navigation }) => {
         }}
         style={{ position: "absolute", top: 50, left: 20 }}
       >
-        <Ionicons name="ios-arrow-back" size={35} color={Colors.light_green} />
+        <Ionicons name='ios-arrow-back' size={35} color={Colors.light_green} />
       </TouchableOpacity>
 
       <View style={styles.header}>
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.2,
     marginBottom: 40,
     marginHorizontal: 20,
+    zIndex: 1,
   },
 
   title: {

@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     color: Colors.leave_green,
+    textAlign: "center",
   },
 });
 

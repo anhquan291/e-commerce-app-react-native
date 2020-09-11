@@ -21,24 +21,28 @@ const { width, height } = Dimensions.get("window");
 const Header = ({ navigation }) => {
   return (
     <View style={styles.header}>
-      <View style={{ position: "absolute", bottom: 20, left: 15, zIndex: 10 }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons
-            name='ios-arrow-back'
-            size={30}
-            color={Colors.lighter_green}
-          />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.orderStepsContainer}>
-        <CustomText style={styles.title}> Địa chỉ giao hàng </CustomText>
-        <View style={styles.orderSteps}>
-          <OrderSteps position={1} />
+      <View style={styles.innerHeader}>
+        <View
+          style={{ position: "absolute", bottom: 20, left: 15, zIndex: 10 }}
+        >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons
+              name='ios-arrow-back'
+              size={30}
+              color={Colors.lighter_green}
+            />
+          </TouchableOpacity>
         </View>
-      </View>
 
-      <View />
+        <View style={styles.orderStepsContainer}>
+          <CustomText style={styles.title}> Địa chỉ giao hàng </CustomText>
+          <View style={styles.orderSteps}>
+            <OrderSteps position={1} />
+          </View>
+        </View>
+
+        <View />
+      </View>
     </View>
   );
 };
@@ -51,7 +55,12 @@ const styles = StyleSheet.create({
   header: {
     width: width,
     backgroundColor: "#fff",
-    height: Platform.OS === "android" ? 100 : height > 667 ? 110 : 100,
+    height: Platform.OS === "android" ? 100 : height > 667 ? 115 : 100,
+  },
+  innerHeader: {
+    height: "96%",
+    width: "100%",
+    backgroundColor: "#fff",
     shadowColor: "black",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },

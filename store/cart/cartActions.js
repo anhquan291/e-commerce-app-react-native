@@ -1,14 +1,19 @@
-import { API_URL } from '../../utils/Config';
-import { timeoutPromise } from '../../utils/Tools';
-export const FETCH_CART = 'FETCH_CART';
-export const ADD_CART = 'ADD_CART';
-export const RESET_CART = 'RESET_CART';
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-export const DES_CART_QUANTITY = 'DES_CART_QUANTITY';
+import { API_URL } from "../../utils/Config";
+import { timeoutPromise } from "../../utils/Tools";
+export const CART_LOADING = "CART_LOADING";
+export const CART_FAILURE = "CART_FAILURE";
+export const FETCH_CART = "FETCH_CART";
+export const ADD_CART = "ADD_CART";
+export const RESET_CART = "RESET_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const DES_CART_QUANTITY = "DES_CART_QUANTITY";
 
 //Fetch Cart
 export const fetchCart = () => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: CART_LOADING,
+    });
     const user = getState().auth.user;
     const emptyCart = {
       items: [],
@@ -18,15 +23,18 @@ export const fetchCart = () => {
         const response = await timeoutPromise(
           fetch(`${API_URL}/cart`, {
             headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              'auth-token': user.token,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "auth-token": user.token,
             },
-            method: 'GET',
+            method: "GET",
           })
         );
         if (!response.ok) {
-          throw new Error("Something went wrong!, can't get the products");
+          dispatch({
+            type: CART_FAILURE,
+          });
+          throw new Error("Something went wrong!, can't get your carts");
         }
         const resData = await response.json();
         const filterUserCart = resData.content.filter(
@@ -42,49 +50,54 @@ export const fetchCart = () => {
           carts,
         });
       } catch (err) {
-        console.log(err);
+        throw err;
       }
     } else {
-      return;
+      dispatch({
+        type: CART_FAILURE,
+      });
     }
   };
 };
 //Add Add to Cart
 export const addToCart = (item) => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: CART_LOADING,
+    });
     const user = getState().auth.user;
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/cart/post`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": user.token,
           },
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
             userId: user.userid,
             items: [
               {
                 item: item._id,
-                quantity: '1',
+                quantity: 1,
               },
             ],
           }),
         })
       );
       if (!response.ok) {
-        const errorResData = await response.json();
-        alert(errorResData);
+        dispatch({
+          type: CART_FAILURE,
+        });
+        throw new Error("Something went wrong!");
       }
-      const resData = await response.json();
       dispatch({
-        type: 'ADD_CART',
+        type: "ADD_CART",
         cartItem: item,
       });
-      // console.log(resData);
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
@@ -92,63 +105,73 @@ export const addToCart = (item) => {
 //Remove from Cart
 export const removeFromCart = (cartId, itemId) => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: CART_LOADING,
+    });
     const user = getState().auth.user;
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/cart/cartitem/${cartId}`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": user.token,
           },
-          method: 'DELETE',
+          method: "DELETE",
           body: JSON.stringify({
             item: itemId,
           }),
         })
       );
       if (!response.ok) {
-        const errorResData = await response.json();
-        alert(errorResData);
+        dispatch({
+          type: CART_FAILURE,
+        });
+        throw new Error("Something went wrong!");
       }
       dispatch({
-        type: 'REMOVE_FROM_CART',
+        type: "REMOVE_FROM_CART",
         itemId,
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
 //Decrease cart quantity
 export const decCartQuantity = (cartId, itemId) => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: CART_LOADING,
+    });
     const user = getState().auth.user;
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/cart/cartitem/${cartId}`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": user.token,
           },
-          method: 'PUT',
+          method: "PUT",
           body: JSON.stringify({
             item: itemId,
-            quantity: 'decrease',
+            quantity: "decrease",
           }),
         })
       );
       if (!response.ok) {
-        const errorResData = await response.json();
-        alert(errorResData);
+        dispatch({
+          type: CART_FAILURE,
+        });
+        throw new Error("Something went wrong!");
       }
       dispatch({
-        type: 'DES_CART_QUANTITY',
+        type: "DES_CART_QUANTITY",
         cartItemId: itemId,
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
@@ -156,28 +179,33 @@ export const decCartQuantity = (cartId, itemId) => {
 //Reset Cart
 export const resetCart = (cartId) => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: CART_LOADING,
+    });
     const user = getState().auth.user;
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/cart/${cartId}`, {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': user.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "auth-token": user.token,
           },
-          method: 'DELETE',
+          method: "DELETE",
         })
       );
       if (!response.ok) {
-        const errorResData = await response.json();
-        alert(errorResData);
+        dispatch({
+          type: CART_FAILURE,
+        });
+        throw new Error("Something went wrong!");
       }
 
       dispatch({
-        type: 'RESET_CART',
+        type: "RESET_CART",
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };

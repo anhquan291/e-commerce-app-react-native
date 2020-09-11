@@ -1,34 +1,38 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
-import { Input } from "react-native-elements";
+import { TextInput } from "react-native-paper";
 import CustomText from "../../../components/UI/CustomText";
 //Colors
 import Colors from "../../../utils/Colors";
 
 export default renderField = ({
   label,
+  name,
   keyboardType,
   onChangeText,
   returnKeyType,
-  checkFocus,
   checkValidation,
   meta: { touched, error, warning },
   input: { ...restInput },
 }) => {
   useEffect(() => {
     checkValidation(error);
-  }, [checkFocus]);
+  }, [onChangeText]);
   return (
     <View>
       <View>
-        <Input
-          placeholder={label}
-          autoCapitalize={label === "Họ Tên" ? "words" : "none"}
-          inputStyle={{ fontSize: 14 }}
-          inputContainerStyle={{
-            borderBottomColor: checkFocus ? Colors.lighter_green : Colors.grey,
-            borderBottomWidth: checkFocus ? 1.5 : 1,
+        <TextInput
+          label={label}
+          mode='outlined'
+          theme={{ colors: { primary: Colors.leave_green } }}
+          selectionColor={Colors.leave_green}
+          style={{
+            marginVertical: 10,
+            backgroundColor: Colors.white,
+            fontSize: 14,
           }}
+          maxLength={name === "address" || "name" ? 35 : 10}
+          autoCapitalize={name === "name" || "address" ? "words" : "none"}
           returnKeyType={returnKeyType ? returnKeyType : "next"}
           keyboardType={keyboardType}
           onChangeText={onChangeText}

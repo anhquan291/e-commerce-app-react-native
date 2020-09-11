@@ -12,7 +12,7 @@ const TotalButton = ({ toPayment }) => {
       <TouchableOpacity onPress={toPayment}>
         <View style={styles.buttom}>
           <CustomText style={{ color: "#fff", fontSize: 16 }}>
-            Tiến hành đặt hàng
+            Tiếp Tục
           </CustomText>
         </View>
       </TouchableOpacity>

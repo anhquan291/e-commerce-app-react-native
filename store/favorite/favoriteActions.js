@@ -1,5 +1,7 @@
 import { API_URL } from "../../utils/Config";
 import { timeoutPromise } from "../../utils/Tools";
+export const FAVORITE_LOADING = "FAVORITE_LOADING";
+export const FAVORITE_FAILURE = "FAVORITE_FAILURE";
 export const FETCH_FAVORITE = "FETCH_FAVORITE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
@@ -7,6 +9,9 @@ export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 //Fetch Favorite
 export const fetchFavorite = () => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: FAVORITE_LOADING,
+    });
     const user = getState().auth.user;
     if (user.userid != undefined) {
       try {
@@ -21,6 +26,9 @@ export const fetchFavorite = () => {
           })
         );
         if (!response.ok) {
+          dispatch({
+            type: FAVORITE_FAILURE,
+          });
           throw new Error("Something went wrong!, can't get favorite list");
         }
         const resData = await response.json();
@@ -37,15 +45,20 @@ export const fetchFavorite = () => {
           favoriteList: items,
         });
       } catch (err) {
-        console.log(err);
+        throw err;
       }
     } else {
-      return;
+      dispatch({
+        type: FAVORITE_FAILURE,
+      });
     }
   };
 };
 //Add Favorite
 export const addFavorite = (item) => {
+  dispatch({
+    type: FAVORITE_LOADING,
+  });
   return async (dispatch, getState) => {
     const user = getState().auth.user;
     try {
@@ -68,21 +81,27 @@ export const addFavorite = (item) => {
         })
       );
       if (!response.ok) {
+        dispatch({
+          type: FAVORITE_FAILURE,
+        });
         throw new Error("Something went wrong!");
       }
       const resData = await response.json();
 
       dispatch({
-        type: "ADD_FAVORITE",
+        type: ADD_FAVORITE,
         addItem: item,
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   };
 };
 export const removeFavorite = (id) => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: FAVORITE_LOADING,
+    });
     const user = getState().auth.user;
     try {
       const response = await timeoutPromise(
@@ -99,16 +118,17 @@ export const removeFavorite = (id) => {
         })
       );
       if (!response.ok) {
+        dispatch({
+          type: FAVORITE_FAILURE,
+        });
         throw new Error("Something went wrong!");
       }
-      const resData = await response.json();
-
       dispatch({
-        type: "REMOVE_FAVORITE",
+        type: REMOVE_FAVORITE,
         itemId: id,
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   };
 };

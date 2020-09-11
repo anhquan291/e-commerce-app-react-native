@@ -50,7 +50,7 @@ TotalButton.propTypes = {
   total: PropTypes.number.isRequired,
   navigation: PropTypes.object.isRequired,
   cartItems: PropTypes.array.isRequired,
-  cartId: PropTypes.string.isRequired,
+  cartId: PropTypes.string,
 };
 
 const styles = StyleSheet.create({

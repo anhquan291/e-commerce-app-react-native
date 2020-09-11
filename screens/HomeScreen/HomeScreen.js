@@ -30,6 +30,7 @@ import FloatButton from "./components/FloatButton";
 const { height } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.auth.user);
   const products = useSelector((state) => state.store.products);
@@ -37,17 +38,23 @@ const HomeScreen = ({ navigation }) => {
   const rings = products.filter((ring) => ring.type === "ring");
   const bracelets = products.filter((bracelet) => bracelet.type === "bracelet");
   const stones = products.filter((stone) => stone.type === "stone");
-  const dispatch = useDispatch();
+
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  // console.log(isLoading);
 
   // AsyncStorage.removeItem("isFirstTime");
   //fetch Api
   useEffect(() => {
     setLoading(true);
     const fetching = async () => {
-      await dispatch(ProductActions.fetchProducts());
-      await dispatch(CartActions.fetchCart());
-      await dispatch(FavoriteActions.fetchFavorite());
-      setLoading(false);
+      try {
+        await dispatch(ProductActions.fetchProducts());
+        await dispatch(CartActions.fetchCart());
+        await dispatch(FavoriteActions.fetchFavorite());
+        setLoading(false);
+      } catch (err) {
+        alert(err);
+      }
     };
     fetching();
   }, [user.userid]);

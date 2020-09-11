@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -14,7 +14,7 @@ import Colors from "../../utils/Colors";
 //Icon
 import { Feather } from "@expo/vector-icons";
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //Action
 import * as AuthActions from "../../store/auth/authActions";
 
@@ -31,7 +31,7 @@ const validate = (values) => {
 
 const ForgetPwScreen = (props) => {
   const { handleSubmit, reset } = props;
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
   const unmounted = useRef(false);
   useEffect(() => {
@@ -41,17 +41,14 @@ const ForgetPwScreen = (props) => {
   }, []);
   const submit = async (values) => {
     try {
-      setLoading(true);
       await dispatch(AuthActions.ForgetPassword(values.email));
-      setLoading(false);
-      reset();
       if (!unmounted.current) {
         props.navigation.navigate("FinishResetScreen", {
           value: values,
         });
       }
     } catch (err) {
-      throw err;
+      alert(err);
     }
   };
 

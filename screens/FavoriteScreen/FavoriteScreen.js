@@ -12,14 +12,13 @@ import Colors from "../../utils/Colors";
 import SkeletonLoadingCart from "../../components/Loaders/SkeletonLoadingCart";
 
 const FavoriteScreen = ({ navigation }) => {
-  const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const user = useSelector((state) => state.auth.user);
+  const loading = useSelector((state) => state.fav.isLoading);
   const FavoriteProducts = useSelector((state) => state.fav.favoriteList);
   const dispatch = useDispatch();
 
   const loadFavoriteProducts = useCallback(async () => {
-    setLoading(true);
     setIsRefreshing(true);
     try {
       await dispatch(FavoriteActions.fetchFavorite());
@@ -27,7 +26,6 @@ const FavoriteScreen = ({ navigation }) => {
       alert(err.message);
     }
     setIsRefreshing(false);
-    setLoading(false);
   }, [dispatch, setIsRefreshing]);
   useEffect(() => {
     loadFavoriteProducts();

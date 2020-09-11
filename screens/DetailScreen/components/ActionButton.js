@@ -44,24 +44,24 @@ const ActionButton = ({
   }, []);
   //Set Colors
   const addToCart = async () => {
-    try {
-      if (Object.keys(user).length === 0) {
-        setMessage(Messages["user.login.require"]);
-        setShowSnackbar(true);
-        if (!unmounted.current) {
-          const interval = setInterval(() => {
-            setShowSnackbar(false);
-          }, 7500);
-          return () => clearInterval(interval);
-        }
-      } else {
+    if (Object.keys(user).length === 0) {
+      setMessage(Messages["user.login.require"]);
+      setShowSnackbar(true);
+      if (!unmounted.current) {
+        const interval = setInterval(() => {
+          setShowSnackbar(false);
+        }, 7500);
+        return () => clearInterval(interval);
+      }
+    } else {
+      try {
         setIsAddingCart(true);
         await dispatch(CartActions.addToCart(item, user.token));
         setIsAddingCart(false);
         setModalVisible(true);
+      } catch (err) {
+        throw err;
       }
-    } catch (err) {
-      throw err;
     }
   };
   const toggleFavorite = () => {

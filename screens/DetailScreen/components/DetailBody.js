@@ -10,6 +10,8 @@ import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
 //number format
 import NumberFormat from "../../../components/UI/NumberFormat";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const { width, height } = Dimensions.get("window");
 
@@ -93,6 +95,11 @@ const DetailBody = ({ item, color }) => {
       </View>
     </View>
   );
+};
+
+DetailBody.propTypes = {
+  item: PropTypes.object.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({

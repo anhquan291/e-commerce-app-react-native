@@ -66,7 +66,7 @@ const OrderItem = ({ order }) => {
             </View>
             <View style={styles.textContainer}>
               <CustomText style={styles.text}>Số điện thoại: </CustomText>
-              <CustomText style={styles.detail}>0{order.phone}</CustomText>
+              <CustomText style={styles.detail}>{order.phone}</CustomText>
             </View>
             <View style={styles.textContainer}>
               <CustomText style={styles.text}>

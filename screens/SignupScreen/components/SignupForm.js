@@ -52,12 +52,10 @@ const validate = (values) => {
 
 const Signup = (props) => {
   const { handleSubmit, reset } = props;
-  const err = useSelector((state) => state.auth.error);
-  const [error, setError] = useState(err);
-  const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [showConfirmPass, setshowConfirmPass] = useState(false);
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.isLoading);
+  const [showPass, setShowPass] = useState(false);
+  const [showConfirmPass, setshowConfirmPass] = useState(false);
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
@@ -66,44 +64,43 @@ const Signup = (props) => {
   }, []);
 
   const submit = async (values) => {
-    setLoading(true);
     try {
       await dispatch(
         AuthActions.SignUp(values.username, values.email, values.password)
       );
-      if (error.length > 0) {
-        alert(error);
-        setError("");
-        reset();
-      } else {
-        reset();
-        if (!unmounted.current) {
-          Alert.alert("Signup Successfully", "You can login now", [
-            {
-              text: "Okay",
-              onPress: () => {
-                props.navigation.goBack();
-              },
+      reset();
+      if (!unmounted.current) {
+        Alert.alert("Signup Successfully", "You can login now", [
+          {
+            text: "Okay",
+            onPress: () => {
+              props.navigation.goBack();
             },
-          ]);
-        }
+          },
+        ]);
       }
-      setLoading(false);
     } catch (err) {
-      setError(err);
-      setLoading(false);
+      alert(err);
     }
   };
   return (
-    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : null}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "position" : null}
+      // keyboardVerticalOffset={40} // adjust the value here if you need more padding
+      // style={{ flex: 1 }}
+    >
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
             style={{
               flexDirection: "column",
               marginHorizontal: 10,
+              zIndex: 0,
             }}
           >
+            <View>
+              <CustomText style={styles.title}>REGISTER</CustomText>
+            </View>
             <View>
               <Field
                 name='username'
@@ -160,6 +157,7 @@ const Signup = (props) => {
                 )}
               </View>
             </TouchableOpacity>
+            <View style={{ flex: 1 }} />
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
@@ -181,6 +179,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: Colors.lighter_green,
     marginTop: 20,
+  },
+  title: {
+    color: Colors.light_green,
+    fontSize: 40,
+    fontWeight: "bold",
+    letterSpacing: 5,
+    textAlign: "center",
   },
   textSign: {
     fontSize: 15,

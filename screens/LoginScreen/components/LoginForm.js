@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, reset } from "redux-form";
 import {
   StyleSheet,
   View,
@@ -9,12 +9,13 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from "react-native";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //Action
 import * as AuthActions from "../../../store/auth/authActions";
 //PropTypes check
@@ -38,36 +39,35 @@ const validate = (values) => {
 };
 
 const Login = (props) => {
-  const { handleSubmit, reset } = props;
+  const dispatch = useDispatch();
+  const { handleSubmit } = props;
   const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const auth = useSelector((state) => state.auth);
   const unmounted = useRef(false);
+
   useEffect(() => {
     return () => {
       unmounted.current = true;
     };
   }, []);
-  const dispatch = useDispatch();
+
   const submit = async (values) => {
-    setLoading(true);
     try {
       await dispatch(AuthActions.Login(values.email, values.password));
-      reset();
-      if (!unmounted.current) {
-        setLoading(false);
-      }
+      props.navigation.navigate("Home");
     } catch (err) {
-      throw err;
+      alert(err);
     }
   };
   return (
-    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : null}>
+    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "position" : null}>
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
             style={{
               flexDirection: "column",
               marginHorizontal: 10,
+              zIndex: -1,
             }}
           >
             <View>
@@ -108,7 +108,7 @@ const Login = (props) => {
               style={{ marginVertical: 10, alignItems: "center" }}
             >
               <View style={styles.signIn}>
-                {loading ? (
+                {auth.isLoading ? (
                   <ActivityIndicator size='small' color='#fff' />
                 ) : (
                   <CustomText style={styles.textSign}>ĐĂNG NHẬP</CustomText>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
 });
 const LoginForm = reduxForm({
-  form: "contact", // a unique identifier for this form
+  form: "login", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(Login);
 

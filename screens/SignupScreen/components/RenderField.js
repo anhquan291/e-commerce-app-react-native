@@ -1,8 +1,6 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
-import { Input } from "react-native-elements";
-//Icon
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View } from "react-native";
+import { TextInput } from "react-native-paper";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
@@ -18,52 +16,56 @@ export default renderField = ({
   showConfirmPass,
   setshowConfirmPass,
   autoCapitalize,
+  autoCorrect,
   meta: { touched, error, warning },
   input: { onChange, ...restInput },
 }) => {
   return (
     <View>
-      <Input
+      <TextInput
         placeholder={label}
         autoCapitalize={autoCapitalize ? "words" : "none"}
         clearButtonMode={passIcon ? "never" : "always"}
-        leftIcon={
-          <MaterialCommunityIcons
+        mode='outlined'
+        selectionColor={Colors.leave_green}
+        theme={{ colors: { primary: Colors.leave_green } }}
+        left={
+          <TextInput.Icon
             name={icon}
             size={24}
             color={Colors.lighter_green}
+            style={{ paddingRight: 10 }}
           />
         }
-        rightIcon={
+        right={
           passIcon === "pass" ? (
-            <TouchableOpacity
+            <TextInput.Icon
               onPress={() => {
                 setShowPass((prev) => !prev);
               }}
-            >
-              <MaterialCommunityIcons
-                name={showPass ? "eye" : "eye-off"}
-                size={24}
-                color={Colors.lighter_green}
-              />
-            </TouchableOpacity>
+              name={showPass ? "eye" : "eye-off"}
+              size={24}
+              color={Colors.lighter_green}
+            />
           ) : passIcon === "confirm" ? (
-            <TouchableOpacity
+            <TextInput.Icon
               onPress={() => {
                 setshowConfirmPass((prev) => !prev);
               }}
-            >
-              <MaterialCommunityIcons
-                name={showConfirmPass ? "eye" : "eye-off"}
-                size={24}
-                color={Colors.lighter_green}
-              />
-            </TouchableOpacity>
+              name={showConfirmPass ? "eye" : "eye-off"}
+              size={24}
+              color={Colors.lighter_green}
+            />
           ) : (
-            <></>
+            ""
           )
         }
-        inputStyle={{ fontSize: 14, paddingLeft: 10 }}
+        style={{
+          fontSize: 14,
+          backgroundColor: "transparent",
+          marginVertical: 5,
+          // paddingHorizontal: 5,
+        }}
         keyboardType={keyboardType}
         onChangeText={onChange}
         secureTextEntry={secureTextEntry}

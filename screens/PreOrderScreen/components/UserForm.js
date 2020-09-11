@@ -40,13 +40,10 @@ const User = ({ getReceiver, checkValidation }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [colorName, setColorName] = useState(false);
-  const [colorAddress, setColorAddress] = useState(false);
-  const [colorPhone, setColorPhone] = useState(false);
 
   useEffect(() => {
     getReceiver(name, phone, address);
-  }, [colorName, colorAddress, colorPhone]);
+  }, [name, phone, address]);
 
   return (
     <View style={styles.container}>
@@ -54,39 +51,30 @@ const User = ({ getReceiver, checkValidation }) => {
       <View style={styles.inputContainer}>
         <View style={styles.inputBox}>
           <Field
-            name="name"
-            label="Họ Tên"
-            keyboardType="default"
+            name='name'
+            label='Họ Tên'
+            keyboardType='default'
             component={renderField}
             onChangeText={(value) => setName(value)}
-            checkFocus={colorName}
-            onFocus={() => setColorName(true)}
-            onBlur={() => setColorName(false)}
             checkValidation={checkValidation}
           />
 
           <Field
-            name="phone"
-            label="Số điện thoại"
+            name='phone'
+            label='Số Điện Thoại'
             component={renderField}
             onChangeText={(value) => setPhone(value)}
-            keyboardType="numeric"
-            returnKeyType="done"
-            checkFocus={colorPhone}
-            onFocus={() => setColorPhone(true)}
-            onBlur={() => setColorPhone(false)}
+            keyboardType='numeric'
+            returnKeyType='done'
             checkValidation={checkValidation}
           />
 
           <Field
-            name="address"
-            label="Địa chỉ"
+            name='address'
+            label='Địa Chỉ'
             component={renderField}
             onChangeText={(value) => setAddress(value)}
-            keyboardType="default"
-            checkFocus={colorAddress}
-            onFocus={() => setColorAddress(true)}
-            onBlur={() => setColorAddress(false)}
+            keyboardType='default'
             checkValidation={checkValidation}
           />
         </View>

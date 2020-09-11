@@ -94,6 +94,7 @@ const PaymentScreen = (props) => {
               navigation={props.navigation}
               payByCard={payByCard}
               setPayByCard={setPayByCard}
+              token={token}
             />
             <SummaryOrder cartItems={carts.items} total={total} />
           </ScrollView>

@@ -11,7 +11,6 @@ const ProfileBody = ({
   uploadButton,
   setUploadButton,
   setImageUri,
-  loading,
   UploadProfile,
 }) => {
   return (
@@ -19,21 +18,20 @@ const ProfileBody = ({
       <View style={styles.titleContainer}>
         <CustomText style={styles.title}>Thông tin cá nhân</CustomText>
       </View>
-      <Detail icon="person" content={user.name} />
-      <Detail icon="email-outline" content={user.email} />
+      <Detail icon='person' content={user.name} />
+      <Detail icon='email-outline' content={user.email} />
       <Detail
-        icon="phone"
+        icon='phone'
         content={user.phone.length === 0 ? "Not added yet" : user.phone}
       />
       <Detail
-        icon="location-on"
+        icon='location-on'
         content={user.address.length === 0 ? "Not added yet" : user.address}
       />
       <UploadButton
         uploadButton={uploadButton}
         setUploadButton={setUploadButton}
         setImageUri={setImageUri}
-        loading={loading}
         UploadProfile={UploadProfile}
       />
     </View>
@@ -45,7 +43,6 @@ ProfileBody.propTypes = {
   uploadButton: PropTypes.bool.isRequired,
   setUploadButton: PropTypes.func.isRequired,
   setImageUri: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
   UploadProfile: PropTypes.func.isRequired,
 };
 

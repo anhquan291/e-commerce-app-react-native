@@ -1,8 +1,6 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
-import { Input } from "react-native-elements";
-//Icon
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View } from "react-native";
+import { TextInput } from "react-native-paper";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
@@ -21,35 +19,41 @@ export default renderField = ({
   return (
     <View>
       <View>
-        <Input
+        <TextInput
           placeholder={label}
-          autoCapitalize="none"
+          autoCapitalize='none'
+          mode='outlined'
           clearButtonMode={passIcon ? "never" : "always"}
-          leftIcon={
-            <MaterialCommunityIcons
+          selectionColor={Colors.leave_green}
+          theme={{ colors: { primary: Colors.leave_green } }}
+          left={
+            <TextInput.Icon
               name={icon}
               size={24}
               color={Colors.lighter_green}
+              style={{ paddingRight: 10 }}
             />
           }
-          rightIcon={
+          right={
             passIcon ? (
-              <TouchableOpacity
+              <TextInput.Icon
+                name={showPass ? "eye" : "eye-off"}
+                size={24}
+                color={Colors.lighter_green}
                 onPress={() => {
                   setShowPass((prev) => !prev);
                 }}
-              >
-                <MaterialCommunityIcons
-                  name={showPass ? "eye" : "eye-off"}
-                  size={24}
-                  color={Colors.lighter_green}
-                />
-              </TouchableOpacity>
+              />
             ) : (
-              <></>
+              ""
             )
           }
-          inputStyle={{ fontSize: 14, paddingLeft: 10 }}
+          style={{
+            fontSize: 14,
+            backgroundColor: "transparent",
+            marginVertical: 5,
+            // paddingHorizontal: 5,
+          }}
           keyboardType={keyboardType}
           onChangeText={onChange}
           secureTextEntry={secureTextEntry}
@@ -57,7 +61,9 @@ export default renderField = ({
         />
       </View>
       {touched && error && (
-        <CustomText style={{ color: "red", marginHorizontal: 15 }}>
+        <CustomText
+          style={{ color: "red", marginHorizontal: 15, marginTop: 5 }}
+        >
           {error}
         </CustomText>
       )}

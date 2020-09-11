@@ -2,9 +2,11 @@ import { AsyncStorage } from "react-native";
 import { API_URL } from "../../utils/Config";
 import { timeoutPromise } from "../../utils/Tools";
 
+export const AUTH_LOADING = "AUTH_LOADING";
 export const SIGN_UP = "SIGN_UP";
 export const LOGIN = "LOGIN";
-export const LOGIN_ERROR = "LOGIN_ERROR";
+export const AUTH_FAILURE = "AUTH_FAILURE";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const LOGOUT = "LOGOUT";
 export const EDIT_INFO = "EDIT_INFO ";
 export const UPLOAD_PROFILEPIC = "UPLOAD_PROFILEPIC";
@@ -26,6 +28,9 @@ const saveDataToStorage = (name, data) => {
 
 export const SignUp = (name, email, password) => {
   return async (dispatch) => {
+    dispatch({
+      type: AUTH_LOADING,
+    });
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/user/register`, {
@@ -44,17 +49,15 @@ export const SignUp = (name, email, password) => {
       if (!response.ok) {
         const errorResData = await response.json();
         dispatch({
-          type: LOGIN_ERROR,
-          error: errorResData.err,
+          type: AUTH_FAILURE,
         });
         throw new Error(errorResData.err);
       }
       dispatch({
         type: SIGN_UP,
-        error: "No Error",
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
@@ -62,6 +65,9 @@ export const SignUp = (name, email, password) => {
 //Login
 export const Login = (email, password) => {
   return async (dispatch) => {
+    dispatch({
+      type: AUTH_LOADING,
+    });
     const pushToken = await AskingExpoToken();
     try {
       const response = await timeoutPromise(
@@ -80,6 +86,9 @@ export const Login = (email, password) => {
       );
       if (!response.ok) {
         const errorResData = await response.json();
+        dispatch({
+          type: AUTH_FAILURE,
+        });
         throw new Error(errorResData.err);
       }
       const resData = await response.json();
@@ -90,7 +99,7 @@ export const Login = (email, password) => {
         user: resData,
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
@@ -98,6 +107,9 @@ export const Login = (email, password) => {
 export const EditInfo = (phone, address) => {
   return async (dispatch, getState) => {
     const user = getState().auth.user;
+    dispatch({
+      type: AUTH_LOADING,
+    });
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/user/${user.userid}`, {
@@ -115,7 +127,10 @@ export const EditInfo = (phone, address) => {
       );
       if (!response.ok) {
         const errorResData = await response.json();
-        alert(errorResData.err);
+        dispatch({
+          type: AUTH_FAILURE,
+        });
+        Error(errorResData.err);
       }
 
       dispatch({
@@ -124,13 +139,16 @@ export const EditInfo = (phone, address) => {
         address,
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
 
 export const UploadProfilePic = (imageUri, filename, type) => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: AUTH_LOADING,
+    });
     const user = getState().auth.user;
     let formData = new FormData();
     // Infer the type of the image
@@ -153,7 +171,10 @@ export const UploadProfilePic = (imageUri, filename, type) => {
       );
       if (!response.ok) {
         const errorResData = await response.json();
-        alert(errorResData.err);
+        dispatch({
+          type: AUTH_FAILURE,
+        });
+        Error(errorResData.err);
       }
 
       dispatch({
@@ -161,13 +182,16 @@ export const UploadProfilePic = (imageUri, filename, type) => {
         profilePic: imageUri,
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
 
 export const ForgetPassword = (email) => {
   return async (dispatch) => {
+    dispatch({
+      type: AUTH_LOADING,
+    });
     try {
       const response = await timeoutPromise(
         fetch(`${API_URL}/user/reset_pw`, {
@@ -183,18 +207,24 @@ export const ForgetPassword = (email) => {
       );
       if (!response.ok) {
         const errorResData = await response.json();
-        alert(errorResData.err);
+        dispatch({
+          type: AUTH_FAILURE,
+        });
+        throw new Error(errorResData.err);
       }
       dispatch({
         type: FORGET_PASSWORD,
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
 export const ResetPassword = (password, url) => {
   return async (dispatch) => {
+    dispatch({
+      type: AUTH_LOADING,
+    });
     try {
       const response = await timeoutPromise(
         fetch(
@@ -213,8 +243,10 @@ export const ResetPassword = (password, url) => {
       );
       if (!response.ok) {
         const errorResData = await response.json();
-        alert(errorResData.err);
-        // throw new Error(errorResData.err);
+        dispatch({
+          type: AUTH_FAILURE,
+        });
+        Error(errorResData.err);
       } else {
         dispatch({
           type: RESET_PASSWORD,
@@ -222,7 +254,7 @@ export const ResetPassword = (password, url) => {
         alert("Reset Successfully");
       }
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };

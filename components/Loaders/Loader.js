@@ -18,7 +18,7 @@ const Loader = () => {
         justifyContent: "center",
       }}
     >
-      <ActivityIndicator size="large" color={Colors.lighter_green} />
+      <ActivityIndicator size='large' color={Colors.lighter_green} />
     </View>
   );
 };

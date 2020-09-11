@@ -15,7 +15,7 @@ import Colors from "../../utils/Colors";
 //Icon
 import { Feather } from "@expo/vector-icons";
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //Import Action
 import * as AuthActions from "../../store/auth/authActions";
 
@@ -39,7 +39,7 @@ const ResetPwScreen = (props) => {
   const { handleSubmit, reset } = props;
   const dispatch = useDispatch();
   const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector((state) => state.auth.isLoading);
   const [showConfirmPass, setshowConfirmPass] = useState(false);
   const url = props.route.params;
   const submit = async (values) => {
@@ -48,9 +48,8 @@ const ResetPwScreen = (props) => {
     reset();
     try {
       await dispatch(AuthActions.ResetPassword(values.password, url));
-      setLoading(false);
     } catch (err) {
-      throw err;
+      alert(err);
     }
   };
   return (

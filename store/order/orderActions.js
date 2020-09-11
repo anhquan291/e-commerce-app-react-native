@@ -1,5 +1,7 @@
 import { API_URL } from "../../utils/Config";
 import { timeoutPromise } from "../../utils/Tools";
+export const ORDER_LOADING = "ORDER_LOADING";
+export const ORDER_FAILURE = "ORDER_FAILURE";
 export const FETCH_ORDER = "FETCH_ORDER";
 export const ADD_ORDER = "ADD_ORDER";
 export const ERROR = "ERROR";
@@ -7,6 +9,9 @@ export const ERROR = "ERROR";
 //Fetch order
 export const fetchOrder = () => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: ORDER_LOADING,
+    });
     const user = getState().auth.user;
     if (user.userid == undefined) {
       return;
@@ -23,18 +28,21 @@ export const fetchOrder = () => {
         })
       );
       if (!response.ok) {
-        alert("Can't get Orders");
+        dispatch({
+          type: ORDER_FAILURE,
+        });
+        throw new Error("Something went wrong! Can't get your order");
       }
       const resData = await response.json();
       const filterUserOrder = resData.content.filter(
         (userOrder) => userOrder.userId._id === user.userid
       );
       dispatch({
-        type: "FETCH_ORDER",
+        type: FETCH_ORDER,
         orderData: filterUserOrder,
       });
     } catch (err) {
-      console.log(err.message);
+      throw err;
     }
   };
 };
@@ -50,6 +58,9 @@ export const addOrder = (
   phone
 ) => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: ORDER_LOADING,
+    });
     const user = getState().auth.user;
     try {
       const response = await timeoutPromise(
@@ -75,18 +86,18 @@ export const addOrder = (
         })
       );
       if (!response.ok) {
-        return dispatch({
-          type: "ERROR",
-          error: "Ordering Error",
+        dispatch({
+          type: ORDER_FAILURE,
         });
+        throw new Error("Something went wrong!");
       }
       const resData = await response.json();
       dispatch({
-        type: "ADD_ORDER",
+        type: ADD_ORDER,
         orderItem: resData.content,
       });
     } catch (err) {
-      console.log(err.message);
+      throw error;
     }
   };
 };

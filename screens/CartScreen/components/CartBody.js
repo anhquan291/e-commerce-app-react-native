@@ -97,6 +97,7 @@ CartBody.propTypes = {
 const styles = StyleSheet.create({
   footer: {
     flex: 1,
+    marginBottom: 80,
   },
   nextButton: {
     borderWidth: 1,

@@ -1,8 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { Input } from "react-native-elements";
+import { TextInput } from "react-native-paper";
 import CustomText from "../../../components/UI/CustomText";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 //Colors
 import Colors from "../../../utils/Colors";
 
@@ -15,18 +14,22 @@ export default renderField = ({
 }) => {
   return (
     <View style={{ marginTop: 30 }}>
-      <Input
+      <TextInput
         placeholder={label}
         autoCapitalize='none'
         clearButtonMode='always'
-        leftIcon={
-          <MaterialCommunityIcons
+        mode='outlined'
+        selectionColor={Colors.leave_green}
+        theme={{ colors: { primary: Colors.leave_green } }}
+        left={
+          <TextInput.Icon
             name={icon}
             size={24}
             color={Colors.lighter_green}
+            style={{ paddingRight: 10 }}
           />
         }
-        inputStyle={{ fontSize: 14, paddingLeft: 10 }}
+        style={{ fontSize: 14 }}
         keyboardType={keyboardType}
         onChangeText={onChange}
         {...restInput}

@@ -9,15 +9,13 @@ const UploadButton = ({
   uploadButton,
   setUploadButton,
   setImageUri,
-  loading,
   UploadProfile,
 }) => {
   return (
     <View style={styles.button}>
       <Button
-        icon="camera"
-        mode="contained"
-        loading={loading}
+        icon='camera'
+        mode='contained'
         onPress={UploadProfile}
         disabled={uploadButton}
         style={{
@@ -30,7 +28,7 @@ const UploadButton = ({
       </Button>
       {!uploadButton ? (
         <Button
-          mode="contained"
+          mode='contained'
           onPress={() => {
             setUploadButton(true), setImageUri("");
           }}
@@ -55,7 +53,6 @@ UploadButton.propTypes = {
   uploadButton: PropTypes.bool.isRequired,
   setUploadButton: PropTypes.func.isRequired,
   setImageUri: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
   UploadProfile: PropTypes.func.isRequired,
 };
 

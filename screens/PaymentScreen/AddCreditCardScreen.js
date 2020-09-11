@@ -39,7 +39,7 @@ const AddCreditCardScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.backIcon}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialCommunityIcons name="arrow-left" size={30} color="black" />
+          <MaterialCommunityIcons name='arrow-left' size={30} color='black' />
         </TouchableOpacity>
       </View>
       <AddSubscriptionView
