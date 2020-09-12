@@ -7,6 +7,7 @@ import {
   SIGN_UP,
   AUTH_FAILURE,
   FORGET_PASSWORD,
+  RESET_PASSWORD,
 } from "./authActions";
 import { AsyncStorage } from "react-native";
 import UserMessages from "../../messages/user";
@@ -64,6 +65,11 @@ export default (state = initialState, action) => {
         isLoading: false,
       };
     case FORGET_PASSWORD:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case RESET_PASSWORD:
       return {
         ...state,
         isLoading: false,

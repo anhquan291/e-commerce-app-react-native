@@ -56,10 +56,10 @@ export const fetchFavorite = () => {
 };
 //Add Favorite
 export const addFavorite = (item) => {
-  dispatch({
-    type: FAVORITE_LOADING,
-  });
   return async (dispatch, getState) => {
+    dispatch({
+      type: FAVORITE_LOADING,
+    });
     const user = getState().auth.user;
     try {
       const response = await timeoutPromise(
@@ -86,8 +86,6 @@ export const addFavorite = (item) => {
         });
         throw new Error("Something went wrong!");
       }
-      const resData = await response.json();
-
       dispatch({
         type: ADD_FAVORITE,
         addItem: item,

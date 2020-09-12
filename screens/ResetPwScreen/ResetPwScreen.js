@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  ActivityIndicator,
   Keyboard,
+  Alert,
 } from "react-native";
 import { Field, reduxForm } from "redux-form";
 import CustomText from "../../components/UI/CustomText";
@@ -16,8 +16,9 @@ import Colors from "../../utils/Colors";
 import { Feather } from "@expo/vector-icons";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-//Import Action
+// Action
 import * as AuthActions from "../../store/auth/authActions";
+import Loader from "../../components/Loaders/Loader";
 
 //Validation
 const validate = (values) => {
@@ -43,17 +44,25 @@ const ResetPwScreen = (props) => {
   const [showConfirmPass, setshowConfirmPass] = useState(false);
   const url = props.route.params;
   const submit = async (values) => {
-    setLoading(true);
-    Keyboard.dismiss;
-    reset();
     try {
       await dispatch(AuthActions.ResetPassword(values.password, url));
+      Keyboard.dismiss;
+      await reset();
+      Alert.alert("Reset Successfully", "You can login now", [
+        {
+          text: "Okay",
+          onPress: () => {
+            props.navigation.navigate("Home");
+          },
+        },
+      ]);
     } catch (err) {
       alert(err);
     }
   };
   return (
     <SafeAreaView style={styles.container}>
+      {loading ? <Loader /> : <></>}
       <TouchableOpacity
         onPress={() => {
           props.navigation.goBack();
@@ -97,13 +106,7 @@ const ResetPwScreen = (props) => {
           style={{ marginVertical: 10, alignItems: "center" }}
         >
           <View style={styles.signIn}>
-            {loading ? (
-              <ActivityIndicator size='small' color='#fff' />
-            ) : (
-              <CustomText style={styles.textSign}>
-                Reset Your Password
-              </CustomText>
-            )}
+            <CustomText style={styles.textSign}>Reset Your Password</CustomText>
           </View>
         </TouchableOpacity>
       </View>

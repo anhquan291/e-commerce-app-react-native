@@ -39,19 +39,19 @@ class ModalComp extends React.PureComponent {
         style={{
           flex: 1,
         }}
-        animationType="slide"
+        animationType='slide'
         transparent={true}
         visible={modalVisible}
       >
         <View style={styles.modalContainer}></View>
         <View style={styles.modal}>
           <TouchableOpacity
-            animation="zoomIn"
+            animation='zoomIn'
             style={styles.close}
             onPress={() => setModalVisible(false)}
           >
             <MaterialCommunityIcons
-              name="window-close"
+              name='window-close'
               size={24}
               color={color}
             />
@@ -61,7 +61,7 @@ class ModalComp extends React.PureComponent {
             style={{ width: "90%", flexDirection: "row", alignItems: "center" }}
           >
             <MaterialCommunityIcons
-              name="check-circle-outline"
+              name='check-circle-outline'
               color={color}
               size={20}
             />
@@ -101,9 +101,7 @@ class ModalComp extends React.PureComponent {
           <View
             style={{
               height: 55,
-              borderTopWidth: 1,
               justifyContent: "center",
-              borderTopColor: Colors.grey,
             }}
           >
             <TouchableOpacity
@@ -164,7 +162,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30,
+    marginVertical: 30,
     height: 50,
     width: "100%",
   },

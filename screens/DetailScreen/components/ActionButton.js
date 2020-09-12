@@ -14,7 +14,7 @@ import LottieView from "lottie-react-native";
 //Animatable
 import * as Animatable from "react-native-animatable";
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //Action
 import * as CartActions from "../../../store/cart/cartActions";
 import * as FavoriteActions from "../../../store/favorite/favoriteActions";
@@ -29,13 +29,12 @@ const ActionButton = ({
   item,
   color,
   setShowSnackbar,
-  setIsAddingCart,
   FavoriteProducts,
-  isAddingCart,
   setModalVisible,
   setMessage,
 }) => {
   const dispatch = useDispatch();
+  const cartLoading = useSelector((state) => state.cart.isLoading);
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
@@ -55,9 +54,7 @@ const ActionButton = ({
       }
     } else {
       try {
-        setIsAddingCart(true);
         await dispatch(CartActions.addToCart(item, user.token));
-        setIsAddingCart(false);
         setModalVisible(true);
       } catch (err) {
         throw err;
@@ -118,7 +115,7 @@ const ActionButton = ({
           style={[styles.addCart, { backgroundColor: color }]}
           onPress={addToCart}
         >
-          {isAddingCart ? (
+          {cartLoading ? (
             <ActivityIndicator size='small' color='#fff' />
           ) : (
             <CustomText style={styles.actionText}>Thêm vào giỏ hàng</CustomText>
@@ -134,9 +131,7 @@ ActionButton.propTypes = {
   user: PropTypes.object.isRequired,
   color: PropTypes.string.isRequired,
   setShowSnackbar: PropTypes.func.isRequired,
-  setIsAddingCart: PropTypes.func.isRequired,
   FavoriteProducts: PropTypes.bool.isRequired,
-  isAddingCart: PropTypes.bool.isRequired,
   setModalVisible: PropTypes.func.isRequired,
   setMessage: PropTypes.func.isRequired,
 };

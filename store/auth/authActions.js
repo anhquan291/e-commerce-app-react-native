@@ -246,13 +246,11 @@ export const ResetPassword = (password, url) => {
         dispatch({
           type: AUTH_FAILURE,
         });
-        Error(errorResData.err);
-      } else {
-        dispatch({
-          type: RESET_PASSWORD,
-        });
-        alert("Reset Successfully");
+        throw new Error(errorResData.err);
       }
+      dispatch({
+        type: RESET_PASSWORD,
+      });
     } catch (err) {
       throw err;
     }

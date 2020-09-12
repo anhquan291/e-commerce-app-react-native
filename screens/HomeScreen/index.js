@@ -38,14 +38,11 @@ const HomeScreen = ({ navigation }) => {
   const rings = products.filter((ring) => ring.type === "ring");
   const bracelets = products.filter((bracelet) => bracelet.type === "bracelet");
   const stones = products.filter((stone) => stone.type === "stone");
-
-  const isLoading = useSelector((state) => state.auth.isLoading);
-  // console.log(isLoading);
-
-  // AsyncStorage.removeItem("isFirstTime");
+  // const isLoading = useSelector((state) => state.auth.isLoading);
   //fetch Api
   useEffect(() => {
     setLoading(true);
+    // AsyncStorage.removeItem("isFirstTime");
     const fetching = async () => {
       try {
         await dispatch(ProductActions.fetchProducts());

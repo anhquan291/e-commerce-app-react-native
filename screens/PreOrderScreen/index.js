@@ -59,38 +59,38 @@ const PreOrderScreen = (props) => {
 
   const fullAddress = `${address}, ${town} ,${province}`;
   const toPayment = async () => {
-    // try {
-    //   if (error == undefined && province.length !== 0 && town.length !== 0) {
-    //     props.navigation.navigate("Payment", {
-    //       screen: "PaymentScreen",
-    //       params: {
-    //         fullAddress,
-    //         orderItems,
-    //         name,
-    //         phone,
-    //         total,
-    //         cartId,
-    //         carts,
-    //       },
-    //     });
-    //   } else {
-    //     alert("Vui lòng nhập đầy đủ thông tin.");
-    //   }
-    // } catch (err) {
-    //   throw err;
-    // }
-    props.navigation.navigate("Payment", {
-      screen: "PaymentScreen",
-      params: {
-        fullAddress,
-        orderItems,
-        name,
-        phone,
-        total,
-        cartId,
-        carts,
-      },
-    });
+    try {
+      if (error == undefined && province.length !== 0 && town.length !== 0) {
+        props.navigation.navigate("Payment", {
+          screen: "PaymentScreen",
+          params: {
+            fullAddress,
+            orderItems,
+            name,
+            phone,
+            total,
+            cartId,
+            carts,
+          },
+        });
+      } else {
+        alert("Vui lòng nhập đầy đủ thông tin.");
+      }
+    } catch (err) {
+      throw err;
+    }
+    // props.navigation.navigate("Payment", {
+    //   screen: "PaymentScreen",
+    //   params: {
+    //     fullAddress,
+    //     orderItems,
+    //     name,
+    //     phone,
+    //     total,
+    //     cartId,
+    //     carts,
+    //   },
+    // });
   };
   useEffect(() => {
     if (carts.items.length === 0) {

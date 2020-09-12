@@ -1,13 +1,12 @@
-import React from 'react';
-import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import React from "react";
+import { View, StyleSheet, SafeAreaView, Dimensions } from "react-native";
 //Icon
-import { AntDesign } from '@expo/vector-icons';
-import CustomText from '../../components/UI/CustomText';
-import Colors from '../../utils/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import CustomText from "../../components/UI/CustomText";
+import Colors from "../../utils/Colors";
+import { TouchableOpacity } from "react-native-gesture-handler";
 //Icon
-import LottieView from 'lottie-react-native';
-const { height } = Dimensions.get('window');
+import LottieView from "lottie-react-native";
+const { height } = Dimensions.get("window");
 
 const FinishOrderScreen = (props) => {
   return (
@@ -15,7 +14,7 @@ const FinishOrderScreen = (props) => {
       <View style={styles.info}>
         <View>
           <LottieView
-            source={require('../../components/IconAnimation/done.json')}
+            source={require("../../components/IconAnimation/done.json")}
             autoPlay
             loop={false}
             resizeMode='contain'
@@ -32,8 +31,8 @@ const FinishOrderScreen = (props) => {
         </CustomText>
       </View>
       <View style={styles.buttom}>
-        <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
-          <CustomText style={{ ...styles.title, color: '#fff' }}>
+        <TouchableOpacity onPress={() => props.navigation.navigate("Home")}>
+          <CustomText style={{ ...styles.title, color: "#fff" }}>
             Quay lại trang chủ
           </CustomText>
         </TouchableOpacity>
@@ -45,18 +44,18 @@ const FinishOrderScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
   },
   info: {
     marginTop: height / 4,
-    alignItems: 'center',
+    alignItems: "center",
   },
   id: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
     color: Colors.text,
   },

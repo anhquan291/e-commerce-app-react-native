@@ -14,25 +14,25 @@ import Colors from "../utils/Colors";
 import CustomDrawer from "./CustomDrawer";
 import CustomText from "../components/UI/CustomText";
 //Screens
-import HomeScreen from "../screens/HomeScreen/HomeScreen";
+import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen/DetailScreen";
 import IntroScreen from "../screens/IntroScreen/IntroScreen";
-import FavoriteScreen from "../screens/FavoriteScreen/FavoriteScreen";
+import FavoriteScreen from "../screens/FavoriteScreen";
 import FirstScreen from "../screens/FirstScreen/FirstScreen";
-import SignupScreen from "../screens/SignupScreen/SignupScreen";
-import LoginScreen from "../screens/LoginScreen/LoginScreen";
-import ContactScreen from "../screens/ContactScreen/ContactScreen";
-import CartScreen from "../screens/CartScreen/CartScreen";
-import ProductScreen from "../screens/ProductScreen/ProductScreen";
-import OrderScreen from "../screens/OrderScreen/OrderScreen";
-import PreOrderScreen from "../screens/PreOrderScreen/PreOrderScreen";
-import PaymentScreen from "../screens/PaymentScreen/PaymentScreen";
+import SignupScreen from "../screens/SignupScreen";
+import LoginScreen from "../screens/LoginScreen";
+import ContactScreen from "../screens/ContactScreen";
+import CartScreen from "../screens/CartScreen";
+import ProductScreen from "../screens/ProductScreen";
+import OrderScreen from "../screens/OrderScreen";
+import PreOrderScreen from "../screens/PreOrderScreen";
+import PaymentScreen from "../screens/PaymentScreen";
 import AddCreditCardScreen from "../screens/PaymentScreen/AddCreditCardScreen";
 import FinishOrderScreen from "../screens/PreOrderScreen/FinishOrderScreen";
-import ForgetPwScreen from "../screens/ResetPwScreen/ForgetPwScreen";
+import ForgetPwScreen from "../screens/ResetPwScreen";
 import ResetPwScreen from "../screens/ResetPwScreen/ResetPwScreen";
 import FinishResetPwScreen from "../screens/ResetPwScreen/FinishResetPwScreen";
-import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import EditProfileScreen from "../screens/ProfileScreen/EditProfileScreen";
 //redux
 import { useSelector } from "react-redux";
@@ -43,7 +43,7 @@ const IntroStack = createStackNavigator();
 export const IntroStackScreen = () => (
   <IntroStack.Navigator>
     <IntroStack.Screen
-      name="IntroScreen"
+      name='IntroScreen'
       component={IntroScreen}
       options={{ headerShown: false }}
     />
@@ -59,15 +59,15 @@ export const LoginStackScreen = () => (
       cardOverlayEnabled: true,
       ...TransitionPresets.ModalPresentationIOS,
     }}
-    mode="modal"
+    mode='modal'
   >
     <LoginStack.Screen
-      name="LoginScreen"
+      name='LoginScreen'
       component={LoginScreen}
       options={{ headerShown: false }}
     />
     <LoginStack.Screen
-      name="ForgetPwScreen"
+      name='ForgetPwScreen'
       component={ForgetPwScreen}
       options={{ headerShown: false }}
     />
@@ -78,22 +78,22 @@ const AuthStack = createStackNavigator();
 export const AuthStackScreen = () => (
   <AuthStack.Navigator>
     <AuthStack.Screen
-      name="FirstScreen"
+      name='FirstScreen'
       component={FirstScreen}
       options={{ headerShown: false }}
     />
     <AuthStack.Screen
-      name="LoginScreen"
+      name='LoginScreen'
       component={LoginStackScreen}
       options={{ headerShown: false }}
     />
     <AuthStack.Screen
-      name="SignupScreen"
+      name='SignupScreen'
       component={SignupScreen}
       options={{ headerShown: false }}
     />
     <AuthStack.Screen
-      name="FinishResetScreen"
+      name='FinishResetScreen'
       component={FinishResetPwScreen}
       options={{ headerShown: false }}
     />
@@ -108,12 +108,12 @@ export const FavoriteStackScreen = () => (
     }}
   >
     <FavoriteStack.Screen
-      name="FavoriteScreen"
+      name='FavoriteScreen'
       component={FavoriteScreen}
       options={{ headerShown: false }}
     />
     <FavoriteStack.Screen
-      name="Detail"
+      name='Detail'
       component={DetailScreen}
       options={{ headerShown: false }}
     />
@@ -131,12 +131,12 @@ export const PaymentStackScreen = () => (
     }}
   >
     <PaymentStack.Screen
-      name="PaymentScreen"
+      name='PaymentScreen'
       component={PaymentScreen}
       options={{ headerShown: false }}
     />
     <PaymentStack.Screen
-      name="AddCreditCardScreen"
+      name='AddCreditCardScreen'
       component={AddCreditCardScreen}
       options={{ headerShown: false }}
     />
@@ -147,23 +147,23 @@ const CartStack = createStackNavigator();
 export const CartStackScreen = () => (
   <CartStack.Navigator>
     <CartStack.Screen
-      name="CartScreen"
+      name='CartScreen'
       component={CartScreen}
       options={{ headerShown: false }}
     />
 
     <CartStack.Screen
-      name="PreOrderScreen"
+      name='PreOrderScreen'
       component={PreOrderScreen}
       options={{ headerShown: false }}
     />
     <CartStack.Screen
-      name="Payment"
+      name='Payment'
       component={PaymentStackScreen}
       options={{ headerShown: false }}
     />
     <CartStack.Screen
-      name="AddCreditCardScreen"
+      name='AddCreditCardScreen'
       component={AddCreditCardScreen}
       options={{ headerShown: false }}
     />
@@ -178,17 +178,17 @@ export const ProductStackScreen = () => (
     }}
   >
     <ProductStack.Screen
-      name="ProductScreen"
+      name='ProductScreen'
       component={ProductScreen}
       options={{ headerShown: false }}
     />
     <ProductStack.Screen
-      name="DetailScreen"
+      name='DetailScreen'
       component={DetailScreen}
       options={{ headerShown: false }}
     />
     <ProductStack.Screen
-      name="CartScreen"
+      name='CartScreen'
       component={CartStackScreen}
       options={{ headerShown: false }}
     />
@@ -205,15 +205,15 @@ export const ProfileStackScreen = () => (
       cardOverlayEnabled: true,
       ...TransitionPresets.ModalPresentationIOS,
     }}
-    mode="modal"
+    mode='modal'
   >
     <ProfileStack.Screen
-      name="Profile"
+      name='Profile'
       component={ProfileScreen}
       options={{ headerShown: false }}
     />
     <ProfileStack.Screen
-      name="ProfileEdit"
+      name='ProfileEdit'
       component={EditProfileScreen}
       options={{ headerShown: false }}
     />
@@ -228,33 +228,33 @@ export const HomeStackScreen = () => (
     }}
   >
     <HomeStack.Screen
-      name="Home"
+      name='Home'
       component={HomeScreen}
       //animationEnabled: false , nằm trong option
       options={{ headerShown: false }}
     />
     <HomeStack.Screen
-      name="Detail"
+      name='Detail'
       component={DetailScreen}
       options={{ headerShown: false }}
     />
     <HomeStack.Screen
-      name="Cart"
+      name='Cart'
       component={CartStackScreen}
       options={{ headerShown: false }}
     />
     <HomeStack.Screen
-      name="Product"
+      name='Product'
       component={ProductStackScreen}
       options={{ headerShown: false }}
     />
     <HomeStack.Screen
-      name="FinishOrder"
+      name='FinishOrder'
       component={FinishOrderScreen}
       options={{ headerShown: false }}
     />
     <HomeStack.Screen
-      name="ResetPw"
+      name='ResetPw'
       component={ResetPwScreen}
       options={{ headerShown: false }}
     />
@@ -295,21 +295,21 @@ export const TabScreen = () => {
       }}
     >
       <Tab.Screen
-        name="HomeTab"
+        name='HomeTab'
         component={HomeStackScreen}
         options={{
           tabBarLabel: "Trang chủ",
         }}
       />
       <Tab.Screen
-        name="Favorite"
+        name='Favorite'
         component={FavoriteStackScreen}
         options={() => ({
           tabBarLabel: "Yêu thích",
         })}
       />
       <Tab.Screen
-        name="Cart"
+        name='Cart'
         component={CartStackScreen}
         options={() => ({
           tabBarLabel: "Giỏ hàng",
@@ -385,7 +385,7 @@ export const DrawerNavigator = () => {
 
       {Object.keys(user).length === 0 ? (
         <Drawer.Screen
-          name="SignUp"
+          name='SignUp'
           component={AuthStackScreen}
           options={() => ({
             title: ({ focused }) => (
@@ -401,7 +401,7 @@ export const DrawerNavigator = () => {
             ),
             drawerIcon: ({ focused }) => (
               <MaterialCommunityIcons
-                name="login"
+                name='login'
                 size={23}
                 color={focused ? Colors.lighter_green : Colors.grey}
               />
@@ -410,7 +410,7 @@ export const DrawerNavigator = () => {
         />
       ) : (
         <Drawer.Screen
-          name="Profile"
+          name='Profile'
           component={ProfileStackScreen}
           options={() => ({
             title: ({ focused }) => (
@@ -426,7 +426,7 @@ export const DrawerNavigator = () => {
             ),
             drawerIcon: ({ focused }) => (
               <MaterialCommunityIcons
-                name="face-profile"
+                name='face-profile'
                 size={25}
                 color={focused ? Colors.lighter_green : Colors.grey}
               />
