@@ -1,29 +1,29 @@
-# README #
+<img align='right' src="https://media.giphy.com/media/M9gbBd9nbDrOTu1Mqx/giphy.gif" width="230">
 
-This README would normally document whatever steps are necessary to get your application up and running.
+🙏, I'm Quan.  
+## Web/App Developer 👨‍💻
 
-### What is this repository for? ###
+[![](https://img.shields.io/badge/LinkedIn-ashrafkm-blue)](https://www.linkedin.com/in/ashraf-k-m-149a3494/)
+[![](https://img.shields.io/badge/Gmail-ashrafkm010%40gmail.com-red)](mailto:anhquan291@gmail.com)
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
-### How do I get set up? ###
+### <img src="https://media.giphy.com/media/VgCDAzcKvsR6OM0uWg/giphy.gif" width="50"> A little more about me...  
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+```javascript
+const ashraf = {
+    pronouns: "He" | "Him",
+    askMeAbout: ["app dev", "web dev", "tech"],
+    technologies:{
+        backEnd: ["nodejs", "express", "python"],
+        fronEnd: ["angular"],
+        mobileApp: ["ionic","angular"],
+        database: ["mongo","mySql"],
+        serverless: ["mongo-realm","aws-lambda"],
+        devOps: ["AWS", "Nginx", "Jenkins"],
+        misc: ["Firebase", "Socket.IO"]
+    },
+    architecture: ["Serverless Architecture", "microservices", "event-driven", "Single page applications"],
+}
+```
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
