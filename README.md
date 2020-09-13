@@ -9,18 +9,15 @@
 
 <div style="display: flex; margin-top: 30px">
  <img src="https://i.imgur.com/oJqL4FG.png" width="300">
- <img src="https://i.imgur.com/p3EwDuz.png" width="300">
- <img src="https://i.imgur.com/2V2bjJz.png" width="300">
+ <img src="https://i.imgur.com/p3EwDuz.png" style="margin-left: 20px" width="300">
 </div>
 <div style="display: flex; margin-top: 30px">
- <img src="https://i.imgur.com/xvcx4O0.png" width="300">
- <img src="https://i.imgur.com/Sj49rlK.png" width="300">
- <img src="https://i.imgur.com/Odh9i7n.png" width="300">
+  <img src="https://i.imgur.com/2V2bjJz.png" width="300">
+ <img src="https://i.imgur.com/Sj49rlK.png" style="margin-left: 20px" width="300">
 </div>
 <div style="display: flex; margin-top: 30px">
  <img src="https://i.imgur.com/vnbPrl4.png" width="300">
- <img src="https://i.imgur.com/mT5Vjmj.png" width="300">
- <img src="https://i.imgur.com/jW4IBYK.png" width="300">
+ <img src="https://i.imgur.com/mT5Vjmj.png"  style="margin-left: 20px" width="300">
 </div>
 
 
