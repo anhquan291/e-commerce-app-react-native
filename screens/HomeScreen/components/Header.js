@@ -15,7 +15,6 @@ import {
   Platform,
   StatusBar,
 } from "react-native";
-
 //icon
 import { Ionicons, Feather } from "@expo/vector-icons";
 //Colors
@@ -92,12 +91,12 @@ class FBSearchBar extends React.Component {
     // animation config
     // input box
     const input_box_translate_x_config = {
-      duration: 100,
+      duration: 50,
       toValue: width,
       easing: Easing.inOut(Easing.ease),
     };
     const back_button_opacity_config = {
-      duration: 200,
+      duration: 50,
       toValue: 0,
       easing: Easing.inOut(Easing.ease),
     };
@@ -276,7 +275,7 @@ export default FBSearchBar;
 
 const styles = StyleSheet.create({
   header_safe_area: {
-    zIndex: 100,
+    zIndex: 1000,
     backgroundColor: "#fff",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },

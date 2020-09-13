@@ -6,8 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   Image,
-  StatusBar,
-  Platform,
 } from "react-native";
 //import CustomText
 import CustomText from "../../../components/UI/CustomText";
@@ -17,105 +15,119 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Colors from "../../../utils/Colors";
 //number format
 import NumberFormat from "../../../components/UI/NumberFormat";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const { width, height } = Dimensions.get("window");
-// const screenHeight = Dimensions.get("screen").height;
-// const windowHeight = Dimensions.get("window").height;
-// const navbarHeight = screenHeight - windowHeight + StatusBar.currentHeight;
 
-const ModalComp = ({
-  item,
-  color,
-  modalVisible,
-  setModalVisible,
-  navigation,
-}) => {
-  const moveToCart = () => {
-    setModalVisible(false);
-    navigation.navigate("Cart");
-  };
+class ModalComp extends React.PureComponent {
+  render() {
+    const {
+      item,
+      color,
+      modalVisible,
+      setModalVisible,
+      navigation,
+    } = this.props;
+    const moveToCart = () => {
+      setModalVisible(false);
+      navigation.navigate("Cart");
+    };
 
-  return (
-    <Modal
-      style={{
-        flex: 1,
-      }}
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-    >
-      <View style={styles.modalContainer}></View>
-      <View style={styles.modal}>
-        <TouchableOpacity
-          animation="zoomIn"
-          style={styles.close}
-          onPress={() => setModalVisible(false)}
-        >
-          <MaterialCommunityIcons name="window-close" size={24} color={color} />
-        </TouchableOpacity>
-
-        <View
-          style={{ width: "90%", flexDirection: "row", alignItems: "center" }}
-        >
-          <MaterialCommunityIcons
-            name="check-circle-outline"
-            color={color}
-            size={20}
-          />
-          <CustomText style={{ ...styles.success, color }}>
-            Sản phẩm đã được thêm vào giỏ hàng
-          </CustomText>
-        </View>
-        <View style={styles.modelInfo}>
-          <View style={{ borderRadius: 20, width: "45%", overflow: "hidden" }}>
-            <Image
-              source={{ uri: item.thumb }}
-              style={{
-                height: 100,
-                resizeMode: "stretch",
-              }}
-            />
-          </View>
-          <View style={styles.quantity}>
-            <View>
-              <CustomText style={{ ...styles.title, fontSize: 15 }}>
-                {item.filename}
-              </CustomText>
-              <CustomText style={{ fontSize: 12, color: Colors.grey }}>
-                Cung cấp bởi Cát Tường
-              </CustomText>
-            </View>
-            <CustomText
-              style={{ marginTop: 5, fontSize: 14, color: Colors.text }}
-            >
-              Thành tiền:
-            </CustomText>
-            <NumberFormat price={item.price} />
-          </View>
-        </View>
-        <View
-          style={{
-            height: 55,
-            borderTopWidth: 1,
-            justifyContent: "center",
-            borderTopColor: Colors.grey,
-          }}
-        >
+    return (
+      <Modal
+        style={{
+          flex: 1,
+        }}
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+      >
+        <View style={styles.modalContainer}></View>
+        <View style={styles.modal}>
           <TouchableOpacity
-            style={[
-              styles.addCart,
-              {
-                backgroundColor: color,
-              },
-            ]}
-            onPress={moveToCart}
+            animation='zoomIn'
+            style={styles.close}
+            onPress={() => setModalVisible(false)}
           >
-            <CustomText style={styles.actionText}>Xem Giỏ Hàng</CustomText>
+            <MaterialCommunityIcons
+              name='window-close'
+              size={24}
+              color={color}
+            />
           </TouchableOpacity>
+
+          <View
+            style={{ width: "90%", flexDirection: "row", alignItems: "center" }}
+          >
+            <MaterialCommunityIcons
+              name='check-circle-outline'
+              color={color}
+              size={20}
+            />
+            <CustomText style={{ ...styles.success, color }}>
+              Sản phẩm đã được thêm vào giỏ hàng
+            </CustomText>
+          </View>
+          <View style={styles.modelInfo}>
+            <View
+              style={{ borderRadius: 20, width: "45%", overflow: "hidden" }}
+            >
+              <Image
+                source={{ uri: item.thumb }}
+                style={{
+                  height: 100,
+                  resizeMode: "stretch",
+                }}
+              />
+            </View>
+            <View style={styles.quantity}>
+              <View>
+                <CustomText style={{ ...styles.title, fontSize: 15 }}>
+                  {item.filename}
+                </CustomText>
+                <CustomText style={{ fontSize: 12, color: Colors.grey }}>
+                  Cung cấp bởi Cát Tường
+                </CustomText>
+              </View>
+              <CustomText
+                style={{ marginTop: 5, fontSize: 14, color: Colors.text }}
+              >
+                Thành tiền:
+              </CustomText>
+              <NumberFormat price={item.price} />
+            </View>
+          </View>
+          <View
+            style={{
+              height: 55,
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                styles.addCart,
+                {
+                  backgroundColor: color,
+                },
+              ]}
+              onPress={moveToCart}
+            >
+              <CustomText style={styles.actionText}>Xem Giỏ Hàng</CustomText>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </Modal>
-  );
+      </Modal>
+    );
+  }
+}
+
+ModalComp.propTypes = {
+  item: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
+  modalVisible: PropTypes.bool.isRequired,
+  setModalVisible: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -150,7 +162,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30,
+    marginVertical: 30,
     height: 50,
     width: "100%",
   },

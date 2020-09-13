@@ -5,6 +5,8 @@ import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
 import Messages from "../../../messages/user";
 import OrderItem from "./OrderItem";
+//PropTypes check
+import PropTypes from "prop-types";
 
 class OrderBody extends React.PureComponent {
   render() {
@@ -45,6 +47,14 @@ class OrderBody extends React.PureComponent {
     );
   }
 }
+
+OrderBody.propTypes = {
+  user: PropTypes.object.isRequired,
+  orders: PropTypes.array.isRequired,
+  loadOrders: PropTypes.func.isRequired,
+  isRefreshing: PropTypes.bool.isRequired,
+  navigation: PropTypes.object.isRequired,
+};
 
 const styles = StyleSheet.create({
   footer: {

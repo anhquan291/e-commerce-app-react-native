@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 //Icon
 import Colors from "../../utils/Colors";
 import Loader from "../../components/Loaders/Loader";
@@ -21,13 +14,27 @@ import PaymentBody from "./components/PaymentBody";
 import SummaryOrder from "../PreOrderScreen/components/SummaryOrder";
 
 const PaymentScreen = (props) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const carts = useSelector((state) => state.cart.cartItems);
-  const error = useSelector((state) => state.order.error);
+  const cartLoading = useSelector((state) => state.cart.isLoading);
+  const orderLoading = useSelector((state) => state.order.isLoading);
   let token = props.route.params.token;
   const [payByCard, setPayByCard] = useState(false);
   const paymentMethod = payByCard ? "Credit Card" : "Cash";
-
+  const unmounted = useRef(false);
+  useEffect(() => {
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLoading(false);
+    }, 1000);
+    if (!unmounted.current) {
+      return () => clearInterval(interval);
+    }
+  });
   useEffect(() => {
     setPayByCard(token ? true : false);
   }, [token]);
@@ -41,16 +48,10 @@ const PaymentScreen = (props) => {
     cartId,
     fullAddress,
   } = props.route.params;
-  const unmounted = useRef(false);
-  useEffect(() => {
-    return () => {
-      unmounted.current = true;
-    };
-  }, []);
+
   //action Add Order
   const addOrder = async () => {
     try {
-      setLoading(true);
       token = payByCard ? token : {};
       await dispatch(
         OrderActions.addOrder(
@@ -64,62 +65,44 @@ const PaymentScreen = (props) => {
         )
       );
       await dispatch(CartActions.resetCart(cartId));
-      setLoading(false);
-      if (Object.keys(error).length === 0) {
-        if (!unmounted.current) {
-          props.navigation.navigate("FinishOrder");
-        }
-      } else {
-        alert(error);
-      }
+      props.navigation.navigate("FinishOrder");
     } catch (err) {
-      throw err;
+      alert(err);
     }
   };
-  useEffect(() => {
-    if (carts.items.length === 0) {
-      props.navigation.navigate("Home");
-    }
-  }, [carts.items]);
 
   return (
     <View style={styles.container}>
       <Header navigation={props.navigation} />
-      <ScrollView>
-        <PaymentBody
-          navigation={props.navigation}
-          payByCard={payByCard}
-          setPayByCard={setPayByCard}
-        />
-        <SummaryOrder cartItems={carts.items} total={total} />
-      </ScrollView>
-      <View style={styles.total}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-          }}
-        ></View>
-        <View style={styles.orderButton}>
-          <TouchableOpacity onPress={addOrder}>
-            {loading ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <CustomText style={{ color: "#fff", fontSize: 16 }}>
-                Tiến hành đặt hàng
-              </CustomText>
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
+      {loading || (cartLoading && orderLoading) ? (
+        <Loader />
+      ) : (
+        <>
+          <ScrollView>
+            <PaymentBody
+              navigation={props.navigation}
+              payByCard={payByCard}
+              setPayByCard={setPayByCard}
+              token={token}
+            />
+            <SummaryOrder cartItems={carts.items} total={total} />
+          </ScrollView>
+          <View style={styles.total}>
+            <View style={styles.orderButton}>
+              <TouchableOpacity onPress={addOrder}>
+                <CustomText style={{ color: "#fff", fontSize: 16 }}>
+                  Tiến hành đặt hàng
+                </CustomText>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, backgroundColor: Colors.white },
   total: {
     width: "100%",
     position: "absolute",

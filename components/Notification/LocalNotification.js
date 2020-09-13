@@ -11,8 +11,9 @@ Notifications.setNotificationHandler({
 
 const LocalNotification = () => {
   useEffect(() => {
+    Notifications.cancelAllScheduledNotificationsAsync();
     const triggerNotificationHandler = async () => {
-      const LocalNoti = await Notifications.scheduleNotificationAsync({
+      await Notifications.scheduleNotificationAsync({
         content: {
           title: "Ngày mới tốt lành bạn nhé ^^",
           body: "Hãy lựa chọn sự may mắn, mua sự thành công cùng với CatTuong",
@@ -20,14 +21,14 @@ const LocalNotification = () => {
         },
         trigger: {
           hour: 8,
-          minute: 0,
-          repeats: true,
+          minute: 15,
+          type: "daily",
         },
       });
-      Notifications.cancelScheduledNotificationAsync(LocalNoti);
     };
     triggerNotificationHandler();
-
+    //cancle
+    // Notifications.cancelAllScheduledNotificationsAsync();
     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
       (response) => {
         // console.log(response);

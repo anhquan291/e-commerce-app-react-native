@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -18,7 +18,11 @@ import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
 
-class productItem extends React.PureComponent {
+class ProductItem extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { loading: true };
+  }
   render() {
     const { navigation, item } = this.props;
     const toDetail = () => {
@@ -29,8 +33,6 @@ class productItem extends React.PureComponent {
         <View
           style={{
             width: "100%",
-            height: 100,
-
             justifyContent: "center",
             flexDirection: "column",
             alignItems: "center",
@@ -38,28 +40,34 @@ class productItem extends React.PureComponent {
         >
           <TouchableOpacity onPress={toDetail}>
             <Image
-              source={{ uri: item.thumb }}
+              source={{ uri: item.url }}
               style={styles.image}
-              // onLoadStart={() => {
-              //   setIsLoading(true);
-              // }}
-              // onLoadEnd={() => setIsLoading(false)}
+              onLoadStart={() => {
+                this.setState({ loading: true });
+              }}
+              onLoadEnd={() => this.setState({ loading: false })}
             />
           </TouchableOpacity>
-          {/* {isLoading && (
-            <ActivityIndicator
-              size="small"
-              color={Colors.grey}
-              style={{ position: "absolute", left: 0, right: 0, top: 40 }}
-            />
-          )} */}
+          {this.state.loading && (
+            <View
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ActivityIndicator size='small' color={Colors.grey} />
+            </View>
+          )}
         </View>
         <View style={styles.center}>
           <CustomText style={styles.name}>{item.filename}</CustomText>
         </View>
         <View style={styles.info}>
           <View style={styles.rate}>
-            <AntDesign name="star" color="#fed922" size={15} />
+            <AntDesign name='star' color='#fed922' size={15} />
             <Text style={styles.score}>5.0</Text>
           </View>
           <NumberFormat price={item.price} />
@@ -74,7 +82,7 @@ class productItem extends React.PureComponent {
   }
 }
 
-productItem.propTypes = {
+ProductItem.propTypes = {
   item: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
 };
@@ -142,4 +150,4 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
 });
-export default productItem;
+export default ProductItem;

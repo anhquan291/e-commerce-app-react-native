@@ -8,12 +8,14 @@ import EditButtom from "./components/EditButton";
 import ProfilePic from "./components/ProfilePic";
 import ProfileBody from "./components/ProfileBody";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+//Loader
+import Loader from "../../components/Loaders/Loader";
 
 const { width, height } = Dimensions.get("window");
 
 const ProfileScreen = (props) => {
   const user = useSelector((state) => state.auth.user);
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector((state) => state.auth.isLoading);
   const [imageUri, setImageUri] = useState("");
   const [filename, setFilename] = useState("");
   const [type, setType] = useState("");
@@ -27,10 +29,8 @@ const ProfileScreen = (props) => {
     };
   }, []);
   const UploadProfile = async () => {
-    setLoading(true);
     try {
       await dispatch(AuthActions.UploadProfilePic(imageUri, filename, type));
-      setLoading(false);
       setUploadButton(true);
       if (!unmounted.current) {
         Alert.alert("Cập nhật", "Cập nhật thành công", [
@@ -40,7 +40,7 @@ const ProfileScreen = (props) => {
         ]);
       }
     } catch (err) {
-      throw err;
+      alert(err);
     }
   };
 
@@ -48,6 +48,7 @@ const ProfileScreen = (props) => {
     <ActionSheetProvider>
       <View style={styles.container}>
         <View style={styles.header}></View>
+        {loading ? <Loader /> : <></>}
         <View style={styles.profileContainer}>
           <View style={styles.profileBox}>
             <EditButtom navigation={props.navigation} user={user} />

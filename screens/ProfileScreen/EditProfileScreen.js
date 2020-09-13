@@ -1,45 +1,43 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { TextInput, Button } from 'react-native-paper';
-import Colors from '../../utils/Colors';
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Alert } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { TextInput, Button } from "react-native-paper";
+import Colors from "../../utils/Colors";
 //Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 //Action
-import * as AuthActions from '../../store/auth/authActions';
+import * as AuthActions from "../../store/auth/authActions";
+//Loader
+import Loader from "../../components/Loaders/Loader";
 
 const EditProfileScreen = (props) => {
   const { user } = props.route.params;
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector((state) => state.auth.isLoading);
   const [address, setAddress] = useState(user.address);
   const [phone, setPhone] = useState(user.phone);
-  const [disableButton, setDisableBottom] = useState(true);
+  const [disableButton, setDisableBotton] = useState(true);
   const dispatch = useDispatch();
-  const unmounted = useRef(false);
-  useEffect(() => {
-    return () => {
-      unmounted.current = true;
-    };
-  }, []);
+
   useEffect(() => {
     if (user.phone !== phone || user.address !== address) {
-      setDisableBottom(false);
+      setDisableBotton(false);
     }
   }, [address, phone]);
 
   const updateInfoHandler = async () => {
     if (phone.length === 10 && address.length >= 6) {
-      setLoading(true);
-      await dispatch(AuthActions.EditInfo(phone, address));
-      props.navigation.navigate('Profile');
-      if (!unmounted) {
-        setLoading(false);
+      try {
+        await dispatch(AuthActions.EditInfo(phone, address));
+
+        props.navigation.navigate("Profile");
+      } catch (err) {
+        alert(err);
       }
     } else {
-      return Alert.alert('Error', 'Thông tin không hợp lệ. Vui lòng nhập lại', [
+      return Alert.alert("Error", "Thông tin không hợp lệ. Vui lòng nhập lại", [
         {
-          text: 'OK',
+          text: "OK",
         },
       ]);
     }
@@ -47,6 +45,7 @@ const EditProfileScreen = (props) => {
 
   return (
     <View style={styles.container}>
+      {loading ? <Loader /> : <></>}
       <View style={styles.backIcon}>
         <TouchableOpacity onPress={() => props.navigation.goBack()}>
           <MaterialCommunityIcons name='arrow-left' size={30} color='black' />
@@ -82,6 +81,7 @@ const EditProfileScreen = (props) => {
             selectionColor={Colors.leave_green}
             onChangeText={(text) => setAddress(text)}
             style={{ marginVertical: 10 }}
+            autoCapitalize='words'
           />
         </View>
         <View style={styles.button}>
@@ -93,7 +93,7 @@ const EditProfileScreen = (props) => {
             onPress={updateInfoHandler}
             style={{
               height: 50,
-              justifyContent: 'center',
+              justifyContent: "center",
               backgroundColor: Colors.leave_green,
               marginHorizontal: 10,
             }}

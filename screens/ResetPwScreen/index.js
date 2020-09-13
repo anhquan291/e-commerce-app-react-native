@@ -1,76 +1,37 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-} from 'react-native';
-import { Field, reduxForm } from 'redux-form';
-import { TextInput } from 'react-native-paper';
-import CustomText from '../../components/UI/CustomText';
+} from "react-native";
+import { Field, reduxForm } from "redux-form";
+import CustomText from "../../components/UI/CustomText";
+import renderField from "./components/ForgetRenderField";
 //Colors
-import Colors from '../../utils/Colors';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Colors from "../../utils/Colors";
 //Icon
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 //Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 //Action
-import * as AuthActions from '../../store/auth/authActions';
+import * as AuthActions from "../../store/auth/authActions";
 
 //Validation
 const validate = (values) => {
   const errors = {};
   if (!values.email) {
-    errors.email = 'Email không được bỏ trống';
+    errors.email = "Email không được bỏ trống";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Email không hơp lệ';
+    errors.email = "Email không hơp lệ";
   }
   return errors;
 };
 
-const renderField = ({
-  keyboardType,
-  icon,
-  label,
-  meta: { touched, error, warning },
-  input: { onChange, ...restInput },
-}) => {
-  return (
-    <View>
-      <TextInput
-        label={label}
-        underlineColorAndroid={Colors.light_green}
-        underlineColor={Colors.light_green}
-        autoCapitalize='none'
-        theme={{ colors: { primary: Colors.leave_green } }}
-        left={<TextInput.Icon name={icon} color={Colors.lighter_green} />}
-        style={{
-          backgroundColor: 'transparent',
-          justifyContent: 'center',
-        }}
-        keyboardType={keyboardType}
-        onChangeText={onChange}
-        {...restInput}
-      />
-      {touched &&
-        ((error && (
-          <Text style={{ color: 'red', marginVertical: 5 }}>{error}</Text>
-        )) ||
-          (warning && (
-            <Text style={{ color: 'orange', marginVertical: 5 }}>
-              {warning}
-            </Text>
-          )))}
-    </View>
-  );
-};
-
 const ForgetPwScreen = (props) => {
   const { handleSubmit, reset } = props;
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
   const unmounted = useRef(false);
   useEffect(() => {
@@ -80,17 +41,14 @@ const ForgetPwScreen = (props) => {
   }, []);
   const submit = async (values) => {
     try {
-      setLoading(true);
       await dispatch(AuthActions.ForgetPassword(values.email));
-      setLoading(false);
-      reset();
       if (!unmounted.current) {
-        props.navigation.navigate('FinishResetScreen', {
+        props.navigation.navigate("FinishResetScreen", {
           value: values,
         });
       }
     } catch (err) {
-      throw err;
+      alert(err);
     }
   };
 
@@ -100,7 +58,7 @@ const ForgetPwScreen = (props) => {
         onPress={() => {
           props.navigation.goBack();
         }}
-        style={{ position: 'absolute', top: 30, left: 20 }}
+        style={{ position: "absolute", top: 30, left: 20 }}
       >
         <Feather
           name='arrow-left-circle'
@@ -119,7 +77,7 @@ const ForgetPwScreen = (props) => {
         />
         <TouchableOpacity
           onPress={handleSubmit(submit)}
-          style={{ marginVertical: 10, alignItems: 'center' }}
+          style={{ marginVertical: 10, alignItems: "center" }}
         >
           <View style={styles.signIn}>
             {loading ? (
@@ -136,10 +94,10 @@ const ForgetPwScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   content: {
-    marginTop: '20%',
+    marginTop: "20%",
     height: 300,
     paddingHorizontal: 20,
   },
@@ -148,23 +106,23 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   signIn: {
-    width: '100%',
+    width: "100%",
     height: 45,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 10,
     backgroundColor: Colors.lighter_green,
   },
   textSign: {
     fontSize: 15,
-    color: '#fff',
-    fontWeight: '500',
+    color: "#fff",
+    fontWeight: "500",
   },
 });
 const SignupForm = reduxForm({
-  form: 'contact', // a unique identifier for this form
+  form: "contact", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(ForgetPwScreen);
 

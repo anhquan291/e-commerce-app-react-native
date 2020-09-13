@@ -12,8 +12,10 @@ import Colors from "../../../utils/Colors";
 import { _pickImage } from "../../../utils/Tools";
 import CustomText from "../../../components/UI/CustomText";
 import { useActionSheet } from "@expo/react-native-action-sheet";
+//PropTypes check
+import PropTypes from "prop-types";
 
-const EditButton = ({
+const ProfilePic = ({
   user,
   imageUri,
   setImageUri,
@@ -71,12 +73,12 @@ const EditButton = ({
           style={{
             width: "100%",
             alignItems: "flex-end",
-            transform: [{ translateY: -110 }, { translateX: -20 }],
+            transform: [{ translateY: -110 }, { translateX: -5 }],
           }}
         >
           <View style={styles.cameraContainer}>
             <TouchableOpacity onPress={UploadProfileHandler}>
-              <FontAwesome name="camera" size={15} color="white" />
+              <FontAwesome name='camera' size={15} color='white' />
             </TouchableOpacity>
           </View>
         </View>
@@ -84,6 +86,15 @@ const EditButton = ({
       <CustomText style={styles.userName}>{user.name}</CustomText>
     </View>
   );
+};
+
+ProfilePic.propTypes = {
+  user: PropTypes.object.isRequired,
+  imageUri: PropTypes.string.isRequired,
+  setImageUri: PropTypes.func.isRequired,
+  setFilename: PropTypes.func.isRequired,
+  setType: PropTypes.func.isRequired,
+  setUploadButton: PropTypes.func.isRequired,
 };
 const styles = StyleSheet.create({
   profilePic: {
@@ -107,7 +118,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     color: Colors.leave_green,
+    textAlign: "center",
   },
 });
 
-export default EditButton;
+export default ProfilePic;

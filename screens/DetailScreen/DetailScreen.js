@@ -18,7 +18,6 @@ const DetailScreen = (props) => {
   const { item } = props.route.params;
   const [message, setMessage] = useState("");
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const [isAddingCart, setIsAddingCart] = useState(false);
   const [color, setColor] = useState(Colors.lighter_green);
   //color
   const type = item.color;
@@ -57,8 +56,6 @@ const DetailScreen = (props) => {
         item={item}
         FavoriteProducts={FavoriteProducts}
         setShowSnackbar={setShowSnackbar}
-        isAddingCart={isAddingCart}
-        setIsAddingCart={setIsAddingCart}
         setModalVisible={setModalVisible}
         setMessage={setMessage}
         user={user}

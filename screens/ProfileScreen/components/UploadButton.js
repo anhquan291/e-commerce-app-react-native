@@ -1,13 +1,14 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Colors from '../../../utils/Colors';
-import { Button } from 'react-native-paper';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import Colors from "../../../utils/Colors";
+import { Button } from "react-native-paper";
+//PropTypes check
+import PropTypes from "prop-types";
 
 const UploadButton = ({
   uploadButton,
   setUploadButton,
   setImageUri,
-  loading,
   UploadProfile,
 }) => {
   return (
@@ -15,12 +16,11 @@ const UploadButton = ({
       <Button
         icon='camera'
         mode='contained'
-        loading={loading}
         onPress={UploadProfile}
         disabled={uploadButton}
         style={{
           height: 50,
-          justifyContent: 'center',
+          justifyContent: "center",
           backgroundColor: Colors.leave_green,
         }}
       >
@@ -30,13 +30,13 @@ const UploadButton = ({
         <Button
           mode='contained'
           onPress={() => {
-            setUploadButton(true), setImageUri('');
+            setUploadButton(true), setImageUri("");
           }}
           disabled={uploadButton}
           style={{
             height: 50,
             marginTop: 10,
-            justifyContent: 'center',
+            justifyContent: "center",
             backgroundColor: Colors.leave_green,
           }}
         >
@@ -47,6 +47,13 @@ const UploadButton = ({
       )}
     </View>
   );
+};
+
+UploadButton.propTypes = {
+  uploadButton: PropTypes.bool.isRequired,
+  setUploadButton: PropTypes.func.isRequired,
+  setImageUri: PropTypes.func.isRequired,
+  UploadProfile: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

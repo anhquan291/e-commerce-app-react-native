@@ -1,156 +1,73 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from "react";
 import {
   View,
-  Text,
-  TextInput,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  TouchableWithoutFeedback,
+  Keyboard,
   Alert,
-  ActivityIndicator,
-} from 'react-native';
-import { Field, reduxForm } from 'redux-form';
-import CustomText from '../../components/UI/CustomText';
+} from "react-native";
+import { Field, reduxForm } from "redux-form";
+import CustomText from "../../components/UI/CustomText";
+import renderField from "./components/ResetRenderFileld";
 //Colors
-import Colors from '../../utils/Colors';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Colors from "../../utils/Colors";
 //Icon
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 //Redux
-import { useDispatch } from 'react-redux';
-//Import Action
-import * as AuthActions from '../../store/auth/authActions';
-import Snackbar from '../../components/Notification/Snackbar';
+import { useDispatch, useSelector } from "react-redux";
+// Action
+import * as AuthActions from "../../store/auth/authActions";
+import Loader from "../../components/Loaders/Loader";
 
 //Validation
 const validate = (values) => {
   const errors = {};
 
   if (!values.password) {
-    errors.password = 'Mật khẩu không được bỏ trống';
+    errors.password = "Mật khẩu không được bỏ trống";
   } else if (values.password.length < 6) {
-    errors.password = 'Mật khẩu phải nhiều hơn hoặc bằng 6 ký tự';
+    errors.password = "Mật khẩu phải nhiều hơn hoặc bằng 6 ký tự";
   }
-  if (!values.confirmpassword) {
-    errors.confirmpassword = 'Mật khẩu không được bỏ trống';
-  } else if (values.confirmpassword !== values.password) {
-    errors.confirmpassword = 'Mật khẩu xác nhận không trùng khớp';
+  if (values.confirmpassword !== values.password) {
+    errors.confirmpassword = "Mật khẩu xác nhận không trùng khớp";
   }
 
   return errors;
 };
 
-const renderField = ({
-  keyboardType,
-  secureTextEntry,
-  icon,
-  showPass,
-  passIcon,
-  placeholder,
-  setShowPass,
-  showConfirmPass,
-  setshowConfirmPass,
-  meta: { touched, error },
-  input: { onChange, ...restInput },
-}) => {
-  return (
-    <View>
-      <View
-        style={{
-          height: 50,
-          width: '100%',
-          borderBottomWidth: 1,
-          borderBottomColor: Colors.grey,
-          marginBottom: 10,
-        }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons
-            name={icon}
-            size={22}
-            color={Colors.lighter_green}
-          />
-          <TextInput
-            style={{
-              height: 40,
-              padding: 5,
-              width: '80%',
-              marginLeft: 10,
-            }}
-            placeholder={placeholder}
-            keyboardType={keyboardType}
-            onChangeText={onChange}
-            secureTextEntry={secureTextEntry}
-            {...restInput}
-          />
-          {passIcon === 'pass' ? (
-            <TouchableWithoutFeedback
-              onPress={() => setShowPass((prev) => !prev)}
-            >
-              <MaterialCommunityIcons
-                name={!showPass ? 'eye-off-outline' : 'eye-outline'}
-                size={22}
-                color={Colors.lighter_green}
-              />
-            </TouchableWithoutFeedback>
-          ) : passIcon === 'confirm' ? (
-            <TouchableWithoutFeedback
-              onPress={() => setshowConfirmPass((prev) => !prev)}
-            >
-              <MaterialCommunityIcons
-                name={!showConfirmPass ? 'eye-off-outline' : 'eye-outline'}
-                size={22}
-                color={Colors.lighter_green}
-              />
-            </TouchableWithoutFeedback>
-          ) : (
-            <View />
-          )}
-        </View>
-      </View>
-      {touched && error && (
-        <Text style={{ color: 'red', marginVertical: 5 }}>{error}</Text>
-      )}
-    </View>
-  );
-};
-
 const ResetPwScreen = (props) => {
   const { handleSubmit, reset } = props;
-  const unmounted = useRef(false);
-  useEffect(() => {
-    return () => {
-      unmounted.current = true;
-    };
-  }, []);
-  const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [showConfirmPass, setshowConfirmPass] = useState(false);
-  const [showSnack, setSnowSnack] = useState(false);
-  const url = props.route.params;
   const dispatch = useDispatch();
+  const [showPass, setShowPass] = useState(false);
+  const loading = useSelector((state) => state.auth.isLoading);
+  const [showConfirmPass, setshowConfirmPass] = useState(false);
+  const url = props.route.params;
   const submit = async (values) => {
-    setLoading(true);
     try {
-      await dispatch(AuthActions(values.password, url));
-      await setLoading(false);
-      reset();
-
-      if (!unmounted.current) {
-        setSnowSnack(true);
-      }
+      await dispatch(AuthActions.ResetPassword(values.password, url));
+      Keyboard.dismiss;
+      await reset();
+      Alert.alert("Reset Successfully", "You can login now", [
+        {
+          text: "Okay",
+          onPress: () => {
+            props.navigation.navigate("Home");
+          },
+        },
+      ]);
     } catch (err) {
-      throw err;
+      alert(err);
     }
   };
   return (
     <SafeAreaView style={styles.container}>
+      {loading ? <Loader /> : <></>}
       <TouchableOpacity
         onPress={() => {
           props.navigation.goBack();
         }}
-        style={{ position: 'absolute', top: 50, left: 20 }}
+        style={{ position: "absolute", top: 50, left: 20 }}
       >
         <Feather
           name='arrow-left-circle'
@@ -186,31 +103,23 @@ const ResetPwScreen = (props) => {
         />
         <TouchableOpacity
           onPress={handleSubmit(submit)}
-          style={{ marginVertical: 10, alignItems: 'center' }}
+          style={{ marginVertical: 10, alignItems: "center" }}
         >
           <View style={styles.signIn}>
-            {loading ? (
-              <ActivityIndicator size='small' color='#fff' />
-            ) : (
-              <CustomText style={styles.textSign}>Đặt Lại Mật Khẩu</CustomText>
-            )}
+            <CustomText style={styles.textSign}>Reset Your Password</CustomText>
           </View>
         </TouchableOpacity>
       </View>
-      <Snackbar
-        checkVisible={showSnack}
-        message={'Reset password successfully'}
-      />
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   content: {
-    marginTop: '20%',
+    marginTop: "20%",
     height: 300,
     paddingHorizontal: 20,
   },
@@ -220,22 +129,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   signIn: {
-    width: '100%',
+    width: "100%",
     height: 45,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 10,
     backgroundColor: Colors.lighter_green,
   },
   textSign: {
     fontSize: 15,
-    color: '#fff',
+    color: "#fff",
   },
 });
 const SignupForm = reduxForm({
-  form: 'resetPw', // a unique identifier for this form
+  form: "resetPw", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(ResetPwScreen);
 

@@ -1,21 +1,18 @@
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
-import KeyboardSpacer from "react-native-keyboard-spacer";
+import { StyleSheet, View } from "react-native";
 import PaymentFormView from "./PaymentFormView";
 /**
  * The class renders a view with PaymentFormView
  */
-export default class AddSubscriptionView extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.cardFormWrapper}>
-          <PaymentFormView {...this.props} />
-        </View>
+export default AddSubscriptionView = (props) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.cardFormWrapper}>
+        <PaymentFormView {...props} />
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

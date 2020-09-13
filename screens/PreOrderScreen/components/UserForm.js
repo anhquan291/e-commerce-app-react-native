@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { Input } from "react-native-elements";
 import { Field, reduxForm } from "redux-form";
+import renderField from "./RenderField";
 //Colors
 import Colors from "../../../utils/Colors";
+import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
-import CustomText from "../../../components/UI/CustomText";
 
 //Validation
-
 const validate = (values) => {
   const errors = {};
   if (!values.name) {
@@ -37,58 +36,14 @@ const validate = (values) => {
   return errors;
 };
 
-const renderField = ({
-  label,
-  keyboardType,
-  onChangeText,
-  returnKeyType,
-  checkFocus,
-  checkValidation,
-  meta: { touched, error, warning },
-  input: { ...restInput },
-}) => {
-  useEffect(() => {
-    checkValidation(error);
-  }, [checkFocus]);
-  return (
-    <View>
-      <View>
-        <Input
-          placeholder={label}
-          autoCapitalize={label === "Họ Tên" ? "words" : "none"}
-          inputStyle={{ fontSize: 14 }}
-          inputContainerStyle={{
-            borderBottomColor: checkFocus ? Colors.lighter_green : Colors.grey,
-            borderBottomWidth: checkFocus ? 1.5 : 1,
-          }}
-          returnKeyType={returnKeyType ? returnKeyType : "next"}
-          keyboardType={keyboardType}
-          onChangeText={onChangeText}
-          {...restInput}
-        />
-      </View>
-      {touched && error && (
-        <CustomText
-          style={{ color: "red", marginBottom: 5, paddingHorizontal: 5 }}
-        >
-          {error}
-        </CustomText>
-      )}
-    </View>
-  );
-};
-
 const User = ({ getReceiver, checkValidation }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [colorName, setColorName] = useState(false);
-  const [colorAddress, setColorAddress] = useState(false);
-  const [colorPhone, setColorPhone] = useState(false);
 
   useEffect(() => {
     getReceiver(name, phone, address);
-  }, [colorName, colorAddress, colorPhone]);
+  }, [name, phone, address]);
 
   return (
     <View style={styles.container}>
@@ -96,45 +51,41 @@ const User = ({ getReceiver, checkValidation }) => {
       <View style={styles.inputContainer}>
         <View style={styles.inputBox}>
           <Field
-            name="name"
-            label="Họ Tên"
-            keyboardType="default"
+            name='name'
+            label='Họ Tên'
+            keyboardType='default'
             component={renderField}
             onChangeText={(value) => setName(value)}
-            checkFocus={colorName}
-            onFocus={() => setColorName(true)}
-            onBlur={() => setColorName(false)}
             checkValidation={checkValidation}
           />
 
           <Field
-            name="phone"
-            label="Số điện thoại"
+            name='phone'
+            label='Số Điện Thoại'
             component={renderField}
             onChangeText={(value) => setPhone(value)}
-            keyboardType="numeric"
-            returnKeyType="done"
-            checkFocus={colorPhone}
-            onFocus={() => setColorPhone(true)}
-            onBlur={() => setColorPhone(false)}
+            keyboardType='numeric'
+            returnKeyType='done'
             checkValidation={checkValidation}
           />
 
           <Field
-            name="address"
-            label="Địa chỉ"
+            name='address'
+            label='Địa Chỉ'
             component={renderField}
             onChangeText={(value) => setAddress(value)}
-            keyboardType="default"
-            checkFocus={colorAddress}
-            onFocus={() => setColorAddress(true)}
-            onBlur={() => setColorAddress(false)}
+            keyboardType='default'
             checkValidation={checkValidation}
           />
         </View>
       </View>
     </View>
   );
+};
+
+User.propTypes = {
+  getReceiver: PropTypes.func.isRequired,
+  checkValidation: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

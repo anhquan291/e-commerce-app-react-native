@@ -14,24 +14,27 @@ import LottieView from "lottie-react-native";
 //Animatable
 import * as Animatable from "react-native-animatable";
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //Action
 import * as CartActions from "../../../store/cart/cartActions";
 import * as FavoriteActions from "../../../store/favorite/favoriteActions";
 import Messages from "../../../messages/user";
+import Colors from "../../../utils/Colors";
+
+//PropTypes check
+import PropTypes from "prop-types";
 
 const ActionButton = ({
   user,
   item,
   color,
   setShowSnackbar,
-  setIsAddingCart,
   FavoriteProducts,
-  isAddingCart,
   setModalVisible,
   setMessage,
 }) => {
   const dispatch = useDispatch();
+  const cartLoading = useSelector((state) => state.cart.isLoading);
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
@@ -40,24 +43,22 @@ const ActionButton = ({
   }, []);
   //Set Colors
   const addToCart = async () => {
-    try {
-      if (Object.keys(user).length === 0) {
-        setMessage(Messages["user.login.require"]);
-        setShowSnackbar(true);
-        if (!unmounted.current) {
-          const interval = setInterval(() => {
-            setShowSnackbar(false);
-          }, 8000);
-          return () => clearInterval(interval);
-        }
-      } else {
-        setIsAddingCart(true);
-        await dispatch(CartActions.addToCart(item, user.token));
-        setIsAddingCart(false);
-        setModalVisible(true);
+    if (Object.keys(user).length === 0) {
+      setMessage(Messages["user.login.require"]);
+      setShowSnackbar(true);
+      if (!unmounted.current) {
+        const interval = setInterval(() => {
+          setShowSnackbar(false);
+        }, 7500);
+        return () => clearInterval(interval);
       }
-    } catch (err) {
-      throw err;
+    } else {
+      try {
+        await dispatch(CartActions.addToCart(item, user.token));
+        setModalVisible(true);
+      } catch (err) {
+        throw err;
+      }
     }
   };
   const toggleFavorite = () => {
@@ -66,7 +67,7 @@ const ActionButton = ({
       setShowSnackbar(true);
       const interval = setInterval(() => {
         setShowSnackbar(false);
-      }, 5000);
+      }, 7500);
       if (!unmounted.current) {
         return () => clearInterval(interval);
       }
@@ -92,7 +93,7 @@ const ActionButton = ({
   return (
     <Animatable.View
       delay={1500}
-      animation="fadeInUp"
+      animation='fadeInUp'
       style={styles.actionContainer}
     >
       <View style={styles.action}>
@@ -107,15 +108,15 @@ const ActionButton = ({
               loop={false}
             />
           ) : (
-            <Ionicons name="ios-heart-empty" size={27} color={color} />
+            <Ionicons name='ios-heart-empty' size={27} color={color} />
           )}
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.addCart, { backgroundColor: color }]}
           onPress={addToCart}
         >
-          {isAddingCart ? (
-            <ActivityIndicator size="small" color="#fff" />
+          {cartLoading ? (
+            <ActivityIndicator size='small' color='#fff' />
           ) : (
             <CustomText style={styles.actionText}>Thêm vào giỏ hàng</CustomText>
           )}
@@ -125,14 +126,26 @@ const ActionButton = ({
   );
 };
 
+ActionButton.propTypes = {
+  item: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  color: PropTypes.string.isRequired,
+  setShowSnackbar: PropTypes.func.isRequired,
+  FavoriteProducts: PropTypes.bool.isRequired,
+  setModalVisible: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
+};
+
 const styles = StyleSheet.create({
   action: {
     flexDirection: "row",
-    height: 65,
+    height: 80,
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
     backgroundColor: "#fff",
+    borderTopWidth: 1,
+    borderTopColor: Colors.grey,
   },
   addCart: {
     width: "75%",

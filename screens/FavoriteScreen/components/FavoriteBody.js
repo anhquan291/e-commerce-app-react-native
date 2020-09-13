@@ -1,18 +1,26 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import React from "react";
+import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 //Colors
-import Colors from '../../../utils/Colors';
+import Colors from "../../../utils/Colors";
 //Text
-import CustomText from '../../../components/UI/CustomText';
-import FavoriteItem from './FavoriteItem';
-import Messages from '../../../messages/user';
+import CustomText from "../../../components/UI/CustomText";
+import FavoriteItem from "./FavoriteItem";
+import Messages from "../../../messages/user";
+//PropTypes check
+import PropTypes from "prop-types";
 
-const FavoriteBody = ({ navigation, FavoriteProducts, user }) => {
+const FavoriteBody = ({
+  navigation,
+  FavoriteProducts,
+  user,
+  loadFavoriteProducts,
+  isRefreshing,
+}) => {
   return (
     <>
       {Object.keys(user).length === 0 ? (
         <View style={styles.center}>
-          <CustomText>{Messages['user.login.require']}</CustomText>
+          <CustomText>{Messages["user.login.require"]}</CustomText>
           <View
             style={{
               borderWidth: 1,
@@ -24,8 +32,8 @@ const FavoriteBody = ({ navigation, FavoriteProducts, user }) => {
               marginTop: 10,
             }}
           >
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-              <CustomText style={{ color: '#fff' }}>Tiếp tục</CustomText>
+            <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+              <CustomText style={{ color: "#fff" }}>Tiếp tục</CustomText>
             </TouchableOpacity>
           </View>
         </View>
@@ -41,6 +49,8 @@ const FavoriteBody = ({ navigation, FavoriteProducts, user }) => {
       ) : (
         <FlatList
           data={FavoriteProducts}
+          onRefresh={loadFavoriteProducts}
+          refreshing={isRefreshing}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => {
             return <FavoriteItem navigation={navigation} item={item} />;
@@ -51,7 +61,13 @@ const FavoriteBody = ({ navigation, FavoriteProducts, user }) => {
   );
 };
 
+FavoriteBody.propTypes = {
+  user: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
+  FavoriteProducts: PropTypes.array.isRequired,
+};
+
 const styles = StyleSheet.create({
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  center: { flex: 1, alignItems: "center", justifyContent: "center" },
 });
 export default FavoriteBody;

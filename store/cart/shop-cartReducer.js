@@ -1,18 +1,21 @@
-import { Cart } from '../../models/Cart';
+import { Cart } from "../../models/Cart";
 import {
   ADD_CART,
   FETCH_CART,
   REMOVE_FROM_CART,
   DES_CART_QUANTITY,
   RESET_CART,
-} from './cartActions';
-import { LOGOUT } from '../auth/authActions';
+  CART_LOADING,
+  CART_FAILURE,
+} from "./cartActions";
+import { LOGOUT } from "../auth/authActions";
 
 const emptyCart = {
   items: [],
 };
 const initialState = {
   cartItems: emptyCart,
+  isLoading: false,
 };
 
 const findIndex = (cartList, id) => {
@@ -24,10 +27,21 @@ const findIndex = (cartList, id) => {
 export default (state = initialState, action) => {
   const cartList = state.cartItems.items;
   switch (action.type) {
+    case CART_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case CART_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+      };
     case FETCH_CART:
       return {
         ...state,
         cartItems: action.carts,
+        isLoading: false,
       };
 
     case ADD_CART:
@@ -51,6 +65,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cartItems: { ...state.cartItems },
+        isLoading: false,
       };
     case REMOVE_FROM_CART:
       const { itemId } = action;
@@ -59,6 +74,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cartItems: { ...state.cartItems },
+        isLoading: false,
       };
     case DES_CART_QUANTITY:
       const { cartItemId } = action;
@@ -67,16 +83,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cartItems: { ...state.cartItems },
+        isLoading: false,
       };
     case RESET_CART:
       state.cartItems.items = [];
       return {
         ...state,
         cartItems: { ...state.cartItems },
+        isLoading: false,
       };
     case LOGOUT: {
       return {
         cartItems: emptyCart,
+        isLoading: false,
       };
     }
   }

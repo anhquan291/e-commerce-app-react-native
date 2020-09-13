@@ -54,9 +54,9 @@ const Address = ({ getInfo }) => {
     ) : (
       <MaterialIcons
         style={styles.icon}
-        name="keyboard-arrow-down"
+        name='keyboard-arrow-down'
         size={25}
-        color="black"
+        color='black'
       />
     );
   return (
@@ -95,11 +95,11 @@ Address.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 15, backgroundColor: "#fff" },
+  container: { flex: 1, paddingHorizontal: 10, backgroundColor: "#fff" },
   boxSelect: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.grey,
-    height: 50,
+    borderWidth: 1,
+    borderColor: Colors.grey,
+    height: 60,
     justifyContent: "space-between",
     marginBottom: 15,
     paddingHorizontal: 10,

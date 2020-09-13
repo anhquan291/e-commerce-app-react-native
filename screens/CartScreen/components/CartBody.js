@@ -16,8 +16,17 @@ import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
 import CartItem from "./CartItem";
 import Messages from "../../../messages/user";
+//PropTypes check
+import PropTypes from "prop-types";
 
-const CartBody = ({ navigation, user, carts, loadCarts, isRefreshing }) => {
+const CartBody = ({
+  navigation,
+  user,
+  carts,
+  loadCarts,
+  isRefreshing,
+  setAddLoading,
+}) => {
   const dispatch = useDispatch();
   const onRemove = (itemId) => {
     Alert.alert("Bỏ giỏ hàng", "Bạn có chắc bỏ sản phẩm khỏi giỏ hàng?", [
@@ -59,6 +68,7 @@ const CartBody = ({ navigation, user, carts, loadCarts, isRefreshing }) => {
             return (
               <CartItem
                 item={item}
+                setAddLoading={setAddLoading}
                 onRemove={() => onRemove(item.item._id)}
                 onAdd={() => {
                   dispatch(CartActions.addToCart(item.item, user.token));
@@ -76,9 +86,18 @@ const CartBody = ({ navigation, user, carts, loadCarts, isRefreshing }) => {
     </View>
   );
 };
+
+CartBody.propTypes = {
+  user: PropTypes.object.isRequired,
+  carts: PropTypes.object.isRequired,
+  loadCarts: PropTypes.func.isRequired,
+  isRefreshing: PropTypes.bool.isRequired,
+  navigation: PropTypes.object.isRequired,
+};
 const styles = StyleSheet.create({
   footer: {
     flex: 1,
+    marginBottom: 80,
   },
   nextButton: {
     borderWidth: 1,

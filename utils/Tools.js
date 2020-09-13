@@ -7,6 +7,7 @@ import Colors from "./Colors";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
+import { STRIPE_PUBLISHABLE_KEY } from "./Config";
 
 export const OpenURL = ({ url, children }) => {
   const handlePress = useCallback(async () => {
@@ -44,7 +45,7 @@ export const urlRedirect = (url) => {
 export const timeoutPromise = (url) => {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
-      reject(new alert("Timeout"));
+      reject(new alert("Timeout, Server is not responding"));
     }, 10 * 1000);
     url.then(
       (res) => {
@@ -82,20 +83,6 @@ export const uploadProfilePic = async (id, token, imageUri, filename, type) => {
 };
 
 export const _pickImage = async (action) => {
-  const type =
-    action === "library"
-      ? ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 4],
-          quality: 1,
-        })
-      : ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 4],
-          quality: 1,
-        });
   try {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(
@@ -108,6 +95,20 @@ export const _pickImage = async (action) => {
         );
       }
     }
+    const type =
+      action === "library"
+        ? ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+          })
+        : ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+          });
 
     let result = await type;
     return result;
@@ -149,7 +150,7 @@ export const getCreditCardToken = (creditCardData) => {
       // Use the correct Content Type to send data to Stripe
       "Content-Type": "application/x-www-form-urlencoded",
       // Use the Stripe publishable key as Bearer
-      Authorization: `Bearer ${process.env.STRIPE_PUBLISHABLE_KEY}`,
+      Authorization: `Bearer ${STRIPE_PUBLISHABLE_KEY}`,
     },
     // Use a proper HTTP method
     method: "post",

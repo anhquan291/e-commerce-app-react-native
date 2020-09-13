@@ -3,25 +3,25 @@ import { Field, reduxForm } from "redux-form";
 import {
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
   ActivityIndicator,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from "react-native";
 
-import { Input } from "react-native-elements";
-//Icon
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //Action
 import * as AuthActions from "../../../store/auth/authActions";
+//PropTypes check
+import PropTypes from "prop-types";
+import renderField from "./RenderField";
 
 //Validation
 const validate = (values) => {
@@ -50,80 +50,11 @@ const validate = (values) => {
   return errors;
 };
 
-const renderField = ({
-  label,
-  keyboardType,
-  secureTextEntry,
-  icon,
-  showPass,
-  passIcon,
-  setShowPass,
-  showConfirmPass,
-  setshowConfirmPass,
-  autoCapitalize,
-  meta: { touched, error, warning },
-  input: { onChange, ...restInput },
-}) => {
-  return (
-    <View>
-      <Input
-        placeholder={label}
-        autoCapitalize={autoCapitalize ? "words" : "none"}
-        clearButtonMode={passIcon ? "never" : "always"}
-        leftIcon={
-          <MaterialCommunityIcons
-            name={icon}
-            size={24}
-            color={Colors.lighter_green}
-          />
-        }
-        rightIcon={
-          passIcon === "pass" ? (
-            <TouchableOpacity
-              onPress={() => {
-                setShowPass((prev) => !prev);
-              }}
-            >
-              <MaterialCommunityIcons
-                name={showPass ? "eye" : "eye-off"}
-                size={24}
-                color={Colors.lighter_green}
-              />
-            </TouchableOpacity>
-          ) : passIcon === "confirm" ? (
-            <TouchableOpacity
-              onPress={() => {
-                setshowConfirmPass((prev) => !prev);
-              }}
-            >
-              <MaterialCommunityIcons
-                name={showConfirmPass ? "eye" : "eye-off"}
-                size={24}
-                color={Colors.lighter_green}
-              />
-            </TouchableOpacity>
-          ) : (
-            <></>
-          )
-        }
-        inputStyle={{ fontSize: 14 }}
-        keyboardType={keyboardType}
-        onChangeText={onChange}
-        secureTextEntry={secureTextEntry}
-        {...restInput}
-      />
-
-      {touched && error && (
-        <Text style={{ color: "red", marginVertical: 5 }}>{error}</Text>
-      )}
-    </View>
-  );
-};
-
 const Signup = (props) => {
   const { handleSubmit, reset } = props;
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.isLoading);
   const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [showConfirmPass, setshowConfirmPass] = useState(false);
   const unmounted = useRef(false);
   useEffect(() => {
@@ -131,67 +62,80 @@ const Signup = (props) => {
       unmounted.current = true;
     };
   }, []);
-  const dispatch = useDispatch();
+
   const submit = async (values) => {
-    setLoading(true);
     try {
       await dispatch(
         AuthActions.SignUp(values.username, values.email, values.password)
       );
-      setLoading(false);
       reset();
       if (!unmounted.current) {
-        alert("Sign Up Successfully");
+        Alert.alert("Signup Successfully", "You can login now", [
+          {
+            text: "Okay",
+            onPress: () => {
+              props.navigation.goBack();
+            },
+          },
+        ]);
       }
     } catch (err) {
-      throw err;
+      alert(err);
     }
   };
   return (
-    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : null}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "position" : null}
+      // keyboardVerticalOffset={40} // adjust the value here if you need more padding
+      // style={{ flex: 1 }}
+    >
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
             style={{
               flexDirection: "column",
-              marginHorizontal: 20,
+              marginHorizontal: 10,
+              zIndex: 0,
             }}
           >
             <View>
+              <CustomText style={styles.title}>REGISTER</CustomText>
+            </View>
+            <View>
               <Field
-                name="username"
-                keyboardType="default"
-                label="Your Name"
+                name='username'
+                keyboardType='default'
+                label='Your Name'
                 component={renderField}
-                icon="id-card"
+                icon='id-card'
                 autoCapitalize={true}
               />
               <Field
-                name="email"
-                keyboardType="email-address"
-                label="Email"
-                icon="email"
+                name='email'
+                keyboardType='email-address'
+                label='Email'
+                icon='email'
                 component={renderField}
               />
               <Field
-                name="password"
-                keyboardType="default"
-                label="Password"
+                name='password'
+                keyboardType='default'
+                label='Password'
                 component={renderField}
                 secureTextEntry={showPass ? false : true}
-                passIcon="pass"
-                icon="lock"
+                passIcon='pass'
+                icon='lock'
                 showPass={showPass}
                 setShowPass={setShowPass}
               />
               <Field
-                name="confirmpassword"
-                keyboardType="default"
-                label="Confirm Password"
+                name='confirmpassword'
+                keyboardType='default'
+                label='Confirm Password'
                 component={renderField}
                 secureTextEntry={showConfirmPass ? false : true}
-                passIcon="confirm"
-                icon="lock"
+                passIcon='confirm'
+                icon='lock'
                 showConfirmPass={showConfirmPass}
                 setshowConfirmPass={setshowConfirmPass}
               />
@@ -202,24 +146,28 @@ const Signup = (props) => {
               style={{ marginVertical: 10, alignItems: "center" }}
             >
               <View style={styles.signIn}>
-                <CustomText style={styles.textSign}>
-                  {loading ? (
-                    <ActivityIndicator
-                      style={{ paddingTop: 10 }}
-                      size="small"
-                      color="#fff"
-                    />
-                  ) : (
-                    "REGISTER"
-                  )}
-                </CustomText>
+                {loading ? (
+                  <ActivityIndicator
+                    style={{ paddingTop: 10 }}
+                    size='small'
+                    color='#fff'
+                  />
+                ) : (
+                  <CustomText style={styles.textSign}>REGISTER</CustomText>
+                )}
               </View>
             </TouchableOpacity>
+            <View style={{ flex: 1 }} />
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
     </KeyboardAvoidingView>
   );
+};
+
+Signup.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 const styles = StyleSheet.create({
   signIn: {
@@ -232,6 +180,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lighter_green,
     marginTop: 20,
   },
+  title: {
+    color: Colors.light_green,
+    fontSize: 40,
+    fontWeight: "bold",
+    letterSpacing: 5,
+    textAlign: "center",
+  },
   textSign: {
     fontSize: 15,
     color: "#fff",
@@ -243,7 +198,7 @@ const styles = StyleSheet.create({
   },
 });
 const SignupForm = reduxForm({
-  form: "contact", // a unique identifier for this form
+  form: "signup", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(Signup);
 

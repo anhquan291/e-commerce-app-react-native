@@ -1,42 +1,42 @@
-import React from 'react';
-import { View, StyleSheet, Image, StatusBar, Alert, Text } from 'react-native';
+import React from "react";
+import { View, StyleSheet, Image, StatusBar, Alert, Text } from "react-native";
 //Drawer
 import {
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
-} from '@react-navigation/drawer';
-import { useDispatch, useSelector } from 'react-redux';
-import { Drawer } from 'react-native-paper';
+} from "@react-navigation/drawer";
+import { useDispatch, useSelector } from "react-redux";
+import { Drawer } from "react-native-paper";
 //Color
-import Colors from '../utils/Colors';
-import CustomText from '../components/UI/CustomText';
+import Colors from "../utils/Colors";
+import CustomText from "../components/UI/CustomText";
 //Icon
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 // Action
-import * as AuthActions from '../store/auth/authActions';
+import * as AuthActions from "../store/auth/authActions";
 //Link
-import { OpenURL } from '../utils/Tools';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { OpenURL } from "../utils/Tools";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const fbURL = 'https://www.facebook.com/daquyankhangthinhvuong/';
-const youtubeURL = 'https://www.youtube.com/';
+const fbURL = "https://www.facebook.com/daquyankhangthinhvuong/";
+const youtubeURL = "https://www.youtube.com/";
 
 //custom drawer content
 export default (props) => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const Logout = () => {
-    Alert.alert('Đăng Xuất', 'Bạn có chắc muốn đăng xuất?', [
+    Alert.alert("Đăng Xuất", "Bạn có chắc muốn đăng xuất?", [
       {
-        text: 'Hủy',
-        style: 'cancel',
+        text: "Hủy",
+        style: "cancel",
       },
       {
-        text: 'Đồng ý',
+        text: "Đồng ý",
         onPress: () => {
           dispatch(AuthActions.Logout());
-          props.navigation.navigate('Home');
+          props.navigation.navigate("Home");
         },
       },
     ]);
@@ -49,28 +49,28 @@ export default (props) => {
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
         {Object.keys(user).length === 0 ? (
-          <View style={{ alignItems: 'center', marginVertical: 20 }}>
+          <View style={{ alignItems: "center", marginVertical: 20 }}>
             <Image
               style={styles.logo}
-              source={require('../assets/Images/logo1.png')}
+              source={require("../assets/Images/logo1.png")}
             />
           </View>
         ) : (
           <>
             <View style={styles.profileContainer}>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('Profile')}
+                onPress={() => props.navigation.navigate("Profile")}
               >
                 <Image
                   style={styles.profilePic}
                   source={
                     user.profilePicture.length === 0
-                      ? require('../assets/Images/defaultprofile.jpg')
+                      ? require("../assets/Images/defaultprofile.jpg")
                       : { uri: user.profilePicture }
                   }
                 />
               </TouchableOpacity>
-              <View style={{ justifyContent: 'center' }}>
+              <View style={{ justifyContent: "center" }}>
                 <Text
                   style={{
                     color: Colors.green,
@@ -100,20 +100,20 @@ export default (props) => {
           <View style={styles.social}>
             <OpenURL url={fbURL}>
               <Image
-                style={{ resizeMode: 'contain', width: 80, height: 80 }}
-                source={require('../assets/Images/social1.png')}
+                style={{ resizeMode: "contain", width: 80, height: 80 }}
+                source={require("../assets/Images/social1.png")}
               />
             </OpenURL>
             <OpenURL url={youtubeURL}>
               <Image
-                style={{ resizeMode: 'contain', width: 80, height: 80 }}
-                source={require('../assets/Images/social3.png')}
+                style={{ resizeMode: "contain", width: 80, height: 80 }}
+                source={require("../assets/Images/social3.png")}
               />
             </OpenURL>
             <OpenURL url={fbURL}>
               <Image
-                style={{ resizeMode: 'contain', width: 80, height: 80 }}
-                source={require('../assets/Images/social2.png')}
+                style={{ resizeMode: "contain", width: 80, height: 80 }}
+                source={require("../assets/Images/social2.png")}
               />
             </OpenURL>
           </View>
@@ -127,12 +127,14 @@ export default (props) => {
           label={() => (
             <View style={styles.logout}>
               <MaterialCommunityIcons
-                name='logout'
+                name="logout"
                 size={25}
                 style={{ marginRight: 30 }}
                 color={Colors.dark}
               />
-              <CustomText style={{ fontSize: 16, color: Colors.dark }}>
+              <CustomText
+                style={{ fontSize: 14, color: Colors.dark, fontWeight: "500" }}
+              >
                 Đăng xuất
               </CustomText>
             </View>
@@ -156,23 +158,23 @@ export default (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   profileContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginHorizontal: 20,
     marginVertical: 20,
   },
   profilePic: {
-    resizeMode: 'contain',
+    resizeMode: "contain",
     width: 50,
     height: 50,
     borderRadius: 25,
   },
   logo: {
-    resizeMode: 'contain',
-    width: '80%',
+    resizeMode: "contain",
+    width: "80%",
     height: 100,
   },
   logoutSection: {
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   actionButton: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginHorizontal: 10,
     height: 40,
     marginBottom: 10,
@@ -193,13 +195,13 @@ const styles = StyleSheet.create({
   },
   social: {
     marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginHorizontal: 10,
   },
   logout: {
-    display: 'flex',
-    flexDirection: 'row',
+    flexDirection: "row",
+    alignItems: "center",
   },
   version: {
     height: 60,

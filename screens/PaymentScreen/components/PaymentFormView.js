@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import { CreditCardInput } from "react-native-input-credit-card";
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../../../utils/Colors";
+//PropTypes check
+import PropTypes from "prop-types";
 
 export default class PaymentFormView extends React.Component {
   constructor(props) {
@@ -30,7 +32,7 @@ export default class PaymentFormView extends React.Component {
           ]}
         >
           <Button
-            title="Xác nhận"
+            title='Xác nhận'
             disabled={!this.state.cardData.valid || submitted}
             onPress={() => onSubmit(this.state.cardData)}
           />
@@ -39,7 +41,7 @@ export default class PaymentFormView extends React.Component {
             <View style={styles.alertWrapper}>
               <View style={styles.alertIconWrapper}>
                 <FontAwesome
-                  name="exclamation-circle"
+                  name='exclamation-circle'
                   size={20}
                   style={{ color: "#c22" }}
                 />
@@ -54,6 +56,13 @@ export default class PaymentFormView extends React.Component {
     );
   }
 }
+
+PaymentFormView.propTypes = {
+  onSubmit: PropTypes.func,
+  submitted: PropTypes.bool,
+  error: PropTypes.string,
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

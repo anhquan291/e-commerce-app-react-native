@@ -12,36 +12,52 @@ import CustomText from "../../../components/UI/CustomText";
 //Steps
 import OrderSteps from "../../../components/UI/OrderSteps";
 import { Ionicons } from "@expo/vector-icons";
-const { width } = Dimensions.get("window");
+//PropTypes check
+import PropTypes from "prop-types";
+
+const { width, height } = Dimensions.get("window");
 
 const Header = ({ navigation }) => {
   return (
     <View style={styles.header}>
-      <View style={{ position: "absolute", bottom: 20, left: 15, zIndex: 10 }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons
-            name="ios-arrow-back"
-            size={28}
-            color={Colors.lighter_green}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.orderStepsContainer}>
-        <CustomText style={styles.title}> Phương Thức Thanh Toán </CustomText>
-        <View style={styles.orderSteps}>
-          <OrderSteps position={2} />
+      <View style={styles.innerHeader}>
+        <View
+          style={{ position: "absolute", bottom: 20, left: 15, zIndex: 10 }}
+        >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons
+              name='ios-arrow-back'
+              size={28}
+              color={Colors.lighter_green}
+            />
+          </TouchableOpacity>
         </View>
+        <View style={styles.orderStepsContainer}>
+          <CustomText style={styles.title}> Phương Thức Thanh Toán </CustomText>
+          <View style={styles.orderSteps}>
+            <OrderSteps position={2} />
+          </View>
+        </View>
+        <View />
       </View>
-      <View />
     </View>
   );
+};
+
+Header.propTypes = {
+  navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
   header: {
     width: width,
     backgroundColor: "#fff",
-    height: Platform.OS === "ios" ? 120 : 100,
+    height: Platform.OS === "android" ? 100 : height > 667 ? 115 : 100,
+  },
+  innerHeader: {
+    height: "96%",
+    width: "100%",
+    backgroundColor: "#fff",
     shadowColor: "black",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },

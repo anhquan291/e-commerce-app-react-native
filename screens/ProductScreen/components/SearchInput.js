@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { Component } from "react";
+import { View, Text, TextInput, StyleSheet, Dimensions } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 //Color
-import Colors from '../../../utils/Colors';
+import Colors from "../../../utils/Colors";
 //Animate
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { Easing } from "react-native-reanimated";
 //height
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get("window");
 
 export default class SearchInput extends Component {
   constructor(props) {
     super(props);
     // state
     this.state = {
-      keyword: '',
-      productsFilter: '',
+      keyword: "",
+      productsFilter: "",
     };
     this.titleHeight = new Animated.Value(40);
     this.titleopacity = new Animated.Value(1);
@@ -74,17 +74,18 @@ export default class SearchInput extends Component {
 }
 const styles = StyleSheet.create({
   title: {
-    marginTop: Platform.OS === 'android' ? 90 : height < 668 ? 90 : 100,
+    marginTop: Platform.OS === "android" ? 90 : height < 668 ? 90 : 100,
+    marginBottom: 20,
   },
   titleText: {
-    fontSize: Platform.OS === 'android' ? 30 : height < 668 ? 30 : 37,
+    fontSize: Platform.OS === "android" ? 30 : height < 668 ? 30 : 32,
     color: Colors.lighter_green,
   },
   inputBox: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 20,
     height: 40,
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: Colors.light_grey,
     borderRadius: 15,
   },
@@ -92,6 +93,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderWidth: 0,
     fontSize: 16,
-    width: '97%',
+    width: "97%",
   },
 });
