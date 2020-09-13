@@ -13,7 +13,7 @@
 </div>
 <div style="display: flex; margin-top: 30px">
   <img src="https://i.imgur.com/2V2bjJz.png" width="300">
- <img src="https://i.imgur.com/Sj49rlK.png" style="margin-left:20px" width="300">
+ <img src="https://i.imgur.com/Sj49rlK.png" margin-left="30" width="300">
 </div>
 <div style="display: flex; margin-top: 30px">
  <img src="https://i.imgur.com/vnbPrl4.png" width="300">
