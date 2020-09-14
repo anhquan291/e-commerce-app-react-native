@@ -13,11 +13,11 @@
 </div>
 <div style="display: flex; margin-top: 30px">
   <img src="https://i.imgur.com/2V2bjJz.png" width="250">
- <img src="https://i.imgur.com/Sj49rlK.png" width="250">
+ <img src="https://i.imgur.com/Sj49rlK.png" align="center width="250">
 </div>
 <div style="display: flex; margin-top: 30px">
  <img src="https://i.imgur.com/vnbPrl4.png" width="250">
- <img src="https://i.imgur.com/mT5Vjmj.png" width="250">
+ <img src="https://i.imgur.com/mT5Vjmj.png" align="center width="250">
 </div>
 
 
