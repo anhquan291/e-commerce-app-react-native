@@ -7,7 +7,7 @@
 
 ### <img src="https://media.giphy.com/media/VgCDAzcKvsR6OM0uWg/giphy.gif" width="50">Contain all necessary features 
 
-<div style="display: flex" width: 550>
+<div style="display: flex" width:"550">
  <img src="https://i.imgur.com/oJqL4FG.png" align="left" width="250">
  <img src="https://i.imgur.com/p3EwDuz.png"  align="right" width="250">
 </div>
