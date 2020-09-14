@@ -6,7 +6,7 @@ import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const TotalButton = ({ toPayment }) => {
+export const TotalButton = ({ toPayment }) => {
   return (
     <View style={styles.total}>
       <TouchableOpacity onPress={toPayment}>
@@ -42,5 +42,3 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-
-export default TotalButton;

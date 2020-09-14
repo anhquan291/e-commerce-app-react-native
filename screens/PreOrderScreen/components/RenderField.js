@@ -7,7 +7,7 @@ import Colors from "../../../utils/Colors";
 
 export default renderField = ({
   label,
-  name,
+  maxLength,
   keyboardType,
   onChangeText,
   returnKeyType,
@@ -31,8 +31,8 @@ export default renderField = ({
             backgroundColor: Colors.white,
             fontSize: 14,
           }}
-          maxLength={name === "address" || "name" ? 35 : 10}
-          autoCapitalize={name === "name" || "address" ? "words" : "none"}
+          maxLength={maxLength}
+          autoCapitalize='words'
           returnKeyType={returnKeyType ? returnKeyType : "next"}
           keyboardType={keyboardType}
           onChangeText={onChangeText}

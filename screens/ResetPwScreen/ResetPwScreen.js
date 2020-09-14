@@ -17,7 +17,7 @@ import { Feather } from "@expo/vector-icons";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 // Action
-import * as AuthActions from "../../store/auth/authActions";
+import { ResetPassword } from "../../store";
 import Loader from "../../components/Loaders/Loader";
 
 //Validation
@@ -36,7 +36,7 @@ const validate = (values) => {
   return errors;
 };
 
-const ResetPwScreen = (props) => {
+const resetForm = (props) => {
   const { handleSubmit, reset } = props;
   const dispatch = useDispatch();
   const [showPass, setShowPass] = useState(false);
@@ -45,7 +45,7 @@ const ResetPwScreen = (props) => {
   const url = props.route.params;
   const submit = async (values) => {
     try {
-      await dispatch(AuthActions.ResetPassword(values.password, url));
+      await dispatch(ResetPassword(values.password, url));
       Keyboard.dismiss;
       await reset();
       Alert.alert("Reset Successfully", "You can login now", [
@@ -143,9 +143,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
 });
-const SignupForm = reduxForm({
+export const ResetPwScreen = reduxForm({
   form: "resetPw", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
-})(ResetPwScreen);
-
-export default SignupForm;
+})(resetForm);

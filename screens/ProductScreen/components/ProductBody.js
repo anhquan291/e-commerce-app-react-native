@@ -9,7 +9,7 @@ import HorizontalItem from "./HorizontalItem";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const ProductBody = ({ navigation, productsFilter }) => {
+export const ProductBody = ({ navigation, productsFilter }) => {
   const rings = productsFilter.filter((ring) => ring.type === "ring");
   const bracelets = productsFilter.filter(
     (bracelet) => bracelet.type === "bracelet"
@@ -98,5 +98,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-export default ProductBody;

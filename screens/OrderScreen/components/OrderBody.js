@@ -8,7 +8,7 @@ import OrderItem from "./OrderItem";
 //PropTypes check
 import PropTypes from "prop-types";
 
-class OrderBody extends React.PureComponent {
+export class OrderBody extends React.PureComponent {
   render() {
     const { navigation, user, orders, loadOrders, isRefreshing } = this.props;
     return (
@@ -75,5 +75,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
-export default OrderBody;

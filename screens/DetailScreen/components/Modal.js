@@ -20,7 +20,7 @@ import PropTypes from "prop-types";
 
 const { width, height } = Dimensions.get("window");
 
-class ModalComp extends React.PureComponent {
+export class ModalComp extends React.PureComponent {
   render() {
     const {
       item,
@@ -188,5 +188,3 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
-
-export default ModalComp;

@@ -9,7 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const Header = ({ navigation, searchFilterFunction }) => {
+export const Header = ({ navigation, searchFilterFunction }) => {
   return (
     <View style={styles.header}>
       <View style={{ position: "absolute", left: 0, top: 40, zIndex: 10 }}>
@@ -19,14 +19,14 @@ const Header = ({ navigation, searchFilterFunction }) => {
           }}
           style={styles.icon}
         >
-          <Ionicons name="ios-arrow-back" size={20} color="black" />
+          <Ionicons name='ios-arrow-back' size={20} color='black' />
         </TouchableOpacity>
       </View>
       <View style={styles.shareItem}>
         <ShareItem
-          imageURL="https://www.facebook.com/daquyankhangthinhvuong/"
-          title="Share our facebook page"
-          message="Our Facebook Link"
+          imageURL='https://www.facebook.com/daquyankhangthinhvuong/'
+          title='Share our facebook page'
+          message='Our Facebook Link'
         />
       </View>
       <SearchInput inputValue={searchFilterFunction} />
@@ -65,5 +65,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-export default Header;

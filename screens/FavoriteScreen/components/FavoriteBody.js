@@ -4,12 +4,12 @@ import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import Colors from "../../../utils/Colors";
 //Text
 import CustomText from "../../../components/UI/CustomText";
-import FavoriteItem from "./FavoriteItem";
+import { FavoriteItem } from "./FavoriteItem";
 import Messages from "../../../messages/user";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const FavoriteBody = ({
+export const FavoriteBody = ({
   navigation,
   FavoriteProducts,
   user,
@@ -66,8 +66,6 @@ FavoriteBody.propTypes = {
   navigation: PropTypes.object.isRequired,
   FavoriteProducts: PropTypes.array.isRequired,
 };
-
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
 });
-export default FavoriteBody;

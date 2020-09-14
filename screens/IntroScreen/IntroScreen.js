@@ -1,26 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   StyleSheet,
   Dimensions,
   Animated,
   StatusBar,
-} from 'react-native';
+} from "react-native";
 //Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 //Action
-import * as CheckFirstTimeAction from '../../store/product/checkFirstTimeActions';
+import * as CheckFirstTimeAction from "../../store/product/checkFirstTimeActions";
 //Slides
-import Slide from './components/Slide';
-import SubSlide from './components/SubSlide';
-import slides from '../../db/IntroSlides';
-import Ticker from './components/TickerText';
-import Pagination from './components/Pagination';
-import Loader from '../../components/Loaders/Loader';
+import { Slide, SubSlide, Ticker, Pagination } from "./components";
+import slides from "../../db/IntroSlides";
+import Loader from "../../components/Loaders/Loader";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
-const IntroScreen = () => {
+export const IntroScreen = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollClick = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -32,13 +29,13 @@ const IntroScreen = () => {
   }, []);
   const backgroundColor = scrollX.interpolate({
     inputRange: [0, width, width * 2],
-    outputRange: ['#BFEAF5', '#BEECC4', '#FFE4D9'],
-    extrapolate: 'clamp',
+    outputRange: ["#BFEAF5", "#BEECC4", "#FFE4D9"],
+    extrapolate: "clamp",
   });
   const textTranslate = scrollX.interpolate({
     inputRange: [0, width, width * 2],
     outputRange: [0, width * -1, width * -2],
-    extrapolate: 'clamp',
+    extrapolate: "clamp",
   });
   const dispatch = useDispatch();
   const EnterApp = async () => {
@@ -87,7 +84,7 @@ const IntroScreen = () => {
         <Animated.View style={styles.footerContent}>
           <Animated.View
             style={{
-              flexDirection: 'row',
+              flexDirection: "row",
               width: width * slides.length,
               transform: [{ translateX: textTranslate }],
             }}
@@ -119,10 +116,10 @@ const IntroScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
   },
   slider: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 20,
     height: 0.61 * height,
     borderBottomEndRadius: 75,
   },
@@ -132,9 +129,7 @@ const styles = StyleSheet.create({
   footerContent: {
     flex: 1,
     borderTopLeftRadius: 75,
-    flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    flexDirection: "row",
+    backgroundColor: "#ffffff",
   },
 });
-
-export default IntroScreen;

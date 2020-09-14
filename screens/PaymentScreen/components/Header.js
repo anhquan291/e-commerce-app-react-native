@@ -17,7 +17,7 @@ import PropTypes from "prop-types";
 
 const { width, height } = Dimensions.get("window");
 
-const Header = ({ navigation }) => {
+export const Header = ({ navigation }) => {
   return (
     <View style={styles.header}>
       <View style={styles.innerHeader}>
@@ -81,5 +81,3 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
 });
-
-export default Header;

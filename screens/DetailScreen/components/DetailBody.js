@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 
 const { width, height } = Dimensions.get("window");
 
-const DetailBody = ({ item, color }) => {
+export const DetailBody = ({ item, color }) => {
   return (
     <View>
       <View style={[styles.footer]}>
@@ -136,5 +136,3 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
-
-export default DetailBody;

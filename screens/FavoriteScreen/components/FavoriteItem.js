@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -8,23 +8,22 @@ import {
   ActivityIndicator,
   Animated,
   Alert,
-} from 'react-native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+} from "react-native";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 //Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 // Action
-import * as FavoriteActions from '../../../store/favorite/favoriteActions';
-import * as CartActions from '../../../store/cart/cartActions';
+import { addToCart, removeFavorite } from "../../../store";
 //Color
-import Colors from '../../../utils/Colors';
+import Colors from "../../../utils/Colors";
 //number format
-import NumberFormat from 'react-number-format';
+import NumberFormat from "react-number-format";
 //Text
-import CustomText from '../../../components/UI/CustomText';
+import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const renderRightAction = (text, color, action, x, progress) => {
+export const renderRightAction = (text, color, action, x, progress) => {
   const trans = progress.interpolate({
     inputRange: [0, 1],
     outputRange: [x, 0],
@@ -41,7 +40,7 @@ const renderRightAction = (text, color, action, x, progress) => {
   );
 };
 
-const FavoriteItem = ({ navigation, item }) => {
+export const FavoriteItem = ({ navigation, item }) => {
   const [isLoading, setIsLoading] = useState(true);
   const unmounted = useRef(false);
   useEffect(() => {
@@ -50,13 +49,13 @@ const FavoriteItem = ({ navigation, item }) => {
     };
   }, []);
   const dispatch = useDispatch();
-  const addToCart = async () => {
+  const addToCartAct = async () => {
     try {
-      await dispatch(CartActions.addToCart(item));
+      await dispatch(addToCart(item));
       if (!unmounted.current) {
-        Alert.alert('Thêm thành công', 'Sản phẩm đã được thêm vào giỏ hàng', [
+        Alert.alert("Thêm thành công", "Sản phẩm đã được thêm vào giỏ hàng", [
           {
-            text: 'OK',
+            text: "OK",
           },
         ]);
       }
@@ -64,30 +63,36 @@ const FavoriteItem = ({ navigation, item }) => {
       throw err;
     }
   };
-  const removeFavorite = () => {
+  const removeFavoriteAct = () => {
     Alert.alert(
-      'Bỏ yêu thích',
-      'Bạn có muốn bỏ sản phẩm ra khỏi mục yêu thích?',
+      "Bỏ yêu thích",
+      "Bạn có muốn bỏ sản phẩm ra khỏi mục yêu thích?",
       [
         {
-          text: 'Hủy',
-          style: 'cancel',
+          text: "Hủy",
+          style: "cancel",
         },
         {
-          text: 'Đồng ý',
-          onPress: () => dispatch(FavoriteActions.removeFavorite(item._id)),
+          text: "Đồng ý",
+          onPress: () => dispatch(removeFavorite(item._id)),
         },
       ]
     );
   };
   const RightActions = (progress) => {
     return (
-      <View style={{ width: 170, flexDirection: 'row' }}>
-        {renderRightAction('Thêm vào giỏ', '#ffab00', addToCart, 140, progress)}
+      <View style={{ width: 170, flexDirection: "row" }}>
         {renderRightAction(
-          'Bỏ thích',
+          "Thêm vào giỏ",
+          "#ffab00",
+          addToCartAct,
+          140,
+          progress
+        )}
+        {renderRightAction(
+          "Bỏ thích",
           Colors.red,
-          removeFavorite,
+          removeFavoriteAct,
           30,
           progress
         )}
@@ -103,14 +108,14 @@ const FavoriteItem = ({ navigation, item }) => {
       >
         <View style={styles.itemContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Detail', { item: item })}
-            style={{ marginLeft: 5, width: '30%', marginRight: 10 }}
+            onPress={() => navigation.navigate("Detail", { item: item })}
+            style={{ marginLeft: 5, width: "30%", marginRight: 10 }}
           >
             <Image
               style={{
                 height: 70,
-                width: '100%',
-                resizeMode: 'contain',
+                width: "100%",
+                resizeMode: "contain",
                 borderRadius: 10,
               }}
               source={{ uri: item.thumb }}
@@ -123,7 +128,7 @@ const FavoriteItem = ({ navigation, item }) => {
               <ActivityIndicator
                 size='small'
                 color={Colors.grey}
-                style={{ position: 'absolute', left: 0, right: 0, top: 40 }}
+                style={{ position: "absolute", left: 0, right: 0, top: 40 }}
               />
             )}
           </TouchableOpacity>
@@ -133,9 +138,9 @@ const FavoriteItem = ({ navigation, item }) => {
             <View style={styles.rateContainer}>
               <NumberFormat
                 value={item.price}
-                displayType={'text'}
+                displayType={"text"}
                 thousandSeparator={true}
-                suffix={' đ'}
+                suffix={" đ"}
                 renderText={(formattedValue) => (
                   <View style={styles.priceContainer}>
                     <CustomText style={styles.price}>
@@ -160,18 +165,18 @@ FavoriteItem.propTypes = {
 const styles = StyleSheet.create({
   itemContainer: {
     height: 90,
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: Colors.light_grey,
     marginTop: 5,
     borderRadius: 0,
-    alignItems: 'center',
+    alignItems: "center",
   },
   info: {
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "flex-start",
     paddingVertical: 10,
-    width: '75%',
+    width: "75%",
   },
   title: {
     fontSize: 15,
@@ -182,13 +187,13 @@ const styles = StyleSheet.create({
     color: Colors.grey,
   },
   rateContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '70%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "70%",
   },
   rate: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
+    flexDirection: "row",
+    alignItems: "flex-end",
     paddingBottom: 5,
   },
   score: {
@@ -197,31 +202,29 @@ const styles = StyleSheet.create({
     color: Colors.grey,
   },
   priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   price: {
     fontSize: 13,
     color: Colors.red,
   },
   action: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 5,
   },
   rightAction: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginVertical: 6,
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 90,
   },
   actionText: {
-    color: 'white',
+    color: "white",
     fontSize: 11,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     padding: 5,
   },
 });
-
-export default FavoriteItem;

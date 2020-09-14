@@ -8,7 +8,7 @@ import NumberFormat from "../../../components/UI/NumberFormat";
 //PropTypes check
 import PropTypes from "prop-types";
 
-class TotalButton extends React.PureComponent {
+export class TotalButton extends React.PureComponent {
   render() {
     const { total, navigation, cartItems, cartId } = this.props;
     return (
@@ -76,5 +76,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default TotalButton;

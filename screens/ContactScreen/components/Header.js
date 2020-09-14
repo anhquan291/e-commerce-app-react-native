@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 
 const { height } = Dimensions.get("window");
 
-const Header = ({ navigation }) => {
+export const Header = ({ navigation }) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerContainer}>
@@ -24,7 +24,7 @@ const Header = ({ navigation }) => {
             navigation.toggleDrawer();
           }}
         >
-          <MaterialCommunityIcons name="menu" size={25} color="#fff" />
+          <MaterialCommunityIcons name='menu' size={25} color='#fff' />
         </TouchableOpacity>
       </View>
       <Image
@@ -58,5 +58,3 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
 });
-
-export default Header;

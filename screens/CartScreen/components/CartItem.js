@@ -17,9 +17,9 @@ import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
 
-class CartItem extends React.PureComponent {
+export class CartItem extends React.PureComponent {
   render() {
-    const { item, onAdd, onDes, onRemove, setAddLoading } = this.props;
+    const { item, onAdd, onDes, onRemove } = this.props;
     const AddItemHandler = async () => {
       await onAdd();
     };
@@ -143,5 +143,3 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-
-export default CartItem;

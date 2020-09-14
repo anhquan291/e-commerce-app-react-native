@@ -16,7 +16,7 @@ import Steps from "../../../components/UI/Steps";
 
 moment.locale("vi");
 
-const OrderItem = ({ order }) => {
+export const OrderItem = ({ order }) => {
   const [showDetails, setShowDetails] = useState(false);
   const status = () => {
     switch (order.status) {

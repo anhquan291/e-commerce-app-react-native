@@ -6,7 +6,7 @@ import Detail from "./Detail";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const ProfileBody = ({
+export const ProfileBody = ({
   user,
   uploadButton,
   setUploadButton,
@@ -61,5 +61,3 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
 });
-
-export default ProfileBody;

@@ -13,7 +13,7 @@ import Colors from "../../utils/Colors";
 
 const { height } = Dimensions.get("window");
 
-const FinishResetPwScreen = (props) => {
+export const FinishResetPwScreen = (props) => {
   const { value } = props.route.params;
   return (
     <SafeAreaView style={styles.container}>
@@ -22,7 +22,7 @@ const FinishResetPwScreen = (props) => {
           source={require("../../components/IconAnimation/mail-done.json")}
           autoPlay
           loop={false}
-          resizeMode="cover"
+          resizeMode='cover'
           style={{ height: 130 }}
         />
         <CustomText style={{ marginVertical: 20 }}>
@@ -44,9 +44,7 @@ const FinishResetPwScreen = (props) => {
         </CustomText>
       </View>
 
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate("FirstScreen")}
-      >
+      <TouchableOpacity onPress={() => props.navigation.navigate("AuthScreen")}>
         <View style={styles.button}>
           <CustomText style={{ ...styles.title, color: "#fff" }}>
             LOGIN
@@ -86,5 +84,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-export default FinishResetPwScreen;

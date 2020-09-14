@@ -10,7 +10,7 @@ import Colors from "../../../utils/Colors";
 //PropTypes check
 import PropTypes from "prop-types";
 
-class SummaryOrder extends React.PureComponent {
+export class SummaryOrder extends React.PureComponent {
   render() {
     const { cartItems, total } = this.props;
     return (
@@ -68,5 +68,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
-
-export default SummaryOrder;

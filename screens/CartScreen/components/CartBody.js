@@ -9,23 +9,22 @@ import {
 //Redux
 import { useDispatch } from "react-redux";
 //Action
-import * as CartActions from "../../../store/cart/cartActions";
+import { removeFromCart, addToCart, decCartQuantity } from "../../../store";
 //Text
 import CustomText from "../../../components/UI/CustomText";
 //Colors
 import Colors from "../../../utils/Colors";
-import CartItem from "./CartItem";
+import { CartItem } from "./CartItem";
 import Messages from "../../../messages/user";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const CartBody = ({
+export const CartBody = ({
   navigation,
   user,
   carts,
   loadCarts,
   isRefreshing,
-  setAddLoading,
 }) => {
   const dispatch = useDispatch();
   const onRemove = (itemId) => {
@@ -36,7 +35,7 @@ const CartBody = ({
       {
         text: "Đồng ý",
         onPress: () => {
-          dispatch(CartActions.removeFromCart(carts._id, itemId));
+          dispatch(removeFromCart(carts._id, itemId));
         },
       },
     ]);
@@ -68,15 +67,12 @@ const CartBody = ({
             return (
               <CartItem
                 item={item}
-                setAddLoading={setAddLoading}
                 onRemove={() => onRemove(item.item._id)}
                 onAdd={() => {
-                  dispatch(CartActions.addToCart(item.item, user.token));
+                  dispatch(addToCart(item.item, user.token));
                 }}
                 onDes={() => {
-                  dispatch(
-                    CartActions.decCartQuantity(carts._id, item.item._id)
-                  );
+                  dispatch(decCartQuantity(carts._id, item.item._id));
                 }}
               />
             );
@@ -115,5 +111,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-export default CartBody;

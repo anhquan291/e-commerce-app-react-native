@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import ProductItem from "./ProductItem";
+import { ProductItem } from "./ProductItem";
 import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
 //PropTypes check
 import PropTypes from "prop-types";
 
-class CategorySection extends React.PureComponent {
+export class CategorySection extends React.PureComponent {
   render() {
     const { name, bg, data, navigation, user } = this.props;
     return (
@@ -93,5 +93,3 @@ const styles = StyleSheet.create({
     color: Colors.lighter_green,
   },
 });
-
-export default CategorySection;

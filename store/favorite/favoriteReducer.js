@@ -10,7 +10,7 @@ const initialState = {
   favoriteList: [],
   isLoading: false,
 };
-const productReducer = (state = initialState, action) => {
+export const favoriteReducer = (state = initialState, action) => {
   switch (action.type) {
     case FAVORITE_LOADING:
       return {
@@ -47,5 +47,3 @@ const productReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default productReducer;

@@ -23,12 +23,11 @@ import Colors from "../../../utils/Colors";
 import Animated, { Easing } from "react-native-reanimated";
 const { Value, timing } = Animated;
 //Search Item component
-import SearchItem from "./SearchItem";
+import { SearchItem } from "./SearchItem";
 // Calculate window size
 const { width, height } = Dimensions.get("window");
 
-// Declare component
-class FBSearchBar extends React.Component {
+export class Header extends React.Component {
   constructor(props) {
     super(props);
     // state
@@ -164,7 +163,7 @@ class FBSearchBar extends React.Component {
               <TouchableOpacity
                 onPress={() => this.props.navigation.toggleDrawer()}
               >
-                <Feather name="menu" size={25} color={Colors.light_green} />
+                <Feather name='menu' size={25} color={Colors.light_green} />
               </TouchableOpacity>
               <View>
                 <Image
@@ -181,7 +180,7 @@ class FBSearchBar extends React.Component {
                 onPress={this._onFocus}
                 style={styles.search_icon_box}
               >
-                <Ionicons name="ios-search" size={20} color="#fff" />
+                <Ionicons name='ios-search' size={20} color='#fff' />
               </TouchableHighlight>
               <Animated.View
                 style={[
@@ -197,16 +196,16 @@ class FBSearchBar extends React.Component {
                     style={styles.back_icon_box}
                   >
                     <Ionicons
-                      name="ios-arrow-back"
+                      name='ios-arrow-back'
                       size={22}
                       color={Colors.light_green}
                     />
                   </TouchableHighlight>
                 </Animated.View>
                 <TextInput
-                  ref="input"
-                  placeholder="Tìm kiếm sản phẩm"
-                  clearButtonMode="always"
+                  ref='input'
+                  placeholder='Tìm kiếm sản phẩm'
+                  clearButtonMode='always'
                   value={this.state.keyword}
                   onChangeText={(value) => this.searchFilterFunction(value)}
                   style={styles.input}
@@ -270,8 +269,6 @@ class FBSearchBar extends React.Component {
     );
   }
 }
-
-export default FBSearchBar;
 
 const styles = StyleSheet.create({
   header_safe_area: {

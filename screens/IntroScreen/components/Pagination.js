@@ -8,7 +8,7 @@ const { height, width } = Dimensions.get("window");
 
 const DOT_SIZE = 20;
 
-const Pagination = ({ scrollX, slides }) => {
+export const Pagination = ({ scrollX, slides }) => {
   const inputRange = [0, width, width * 2];
   const translateX = scrollX.interpolate({
     inputRange,
@@ -84,4 +84,3 @@ const styles = StyleSheet.create({
     borderColor: Colors.lighter_green,
   },
 });
-export default Pagination;

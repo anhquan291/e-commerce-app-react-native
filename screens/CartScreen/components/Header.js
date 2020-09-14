@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 
 const { height } = Dimensions.get("window");
 
-const Header = ({ navigation, user, carts }) => {
+export const Header = ({ navigation, user, carts }) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity
@@ -20,7 +20,7 @@ const Header = ({ navigation, user, carts }) => {
         }}
       >
         <Ionicons
-          name="ios-arrow-back"
+          name='ios-arrow-back'
           size={30}
           color={Colors.lighter_green}
         />
@@ -68,5 +68,3 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 });
-
-export default Header;

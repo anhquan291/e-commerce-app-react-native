@@ -4,11 +4,9 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Colors from "../../../utils/Colors";
 
-export default class MyCarousel extends Component {
+export class MyCarousel extends Component {
   constructor(props) {
     super(props);
-
-    // state
     this.state = {
       activeSlide: 0,
     };

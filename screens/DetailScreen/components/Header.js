@@ -24,7 +24,7 @@ const HEADER_MIN_HEIGHT =
   Platform.OS === "android" ? 70 : height > 667 ? 80 : 70;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-const Header = ({ navigation, scrollY, item }) => {
+export const Header = ({ navigation, scrollY, item }) => {
   const [isLoading, setIsLoading] = useState(true);
   const headerTranslate = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -132,5 +132,3 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
   },
 });
-
-export default Header;

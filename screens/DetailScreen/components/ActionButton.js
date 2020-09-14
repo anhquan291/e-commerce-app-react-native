@@ -16,15 +16,14 @@ import * as Animatable from "react-native-animatable";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 //Action
-import * as CartActions from "../../../store/cart/cartActions";
-import * as FavoriteActions from "../../../store/favorite/favoriteActions";
+import { addToCart, removeFavorite, addFavorite } from "../../../store";
 import Messages from "../../../messages/user";
 import Colors from "../../../utils/Colors";
 
 //PropTypes check
 import PropTypes from "prop-types";
 
-const ActionButton = ({
+export const ActionButton = ({
   user,
   item,
   color,
@@ -42,19 +41,13 @@ const ActionButton = ({
     };
   }, []);
   //Set Colors
-  const addToCart = async () => {
+  const addToCartAct = async () => {
     if (Object.keys(user).length === 0) {
       setMessage(Messages["user.login.require"]);
       setShowSnackbar(true);
-      if (!unmounted.current) {
-        const interval = setInterval(() => {
-          setShowSnackbar(false);
-        }, 7500);
-        return () => clearInterval(interval);
-      }
     } else {
       try {
-        await dispatch(CartActions.addToCart(item, user.token));
+        await dispatch(addToCart(item, user.token));
         setModalVisible(true);
       } catch (err) {
         throw err;
@@ -82,12 +75,12 @@ const ActionButton = ({
           },
           {
             text: "Đồng ý",
-            onPress: () => dispatch(FavoriteActions.removeFavorite(item._id)),
+            onPress: () => dispatch(removeFavorite(item._id)),
           },
         ]
       );
     } else {
-      dispatch(FavoriteActions.addFavorite(item));
+      dispatch(addFavorite(item));
     }
   };
   return (
@@ -113,7 +106,7 @@ const ActionButton = ({
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.addCart, { backgroundColor: color }]}
-          onPress={addToCart}
+          onPress={addToCartAct}
         >
           {cartLoading ? (
             <ActivityIndicator size='small' color='#fff' />
@@ -170,5 +163,3 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
 });
-
-export default ActionButton;

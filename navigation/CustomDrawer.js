@@ -14,7 +14,7 @@ import CustomText from "../components/UI/CustomText";
 //Icon
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // Action
-import * as AuthActions from "../store/auth/authActions";
+import { Logout as LogoutAction } from "../store";
 //Link
 import { OpenURL } from "../utils/Tools";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -35,7 +35,7 @@ export default (props) => {
       {
         text: "Đồng ý",
         onPress: () => {
-          dispatch(AuthActions.Logout());
+          dispatch(LogoutAction());
           props.navigation.navigate("Home");
         },
       },
@@ -127,7 +127,7 @@ export default (props) => {
           label={() => (
             <View style={styles.logout}>
               <MaterialCommunityIcons
-                name="logout"
+                name='logout'
                 size={25}
                 style={{ marginRight: 30 }}
                 color={Colors.dark}

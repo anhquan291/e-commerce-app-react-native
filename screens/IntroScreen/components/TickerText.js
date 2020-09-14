@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 const TICKER_HEIGHT = 50;
 const { height, width } = Dimensions.get("window");
 
-const Ticker = ({ scrollX }) => {
+export const Ticker = ({ scrollX }) => {
   const inputRange = [0, width, width * 2];
   const translateY = scrollX.interpolate({
     inputRange,
@@ -62,5 +62,3 @@ const styles = StyleSheet.create({
     color: "#2CB9B0",
   },
 });
-
-export default Ticker;
