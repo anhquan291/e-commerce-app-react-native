@@ -8,8 +8,8 @@
 ### <img src="https://media.giphy.com/media/VgCDAzcKvsR6OM0uWg/giphy.gif" width="50">Contain all necessary features 
 
 <div style="display: flex; margin-top:30px">
- <img src="https://i.imgur.com/oJqL4FG.png" style="margin:30" width="250">
- <img src="https://i.imgur.com/p3EwDuz.png" width="250">
+ <img src="https://i.imgur.com/oJqL4FG.png" align="left" width="250">
+ <img src="https://i.imgur.com/p3EwDuz.png"  align="right" width="250">
 </div>
 <div style="display: flex; margin-top: 30px">
   <img src="https://i.imgur.com/2V2bjJz.png" width="250">
