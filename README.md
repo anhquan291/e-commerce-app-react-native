@@ -42,7 +42,7 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 - Push notification to user whenver order status, user inforamtion change. 
 - Send email for reseting password as well as update order information.
 - Share Products to Social Media.
-- Conntact with Admin through Messenger. 
+- Review, Comment, Rating Product (In Processing)
 
 ## :star: Technical details
 - React Native
