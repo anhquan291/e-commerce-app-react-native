@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   ActionSheetIOS,
+  Platform,
 } from "react-native";
 //Color
 import { FontAwesome } from "@expo/vector-icons";
@@ -98,7 +99,7 @@ ProfilePic.propTypes = {
 };
 const styles = StyleSheet.create({
   profilePic: {
-    resizeMode: "contain",
+    resizeMode: Platform.OS === "android" ? "cover" : "contain",
     width: 120,
     height: 120,
     borderRadius: 60,

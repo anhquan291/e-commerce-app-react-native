@@ -12,7 +12,7 @@ import * as Linking from "expo-linking";
 
 YellowBox.ignoreWarnings(["Setting a timer"]);
 
-const AppNavigator = () => {
+export const AppNavigator = () => {
   const [value, setValue] = useState(null);
   const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
   const dispatch = useDispatch();
@@ -62,5 +62,3 @@ const AppNavigator = () => {
     </NavigationContainer>
   );
 };
-
-export default AppNavigator;
