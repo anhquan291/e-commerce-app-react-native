@@ -1,5 +1,6 @@
-import * as Notifications from "expo-notifications";
 import React, { useEffect } from "react";
+import { Platform } from "react-native";
+import * as Notifications from "expo-notifications";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -10,6 +11,18 @@ Notifications.setNotificationHandler({
 });
 
 const LocalNotification = () => {
+  const trigger =
+    Platform.OS === "ios"
+      ? {
+          hour: 8,
+          minute: 15,
+          type: "daily",
+        }
+      : {
+          hour: 8,
+          minute: 15,
+          repeats: true,
+        };
   useEffect(() => {
     Notifications.cancelAllScheduledNotificationsAsync();
     const triggerNotificationHandler = async () => {
@@ -19,11 +32,7 @@ const LocalNotification = () => {
           body: "Hãy lựa chọn sự may mắn, mua sự thành công cùng với CatTuong",
           data: { mySpecialData: "Some text" },
         },
-        trigger: {
-          hour: 8,
-          minute: 15,
-          type: "daily",
-        },
+        trigger: trigger,
       });
     };
     triggerNotificationHandler();

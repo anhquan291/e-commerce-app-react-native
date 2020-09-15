@@ -13,7 +13,7 @@ import {
   productReducer,
 } from "./store";
 //Navigator
-import AppNavigator from "./navigation/AppNavigator";
+import { AppNavigator } from "./navigation";
 //redux form
 import { reducer as formReducer } from "redux-form";
 import { StatusBar } from "expo-status-bar";

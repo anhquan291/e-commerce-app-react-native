@@ -1,5 +1,13 @@
 import React from "react";
-import { View, StyleSheet, Image, StatusBar, Alert, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  StatusBar,
+  Alert,
+  Text,
+  Platform,
+} from "react-native";
 //Drawer
 import {
   DrawerContentScrollView,
@@ -167,7 +175,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   profilePic: {
-    resizeMode: "contain",
+    resizeMode: Platform.OS === "android" ? "cover" : "contain",
     width: 50,
     height: 50,
     borderRadius: 25,

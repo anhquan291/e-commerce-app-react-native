@@ -58,12 +58,6 @@ export const ActionButton = ({
     if (Object.keys(user).length === 0) {
       setMessage(Messages["user.login.require"]);
       setShowSnackbar(true);
-      const interval = setInterval(() => {
-        setShowSnackbar(false);
-      }, 7500);
-      if (!unmounted.current) {
-        return () => clearInterval(interval);
-      }
     } else if (FavoriteProducts) {
       Alert.alert(
         "Bỏ yêu thích",
