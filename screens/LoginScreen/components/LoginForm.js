@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   ScrollView,
-  Alert,
 } from "react-native";
 //Colors
 import Colors from "../../../utils/Colors";
@@ -17,7 +16,7 @@ import CustomText from "../../../components/UI/CustomText";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 //Action
-import * as AuthActions from "../../../store/auth/authActions";
+import { Login as LoginAction } from "../../../store";
 //PropTypes check
 import PropTypes from "prop-types";
 import renderField from "./RenderField";
@@ -53,7 +52,7 @@ const Login = (props) => {
 
   const submit = async (values) => {
     try {
-      await dispatch(AuthActions.Login(values.email, values.password));
+      await dispatch(LoginAction(values.email, values.password));
       props.navigation.navigate("Home");
     } catch (err) {
       alert(err);
@@ -151,9 +150,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-const LoginForm = reduxForm({
+export const LoginForm = reduxForm({
   form: "login", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(Login);
-
-export default LoginForm;

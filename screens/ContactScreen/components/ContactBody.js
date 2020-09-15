@@ -1,26 +1,26 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React from "react";
+import { View, StyleSheet } from "react-native";
 //Text
-import CustomText from '../../../components/UI/CustomText';
-import TextIcon from './TextIcon';
+import CustomText from "../../../components/UI/CustomText";
+import { TextIcon } from "./TextIcon";
 
-const ContactBody = () => {
+export const ContactBody = () => {
   return (
     <View style={styles.footer}>
       <CustomText style={styles.title}>contact us</CustomText>
       <View style={styles.info}>
         <TextIcon
-          icon={require('../../../components/IconAnimation/location.json')}
+          icon={require("../../../components/IconAnimation/location.json")}
           text='14 Phan Ngữ'
           url='mailto: anhquan291@gmail.com'
         />
         <TextIcon
-          icon={require('../../../components/IconAnimation/email3.json')}
+          icon={require("../../../components/IconAnimation/email3.json")}
           text='Anhquan291@gmail.com'
           url='mailto: anhquan291@gmail.com'
         />
         <TextIcon
-          icon={require('../../../components/IconAnimation/phone2.json')}
+          icon={require("../../../components/IconAnimation/phone2.json")}
           text='0968729194'
           url='tel:0968729194'
         />
@@ -32,13 +32,13 @@ const ContactBody = () => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 25,
-    textAlign: 'center',
-    fontWeight: '500',
-    textTransform: 'uppercase',
+    textAlign: "center",
+    fontWeight: "500",
+    textTransform: "uppercase",
   },
   footer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     paddingHorizontal: 15,
@@ -49,5 +49,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
-export default ContactBody;

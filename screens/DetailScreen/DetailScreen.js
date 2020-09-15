@@ -6,13 +6,10 @@ import Colors from "../../utils/Colors";
 import { useSelector } from "react-redux";
 //Components
 import Snackbar from "../../components/Notification/Snackbar";
-import Header from "./components/Header";
-import DetailBody from "./components/DetailBody";
-import ActionButton from "./components/ActionButton";
-import Modal from "./components/Modal";
+import { Header, DetailBody, ActionButton, ModalComp } from "./components";
 import { colorCheck } from "../../utils/Tools";
 
-const DetailScreen = (props) => {
+export const DetailScreen = (props) => {
   const scrollY = new Animated.Value(0);
   const user = useSelector((state) => state.auth.user);
   const { item } = props.route.params;
@@ -26,7 +23,6 @@ const DetailScreen = (props) => {
   const FavoriteProducts = useSelector((state) =>
     state.fav.favoriteList.some((product) => product._id === item._id)
   );
-
   useEffect(() => {
     const checkColor = async () => {
       const getColor = await colorCheck(type);
@@ -61,7 +57,7 @@ const DetailScreen = (props) => {
         user={user}
         color={color}
       />
-      <Modal
+      <ModalComp
         item={item}
         color={color}
         modalVisible={modalVisible}
@@ -75,5 +71,3 @@ const DetailScreen = (props) => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
 });
-
-export default DetailScreen;

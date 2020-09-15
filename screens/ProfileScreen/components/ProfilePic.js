@@ -15,7 +15,7 @@ import { useActionSheet } from "@expo/react-native-action-sheet";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const ProfilePic = ({
+export const ProfilePic = ({
   user,
   imageUri,
   setImageUri,
@@ -121,5 +121,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-export default ProfilePic;

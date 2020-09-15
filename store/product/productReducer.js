@@ -10,14 +10,13 @@ const initialState = {
   isFirstOpen: false,
   isLoading: false,
 };
-const productReducer = (state = initialState, action) => {
+export const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case PRODUCT_LOADING:
       return {
         ...state,
         isLoading: true,
       };
-
     case PRODUCT_FAILURE:
       return {
         ...state,
@@ -39,5 +38,3 @@ const productReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default productReducer;

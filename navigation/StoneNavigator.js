@@ -14,26 +14,28 @@ import Colors from "../utils/Colors";
 import CustomDrawer from "./CustomDrawer";
 import CustomText from "../components/UI/CustomText";
 //Screens
-import HomeScreen from "../screens/HomeScreen";
-import DetailScreen from "../screens/DetailScreen/DetailScreen";
-import IntroScreen from "../screens/IntroScreen/IntroScreen";
-import FavoriteScreen from "../screens/FavoriteScreen";
-import FirstScreen from "../screens/FirstScreen/FirstScreen";
-import SignupScreen from "../screens/SignupScreen";
-import LoginScreen from "../screens/LoginScreen";
-import ContactScreen from "../screens/ContactScreen";
-import CartScreen from "../screens/CartScreen";
-import ProductScreen from "../screens/ProductScreen";
-import OrderScreen from "../screens/OrderScreen";
-import PreOrderScreen from "../screens/PreOrderScreen";
-import PaymentScreen from "../screens/PaymentScreen";
-import AddCreditCardScreen from "../screens/PaymentScreen/AddCreditCardScreen";
-import FinishOrderScreen from "../screens/PreOrderScreen/FinishOrderScreen";
-import ForgetPwScreen from "../screens/ResetPwScreen";
-import ResetPwScreen from "../screens/ResetPwScreen/ResetPwScreen";
-import FinishResetPwScreen from "../screens/ResetPwScreen/FinishResetPwScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import EditProfileScreen from "../screens/ProfileScreen/EditProfileScreen";
+import { HomeScreen } from "../screens/HomeScreen";
+import { CartScreen } from "../screens/CartScreen";
+import { ContactScreen } from "../screens/ContactScreen";
+import { DetailScreen } from "../screens/DetailScreen";
+import { FavoriteScreen } from "../screens/FavoriteScreen";
+import { AuthScreen } from "../screens/AuthScreen";
+import { IntroScreen } from "../screens/IntroScreen";
+
+import { SignupScreen } from "../screens/SignupScreen";
+import { LoginScreen } from "../screens/LoginScreen";
+import { OrderScreen } from "../screens/OrderScreen";
+import { ProductScreen } from "../screens/ProductScreen";
+
+import { PreOrderScreen } from "../screens/PreOrderScreen";
+import { PaymentScreen } from "../screens/PaymentScreen";
+import { AddCreditCardScreen } from "../screens/PaymentScreen";
+import { FinishOrderScreen } from "../screens/FinishOrderScreen";
+import { ForgetPwScreen } from "../screens/ForgetPasswordScreen";
+import { ResetPwScreen } from "../screens/ResetPwScreen";
+import { FinishResetPwScreen } from "../screens/FinishResetPwScreen";
+import { ProfileScreen } from "../screens/ProfileScreen";
+import { EditProfileScreen } from "../screens/ProfileScreen";
 //redux
 import { useSelector } from "react-redux";
 
@@ -78,8 +80,8 @@ const AuthStack = createStackNavigator();
 export const AuthStackScreen = () => (
   <AuthStack.Navigator>
     <AuthStack.Screen
-      name='FirstScreen'
-      component={FirstScreen}
+      name='AuthScreen'
+      component={AuthScreen}
       options={{ headerShown: false }}
     />
     <AuthStack.Screen

@@ -5,7 +5,13 @@ import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 //Reducer
-import Reducers from "./store/reducers";
+import {
+  authReducer,
+  cartReducer,
+  favoriteReducer,
+  orderReducer,
+  productReducer,
+} from "./store";
 //Navigator
 import AppNavigator from "./navigation/AppNavigator";
 //redux form
@@ -16,11 +22,11 @@ import { StatusBar } from "expo-status-bar";
 import LocalNotication from "./components/Notification/LocalNotification";
 
 const rootReducer = combineReducers({
-  store: Reducers.ProductReducer,
-  cart: Reducers.CartReducer,
-  order: Reducers.OrderReducer,
-  auth: Reducers.AuthReducer,
-  fav: Reducers.FavoriteReducer,
+  store: productReducer,
+  cart: cartReducer,
+  order: orderReducer,
+  auth: authReducer,
+  fav: favoriteReducer,
   form: formReducer,
 });
 

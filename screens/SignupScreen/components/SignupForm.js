@@ -18,7 +18,7 @@ import CustomText from "../../../components/UI/CustomText";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 //Action
-import * as AuthActions from "../../../store/auth/authActions";
+import { SignUp as SignUpAct } from "../../../store";
 //PropTypes check
 import PropTypes from "prop-types";
 import renderField from "./RenderField";
@@ -65,9 +65,7 @@ const Signup = (props) => {
 
   const submit = async (values) => {
     try {
-      await dispatch(
-        AuthActions.SignUp(values.username, values.email, values.password)
-      );
+      await dispatch(SignUpAct(values.username, values.email, values.password));
       reset();
       if (!unmounted.current) {
         Alert.alert("Signup Successfully", "You can login now", [
@@ -197,9 +195,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-const SignupForm = reduxForm({
+export const SignupForm = reduxForm({
   form: "signup", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(Signup);
-
-export default SignupForm;

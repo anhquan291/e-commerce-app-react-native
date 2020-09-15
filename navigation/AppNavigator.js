@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { navigationRef } from "./RootNavigation";
 import { DrawerNavigator, IntroStackScreen } from "./StoneNavigator";
 import { useDispatch } from "react-redux";
-import * as AuthActions from "../store/auth/authActions";
+import { Logout } from "../store";
 //Deep Link
 import { urlRedirect } from "../utils/Tools";
 import * as Linking from "expo-linking";
@@ -14,6 +14,7 @@ YellowBox.ignoreWarnings(["Setting a timer"]);
 
 const AppNavigator = () => {
   const [value, setValue] = useState(null);
+  const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,15 +47,13 @@ const AppNavigator = () => {
       if (getUser) {
         const user = await JSON.parse(getUser);
         if (user.data.expireTime - Date.now() < 0) {
-          dispatch(AuthActions.Logout());
+          dispatch(Logout());
         }
       }
       return;
     };
     autoLogout();
   }, [dispatch]);
-
-  const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
   return (
     <NavigationContainer ref={navigationRef}>
       {/* <IntroStackScreen /> */}

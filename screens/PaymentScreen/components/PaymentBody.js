@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 const { width } = Dimensions.get("window");
 
-const PaymentBody = ({ navigation, payByCard, setPayByCard, token }) => {
+export const PaymentBody = ({ navigation, payByCard, setPayByCard, token }) => {
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>Chọn Hình Thức Thanh Toán</CustomText>
@@ -113,5 +113,3 @@ const styles = StyleSheet.create({
     width: 100,
   },
 });
-
-export default PaymentBody;

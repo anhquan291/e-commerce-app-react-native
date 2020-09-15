@@ -19,7 +19,7 @@ const initialState = {
   error: false,
 };
 
-export default (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
   //set user if token doesn't expire yet
   const userInformation = async () => {
     const getUser = await AsyncStorage.getItem("user");

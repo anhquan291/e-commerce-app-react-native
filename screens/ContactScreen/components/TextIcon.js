@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import React from "react";
+import { View, StyleSheet, TouchableOpacity, Linking } from "react-native";
 //Text
-import CustomText from '../../../components/UI/CustomText';
-import LottieView from 'lottie-react-native';
+import CustomText from "../../../components/UI/CustomText";
+import LottieView from "lottie-react-native";
 
-const TextIcon = ({ icon, text, url }) => {
+export const TextIcon = ({ icon, text, url }) => {
   return (
     <View style={styles.detailContainer}>
       <LottieView
@@ -27,14 +27,12 @@ const TextIcon = ({ icon, text, url }) => {
 
 const styles = StyleSheet.create({
   detailContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
   text: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 });
-
-export default TextIcon;

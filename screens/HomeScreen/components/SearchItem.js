@@ -7,7 +7,7 @@ import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const SearchItem = ({ item, navigation }) => {
+export const SearchItem = ({ item, navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -15,7 +15,7 @@ const SearchItem = ({ item, navigation }) => {
         style={{ flexDirection: "row", alignItems: "center" }}
       >
         <Ionicons
-          name="ios-search"
+          name='ios-search'
           size={22}
           color={Colors.grey}
           style={{ marginRight: 20 }}
@@ -48,4 +48,3 @@ const styles = StyleSheet.create({
     marginRight: 30,
   },
 });
-export default SearchItem;

@@ -8,7 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import LottieView from "lottie-react-native";
 const { height } = Dimensions.get("window");
 
-const FinishOrderScreen = (props) => {
+export const FinishOrderScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.info}>
@@ -67,5 +67,3 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
-
-export default FinishOrderScreen;

@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 
 const { height, width } = Dimensions.get("window");
 
-const FirstBody = ({ navigation }) => {
+export const AuthBody = ({ navigation }) => {
   return (
     <>
       <ImageBackground
@@ -34,7 +34,7 @@ const FirstBody = ({ navigation }) => {
         source={require("../../../components/IconAnimation/welcome.json")}
         autoPlay
         loop
-        resizeMode="contain"
+        resizeMode='contain'
         style={{ height: 115 }}
       />
       <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
@@ -60,7 +60,7 @@ const FirstBody = ({ navigation }) => {
   );
 };
 
-FirstBody.propTypes = {
+AuthBody.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
 
@@ -85,5 +85,3 @@ const styles = StyleSheet.create({
     height: 100,
   },
 });
-
-export default FirstBody;

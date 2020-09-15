@@ -10,7 +10,7 @@ const initialState = {
   isLoading: false,
 };
 
-export default (state = initialState, action) => {
+export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case ORDER_LOADING:
       return {

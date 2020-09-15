@@ -18,7 +18,7 @@ import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
 
-class ProductItem extends React.PureComponent {
+export class ProductItem extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { loading: true };
@@ -150,4 +150,3 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
 });
-export default ProductItem;

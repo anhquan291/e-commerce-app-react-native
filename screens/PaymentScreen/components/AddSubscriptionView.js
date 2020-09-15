@@ -4,7 +4,7 @@ import PaymentFormView from "./PaymentFormView";
 /**
  * The class renders a view with PaymentFormView
  */
-export default AddSubscriptionView = (props) => {
+export const AddSubscriptionView = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.cardFormWrapper}>

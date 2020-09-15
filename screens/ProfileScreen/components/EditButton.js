@@ -5,13 +5,13 @@ import { FontAwesome5 } from "@expo/vector-icons";
 //PropTypes check
 import PropTypes from "prop-types";
 
-const EditButton = ({ navigation, user }) => {
+export const EditButton = ({ navigation, user }) => {
   return (
     <View style={styles.editButton}>
       <TouchableOpacity
         onPress={() => navigation.navigate("ProfileEdit", { user })}
       >
-        <FontAwesome5 name="user-edit" size={20} color={Colors.leave_green} />
+        <FontAwesome5 name='user-edit' size={20} color={Colors.leave_green} />
       </TouchableOpacity>
     </View>
   );
@@ -29,5 +29,3 @@ const styles = StyleSheet.create({
     right: 15,
   },
 });
-
-export default EditButton;

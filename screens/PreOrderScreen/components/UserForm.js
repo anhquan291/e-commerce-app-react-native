@@ -37,13 +37,13 @@ const validate = (values) => {
 };
 
 const User = ({ getReceiver, checkValidation }) => {
-  const [name, setName] = useState("");
+  const [receiverName, setReceiverName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
   useEffect(() => {
-    getReceiver(name, phone, address);
-  }, [name, phone, address]);
+    getReceiver(receiverName, phone, address);
+  }, [receiverName, phone, address]);
 
   return (
     <View style={styles.container}>
@@ -52,15 +52,17 @@ const User = ({ getReceiver, checkValidation }) => {
         <View style={styles.inputBox}>
           <Field
             name='name'
+            maxLength={35}
             label='Họ Tên'
             keyboardType='default'
             component={renderField}
-            onChangeText={(value) => setName(value)}
+            onChangeText={(value) => setReceiverName(value)}
             checkValidation={checkValidation}
           />
 
           <Field
             name='phone'
+            maxLength={10}
             label='Số Điện Thoại'
             component={renderField}
             onChangeText={(value) => setPhone(value)}
@@ -71,6 +73,7 @@ const User = ({ getReceiver, checkValidation }) => {
 
           <Field
             name='address'
+            maxLength={35}
             label='Địa Chỉ'
             component={renderField}
             onChangeText={(value) => setAddress(value)}
@@ -103,8 +106,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 });
-const UserForm = reduxForm({
+export const UserForm = reduxForm({
   form: "user", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(User);
-export default UserForm;

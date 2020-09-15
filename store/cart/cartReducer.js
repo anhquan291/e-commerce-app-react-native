@@ -24,7 +24,7 @@ const findIndex = (cartList, id) => {
   });
   return index;
 };
-export default (state = initialState, action) => {
+export const cartReducer = (state = initialState, action) => {
   const cartList = state.cartItems.items;
   switch (action.type) {
     case CART_LOADING:

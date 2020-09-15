@@ -7,11 +7,11 @@ import Colors from "../../utils/Colors";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 //Action
-import * as AuthActions from "../../store/auth/authActions";
+import { EditInfo } from "../../store";
 //Loader
 import Loader from "../../components/Loaders/Loader";
 
-const EditProfileScreen = (props) => {
+export const EditProfileScreen = (props) => {
   const { user } = props.route.params;
   const loading = useSelector((state) => state.auth.isLoading);
   const [address, setAddress] = useState(user.address);
@@ -28,8 +28,7 @@ const EditProfileScreen = (props) => {
   const updateInfoHandler = async () => {
     if (phone.length === 10 && address.length >= 6) {
       try {
-        await dispatch(AuthActions.EditInfo(phone, address));
-
+        await dispatch(EditInfo(phone, address));
         props.navigation.navigate("Profile");
       } catch (err) {
         alert(err);
@@ -121,5 +120,3 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 });
-
-export default EditProfileScreen;

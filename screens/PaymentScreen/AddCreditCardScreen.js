@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import AddSubscriptionView from "./components/AddSubscriptionView";
+import { AddSubscriptionView } from "./components";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getCreditCardToken } from "../../utils/Tools";
 
 const STRIPE_ERROR = "Payment service error. Try again later.";
 
-const AddCreditCardScreen = ({ navigation }) => {
+export const AddCreditCardScreen = ({ navigation }) => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
   // Handles submitting the payment request
@@ -61,5 +61,3 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-
-export default AddCreditCardScreen;
