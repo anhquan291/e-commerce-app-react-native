@@ -9,10 +9,10 @@
 
 ## :star: Get Started
 
-
+```bash
 # install expo cli
 npm install -g expo-cli
-
+```
 ``` bash
 # install dependencies
 npm install
@@ -58,8 +58,10 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 - Image Picker: Expo image picker.
 - Deep Link: Expo Linking.
 
+## :star: Contributing
 
-
+If you'd like to contribute, please fork the repository and make changes as
+you'd like. Pull requests are warmly welcome. Thanks alot
 
 ### Demo
 <div style="display: flex; flex-wrap: wrap">
