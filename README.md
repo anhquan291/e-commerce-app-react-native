@@ -46,15 +46,15 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 
 ## :star: Technical details
 - React Native
-- Expo Bare Workflow.
+- Expo managed workflows.
 - UI framework: Reac Native Paper
 - Intro slides: Animated, onScroll Event for animation.
 - Header Animation: Animated, React Animatiable.
 - Form: Redux form validation.
 - Icon: Lottie, React native vector icon.
-- Payment: React native credit card, Stripe api for cart validation checking.
+- Payment: React native credit card, Stripe server for card validation checking.
 - Loader: Skeleton loader, Leanier gradient.
-- Store: Redux. 
+- Reducer: Redux. 
 - Image Picker: Expo image picker.
 - Deep Link: Expo Linking.
 
