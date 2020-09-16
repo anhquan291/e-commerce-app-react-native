@@ -53,7 +53,7 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 - Form: Redux form validation.
 - Icon: Lottie, React native vector icon.
 - Payment: React native credit card, Stripe server for card validation checking.
-- Loader: Skeleton loader, Leanier gradient.
+- Loader: Skeleton loader, Linear gradient.
 - Reducer: Redux. 
 - Image Picker: Expo image picker.
 - Deep Link: Expo Linking.
