@@ -38,8 +38,8 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 - Header Animation.
 - Add Items to Cart, to wishlist. 
 - Place an Order.
-- Payment Methods:  cash, creadit card.
-- Push notification to user whenver order status, user inforamtion change. 
+- Payment Methods:  cash, credit card.
+- Push notification to user whenever order status, user information change. 
 - Send email for reseting password as well as update order information.
 - Share Products to Social Media.
 - Review, Comment, Rating Product (In Processing)
@@ -49,7 +49,7 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 - Expo managed workflows.
 - UI framework: Reac Native Paper
 - Intro slides: Animated, onScroll Event for animation.
-- Header Animation: Animated, React Animatiable.
+- Header Animation: Animated, React Animatable.
 - Form: Redux form validation.
 - Icon: Lottie, React native vector icon.
 - Payment: React native credit card, Stripe server for card validation checking.
