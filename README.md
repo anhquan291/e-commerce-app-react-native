@@ -23,9 +23,6 @@ yarn install
 ```
 ``` bash
 
-# before running the project:
-1. Go to node_modules\expo\AppEntry.js 
-2. Replace import App from '../../App' to import App from '../../src/App';
 # run project
 expo start
 ```
