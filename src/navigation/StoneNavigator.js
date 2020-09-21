@@ -7,33 +7,36 @@ import {
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //Icon
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 //Color
 import Colors from "../utils/Colors";
 //Custom Drawer
 import CustomDrawer from "./CustomDrawer";
 import CustomText from "../components/UI/CustomText";
-//Screens
-import { HomeScreen } from "../screens/HomeScreen";
-import { CartScreen } from "../screens/CartScreen";
-import { ContactScreen } from "../screens/ContactScreen";
-import { DetailScreen } from "../screens/DetailScreen";
-import { FavoriteScreen } from "../screens/FavoriteScreen";
+//Auth Screens
 import { AuthScreen } from "../screens/AuthScreen";
 import { IntroScreen } from "../screens/IntroScreen";
-
 import { SignupScreen } from "../screens/SignupScreen";
 import { LoginScreen } from "../screens/LoginScreen";
-import { OrderScreen } from "../screens/OrderScreen";
+//Reset Screens
+import { ForgetPwScreen } from "../screens/ForgetPasswordScreen";
+import { ResetPwScreen } from "../screens/ResetPwScreen";
+import { FinishResetPwScreen } from "../screens/FinishResetPwScreen";
+//Home Screens
+import { HomeScreen } from "../screens/HomeScreen";
+import { ContactScreen } from "../screens/ContactScreen";
+//Product Screens
+import { CartScreen } from "../screens/CartScreen";
+import { DetailScreen } from "../screens/DetailScreen";
+import { FavoriteScreen } from "../screens/FavoriteScreen";
 import { ProductScreen } from "../screens/ProductScreen";
-
+//Order Screens
+import { OrderScreen } from "../screens/OrderScreen";
 import { PreOrderScreen } from "../screens/PreOrderScreen";
 import { PaymentScreen } from "../screens/PaymentScreen";
 import { AddCreditCardScreen } from "../screens/PaymentScreen";
 import { FinishOrderScreen } from "../screens/FinishOrderScreen";
-import { ForgetPwScreen } from "../screens/ForgetPasswordScreen";
-import { ResetPwScreen } from "../screens/ResetPwScreen";
-import { FinishResetPwScreen } from "../screens/FinishResetPwScreen";
+//Profile Screens
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { EditProfileScreen } from "../screens/ProfileScreen";
 //redux
@@ -275,15 +278,13 @@ export const TabScreen = () => {
           let iconName;
           const color = focused ? Colors.lighter_green : Colors.grey;
           if (route.name === "HomeTab") {
-            iconName = focused ? "home" : "home-outline";
+            iconName = "home";
           } else if (route.name === "Favorite") {
-            iconName = focused ? "heart-multiple" : "heart-multiple-outline";
+            iconName = "hearto";
           } else if (route.name === "Cart") {
-            iconName = focused ? "cart" : "cart-outline";
+            iconName = "shoppingcart";
           }
-          return (
-            <MaterialCommunityIcons name={iconName} size={25} color={color} />
-          );
+          return <AntDesign name={iconName} size={23} color={color} />;
         },
       })}
       tabBarOptions={{

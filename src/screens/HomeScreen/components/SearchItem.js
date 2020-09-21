@@ -7,7 +7,7 @@ import CustomText from "../../../components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
 
-export const SearchItem = ({ item, navigation }) => {
+export default SearchItem = ({ item, navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity

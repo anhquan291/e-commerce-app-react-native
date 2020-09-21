@@ -18,9 +18,10 @@ import Loader from "../../components/Loaders/Loader";
 const { height, width } = Dimensions.get("window");
 
 export const IntroScreen = () => {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollClick = useRef(null);
-  const [loading, setLoading] = useState(false);
   const unmounted = useRef(false);
   useEffect(() => {
     return () => {
@@ -37,7 +38,7 @@ export const IntroScreen = () => {
     outputRange: [0, width * -1, width * -2],
     extrapolate: "clamp",
   });
-  const dispatch = useDispatch();
+
   const EnterApp = async () => {
     setLoading(true);
     await dispatch(CheckFirstTimeAction.firstOpen());
@@ -66,13 +67,7 @@ export const IntroScreen = () => {
           )}
         >
           {slides.map((slide) => {
-            return (
-              <Slide
-                key={slide.lable}
-                label={slide.lable}
-                imageUrl={slide.imageUrl}
-              />
-            );
+            return <Slide key={slide.id} imageUrl={slide.imageUrl} />;
           })}
         </Animated.ScrollView>
       </Animated.View>

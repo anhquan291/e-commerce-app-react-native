@@ -152,7 +152,7 @@ export const UploadProfilePic = (imageUri, filename, type) => {
     const user = getState().auth.user;
     let formData = new FormData();
     // Infer the type of the image
-    await formData.append("profilePic", {
+    formData.append("profilePic", {
       uri: imageUri,
       name: filename,
       type,
@@ -174,7 +174,7 @@ export const UploadProfilePic = (imageUri, filename, type) => {
         dispatch({
           type: AUTH_FAILURE,
         });
-        Error(errorResData.err);
+        throw new Error(errorResData.err);
       }
 
       dispatch({

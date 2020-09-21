@@ -1,5 +1,12 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  FlatList,
+  Image,
+} from "react-native";
 import { ProductItem } from "./ProductItem";
 import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
@@ -8,24 +15,41 @@ import PropTypes from "prop-types";
 
 export class CategorySection extends React.PureComponent {
   render() {
-    const { name, bg, data, navigation, user } = this.props;
+    const { data, name, bg, navigation } = this.props;
+    const rings = data.filter((ring) => ring.type === "ring");
+    const bracelets = data.filter((bracelet) => bracelet.type === "bracelet");
+    const stones = data.filter((stone) => stone.type === "stone");
+    function getItems() {
+      const items =
+        name === "Vòng Thạch Anh"
+          ? bracelets
+          : name === "Đá Ruby"
+          ? stones
+          : rings;
+      return items;
+    }
     return (
       <View style={[styles.category]}>
-        <Image style={styles.background} source={bg} />
+        <Image style={styles.background} source={bg} blurRadius={10} />
         <View style={styles.titleHeader}>
           <CustomText style={styles.title}>{name}</CustomText>
         </View>
         <View style={styles.productList}>
-          {data.map((item) => {
-            return (
-              <ProductItem
-                key={item._id}
-                item={item}
-                navigation={navigation}
-                user={user}
-              />
-            );
-          })}
+          <FlatList
+            data={getItems()}
+            keyExtractor={(item) => item._id}
+            numColumns={2}
+            columnWrapperStyle={styles.list}
+            renderItem={({ item }) => {
+              return (
+                <ProductItem
+                  key={item._id}
+                  item={item}
+                  navigation={navigation}
+                />
+              );
+            }}
+          />
           <TouchableOpacity
             onPress={() => navigation.navigate("Product")}
             style={styles.seeMore}
@@ -39,11 +63,8 @@ export class CategorySection extends React.PureComponent {
 }
 
 CategorySection.propTypes = {
-  name: PropTypes.string.isRequired,
-  bg: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
-  user: PropTypes.object,
 };
 
 const styles = StyleSheet.create({
@@ -53,7 +74,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingVertical: 15,
     borderRadius: 5,
-    backgroundColor: "transparent",
     overflow: "hidden",
   },
   background: {
@@ -73,12 +93,13 @@ const styles = StyleSheet.create({
     color: Colors.light_green,
     fontWeight: "500",
   },
+  list: {
+    justifyContent: "space-between",
+  },
   productList: {
+    width: "100%",
     marginTop: 10,
     paddingHorizontal: 10,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
   },
   seeMore: {
     backgroundColor: "rgba(255, 255, 255, 0.9)",

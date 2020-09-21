@@ -145,11 +145,7 @@ const Signup = (props) => {
             >
               <View style={styles.signIn}>
                 {loading ? (
-                  <ActivityIndicator
-                    style={{ paddingTop: 10 }}
-                    size='small'
-                    color='#fff'
-                  />
+                  <ActivityIndicator size='small' color='#fff' />
                 ) : (
                   <CustomText style={styles.textSign}>REGISTER</CustomText>
                 )}

@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   container: {
     width: "48%",
     height: 190,
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     marginBottom: 15,
     borderRadius: 8,
     shadowColor: "black",
@@ -135,8 +135,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 35,
     flexDirection: "row",
-    paddingTop: 5,
-    paddingBottom: 2,
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",

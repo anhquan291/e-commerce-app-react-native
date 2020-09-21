@@ -13,8 +13,7 @@ import * as Linking from "expo-linking";
 YellowBox.ignoreWarnings(["Setting a timer"]);
 
 export const AppNavigator = () => {
-  const [value, setValue] = useState(null);
-  const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
+  const [value, setValue] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,12 +52,12 @@ export const AppNavigator = () => {
       return;
     };
     autoLogout();
-  }, [dispatch]);
+  }, []);
   return (
     <NavigationContainer ref={navigationRef}>
       {/* <IntroStackScreen /> */}
-      {(isFirstOpen || value !== null) && <DrawerNavigator />}
-      {!isFirstOpen && value === null && <IntroStackScreen />}
+      {value !== null && <DrawerNavigator />}
+      {value === null && <IntroStackScreen />}
     </NavigationContainer>
   );
 };

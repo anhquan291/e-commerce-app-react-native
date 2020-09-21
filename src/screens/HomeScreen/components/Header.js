@@ -19,11 +19,11 @@ import {
 import { Ionicons, Feather } from "@expo/vector-icons";
 //Colors
 import Colors from "../../../utils/Colors";
-// Import react-native-reanimated
+//Search Item component
+import SearchItem from "./SearchItem";
+import { LinearGradient } from "expo-linear-gradient";
 import Animated, { Easing } from "react-native-reanimated";
 const { Value, timing } = Animated;
-//Search Item component
-import { SearchItem } from "./SearchItem";
 // Calculate window size
 const { width, height } = Dimensions.get("window");
 
@@ -275,6 +275,8 @@ const styles = StyleSheet.create({
     zIndex: 1000,
     backgroundColor: "#fff",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light_grey,
   },
   header_inner: {
     // paddingBottom: 5,
