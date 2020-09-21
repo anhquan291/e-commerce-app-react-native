@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 //Redux
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -14,8 +14,6 @@ import {
 } from "./src/reducers";
 //Navigator
 import { AppNavigator } from "./src/navigation";
-import { AppLoading } from "expo";
-import { Asset } from "expo-asset";
 //redux form
 import { reducer as formReducer } from "redux-form";
 import { StatusBar } from "expo-status-bar";
@@ -37,35 +35,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(ReduxThunk))
 );
 
-const fetchAsset = () => {
-  return Asset.loadAsync([
-    require("./src/assets/Images/logo1.png"),
-    require("./src/assets/Images/logoNoText.png"),
-    require("./src/assets/Images/logoTextWhite.png"),
-    require("./src/assets/Images/bg1.jpg"),
-    require("./src/assets/Images/bg2.jpg"),
-    require("./src/assets/Images/bg3.jpg"),
-    require("./src/assets/Images/flower3.jpg"),
-    require("./src/assets/Images/slide1.png"),
-    require("./src/assets/Images/slide2.png"),
-    require("./src/assets/Images/slide3.png"),
-    require("./src/assets/Images/banner1.jpg"),
-    require("./src/assets/Images/banner3.jpg"),
-    require("./src/assets/Images/banner4.jpg"),
-    require("./src/assets/Images/banner6.jpg"),
-  ]);
-};
-
 export default function App() {
-  const [assetLoaded, setAssetLoaded] = useState(false);
-  if (!assetLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchAsset}
-        onFinish={() => setAssetLoaded(true)}
-      />
-    );
-  }
   return (
     <Provider store={store}>
       <StatusBar />

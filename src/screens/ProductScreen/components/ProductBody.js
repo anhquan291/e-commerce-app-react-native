@@ -1,22 +1,44 @@
-import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Animated,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 //Color
 import Colors from "../../../utils/Colors";
 import ScrollableTabView, {
   ScrollableTabBar,
 } from "react-native-scrollable-tab-view";
 import HorizontalItem from "./HorizontalItem";
+import { Header } from "./index";
 //PropTypes check
 import PropTypes from "prop-types";
 
-export const ProductBody = ({ navigation, productsFilter }) => {
+export const ProductBody = ({
+  navigation,
+  productsFilter,
+  searchFilterFunction,
+}) => {
+  const scrollY = new Animated.Value(0);
   const rings = productsFilter.filter((ring) => ring.type === "ring");
   const bracelets = productsFilter.filter(
     (bracelet) => bracelet.type === "bracelet"
   );
   const stones = productsFilter.filter((stone) => stone.type === "stone");
+
   return (
     <View style={styles.footer}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Header
+          navigation={navigation}
+          searchFilterFunction={searchFilterFunction}
+          scrollY={scrollY}
+        />
+      </TouchableWithoutFeedback>
       <ScrollableTabView
         initialPage={0}
         renderTabBar={() => <ScrollableTabBar />}
@@ -31,7 +53,7 @@ export const ProductBody = ({ navigation, productsFilter }) => {
           paddingTop: 3,
         }}
       >
-        <View tabLabel='Vòng chuỗi'>
+        <View tabLabel="Vòng chuỗi">
           {bracelets.length === 0 ? (
             <View style={styles.center}>
               <Text style={{ color: Colors.grey }}>
@@ -39,16 +61,31 @@ export const ProductBody = ({ navigation, productsFilter }) => {
               </Text>
             </View>
           ) : (
-            <FlatList
-              data={bracelets}
-              keyExtractor={(item) => item._id}
-              renderItem={({ item }) => {
-                return <HorizontalItem item={item} navigation={navigation} />;
-              }}
-            />
+            <Animated.ScrollView
+              scrollEventThrottle={1}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false } //
+              )}
+            >
+              {productsFilter.map((item) => (
+                <HorizontalItem
+                  key={item._id}
+                  item={item}
+                  navigation={navigation}
+                />
+              ))}
+            </Animated.ScrollView>
+            // <FlatList
+            //   data={bracelets}
+            //   keyExtractor={(item) => item._id}
+            //   renderItem={({ item }) => {
+            //     return <HorizontalItem item={item} navigation={navigation} />;
+            //   }}
+            // />
           )}
         </View>
-        <View tabLabel='Nhẫn'>
+        <View tabLabel="Nhẫn">
           {rings.length === 0 ? (
             <View style={styles.center}>
               <Text style={{ color: Colors.grey }}>
@@ -56,16 +93,16 @@ export const ProductBody = ({ navigation, productsFilter }) => {
               </Text>
             </View>
           ) : (
-            <FlatList
-              data={rings}
-              keyExtractor={(item) => item._id}
-              renderItem={({ item }) => {
-                return <HorizontalItem item={item} navigation={navigation} />;
-              }}
-            />
+            productsFilter.map((item) => (
+              <HorizontalItem
+                key={item._id}
+                item={item}
+                navigation={navigation}
+              />
+            ))
           )}
         </View>
-        <View tabLabel='Đá quý'>
+        <View tabLabel="Đá quý">
           {stones.length === 0 ? (
             <View style={styles.center}>
               <Text style={{ color: Colors.grey }}>
@@ -73,13 +110,13 @@ export const ProductBody = ({ navigation, productsFilter }) => {
               </Text>
             </View>
           ) : (
-            <FlatList
-              data={stones}
-              keyExtractor={(item) => item._id}
-              renderItem={({ item }) => {
-                return <HorizontalItem item={item} navigation={navigation} />;
-              }}
-            />
+            productsFilter.map((item) => (
+              <HorizontalItem
+                key={item._id}
+                item={item}
+                navigation={navigation}
+              />
+            ))
           )}
         </View>
       </ScrollableTabView>
