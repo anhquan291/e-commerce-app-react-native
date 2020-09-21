@@ -15,6 +15,7 @@ import Colors from "../../../utils/Colors";
 import NumberFormat from "../../../components/UI/NumberFormat";
 //Text
 import CustomText from "../../../components/UI/CustomText";
+import { BlurView } from "expo-blur";
 //PropTypes check
 import PropTypes from "prop-types";
 
@@ -29,54 +30,56 @@ export class ProductItem extends React.PureComponent {
       navigation.navigate("Detail", { item });
     };
     return (
-      <View style={styles.container}>
-        <View
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity onPress={toDetail}>
-            <Image
-              source={{ uri: item.url }}
-              style={styles.image}
-              onLoadStart={() => {
-                this.setState({ loading: true });
-              }}
-              onLoadEnd={() => this.setState({ loading: false })}
-            />
-          </TouchableOpacity>
-          {this.state.loading && (
-            <View
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <ActivityIndicator size='small' color={Colors.grey} />
-            </View>
-          )}
-        </View>
-        <View style={styles.center}>
-          <CustomText style={styles.name}>{item.filename}</CustomText>
-        </View>
-        <View style={styles.info}>
-          <View style={styles.rate}>
-            <AntDesign name='star' color='#fed922' size={15} />
-            <Text style={styles.score}>5.0</Text>
+      <View style={{ width: "48%" }}>
+        <BlurView tint='light' intensity={70} style={styles.container}>
+          <View
+            style={{
+              width: "100%",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity onPress={toDetail}>
+              <Image
+                source={{ uri: item.url }}
+                style={styles.image}
+                onLoadStart={() => {
+                  this.setState({ loading: true });
+                }}
+                onLoadEnd={() => this.setState({ loading: false })}
+              />
+            </TouchableOpacity>
+            {this.state.loading && (
+              <View
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ActivityIndicator size='small' color={Colors.grey} />
+              </View>
+            )}
           </View>
-          <NumberFormat price={item.price} />
-        </View>
-        <View style={{ marginHorizontal: 5 }}>
-          <TouchableOpacity style={styles.btn} onPress={toDetail}>
-            <CustomText style={styles.detailBtn}>Xem chi tiết</CustomText>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.center}>
+            <CustomText style={styles.name}>{item.filename}</CustomText>
+          </View>
+          <View style={styles.info}>
+            <View style={styles.rate}>
+              <AntDesign name='star' color='#fed922' size={15} />
+              <Text style={styles.score}>5.0</Text>
+            </View>
+            <NumberFormat price={item.price} />
+          </View>
+          <View style={{ marginHorizontal: 5 }}>
+            <TouchableOpacity style={styles.btn} onPress={toDetail}>
+              <CustomText style={styles.detailBtn}>Xem chi tiết</CustomText>
+            </TouchableOpacity>
+          </View>
+        </BlurView>
       </View>
     );
   }
@@ -89,14 +92,11 @@ ProductItem.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    width: "48%",
+    width: "100%",
     height: 190,
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    // backgroundColor: "rgba(255, 255, 255, 0.9)",
     marginBottom: 15,
     borderRadius: 8,
-    shadowColor: "black",
-    shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 2 },
   },
   image: {
     width: "100%",

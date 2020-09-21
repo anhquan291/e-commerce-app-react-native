@@ -13,9 +13,9 @@ import * as Linking from "expo-linking";
 YellowBox.ignoreWarnings(["Setting a timer"]);
 
 export const AppNavigator = () => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState();
   const dispatch = useDispatch();
-
+  const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
   useEffect(() => {
     // listen for new url events coming from Expo
     Linking.addEventListener(
@@ -56,8 +56,8 @@ export const AppNavigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       {/* <IntroStackScreen /> */}
-      {value !== null && <DrawerNavigator />}
-      {value === null && <IntroStackScreen />}
+      {(isFirstOpen || value !== null) && <DrawerNavigator />}
+      {!isFirstOpen && value === null && <IntroStackScreen />}
     </NavigationContainer>
   );
 };

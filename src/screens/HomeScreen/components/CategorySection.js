@@ -3,13 +3,13 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  ImageBackground,
   FlatList,
   Image,
 } from "react-native";
 import { ProductItem } from "./ProductItem";
 import CustomText from "../../../components/UI/CustomText";
 import Colors from "../../../utils/Colors";
+import { BlurView } from "expo-blur";
 //PropTypes check
 import PropTypes from "prop-types";
 
@@ -50,13 +50,15 @@ export class CategorySection extends React.PureComponent {
               );
             }}
           />
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Product")}
-            style={styles.seeMore}
-          >
-            <CustomText style={styles.seeMoreText}>Xem Thêm</CustomText>
-          </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Product")}
+          style={{ marginHorizontal: 10 }}
+        >
+          <BlurView tint='light' intensity={90} style={styles.seeMore}>
+            <CustomText style={styles.seeMoreText}>Xem Thêm</CustomText>
+          </BlurView>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   seeMore: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    // backgroundColor: "rgba(255, 255, 255, 0.9)",
     width: "100%",
     height: 45,
     borderRadius: 5,

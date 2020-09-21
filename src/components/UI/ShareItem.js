@@ -26,11 +26,7 @@ const ShareItem = ({ imageURL, title, message, color }) => {
   };
   return (
     <TouchableOpacity onPress={onShare}>
-      <FontAwesome
-        name='share-square-o'
-        size={22}
-        color={color ? "black" : "white"}
-      />
+      <FontAwesome name='share-square-o' size={25} color='white' />
     </TouchableOpacity>
   );
 };

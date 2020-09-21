@@ -7,7 +7,7 @@ import {
   Dimensions,
   Animated,
 } from "react-native";
-import SearchInput from "./SearchInput";
+// import SearchInput from "./SearchInput";
 import ShareItem from "../../../components/UI/ShareItem";
 //Color
 import Colors from "../../../utils/Colors";
@@ -35,6 +35,11 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
     outputRange: [1, 0],
     extrapolate: "clamp",
   });
+  const borderWidth = scrollY.interpolate({
+    inputRange: [0, HEADER_DISTANCE],
+    outputRange: [0, 1],
+    extrapolate: "clamp",
+  });
   const titleHeight = scrollY.interpolate({
     inputRange: [0, HEADER_DISTANCE],
     outputRange: [50, 0],
@@ -42,11 +47,20 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
   });
   const inputWidth = scrollY.interpolate({
     inputRange: [0, HEADER_DISTANCE],
-    outputRange: [width, width - 60],
+    outputRange: [width, width - 80],
     extrapolate: "clamp",
   });
   return (
-    <Animated.View style={[styles.header, { height: headerHeight }]}>
+    <Animated.View
+      style={[
+        styles.header,
+        {
+          height: headerHeight,
+          borderBottomWidth: borderWidth,
+          borderColor: Colors.light_grey,
+        },
+      ]}
+    >
       <View style={{ position: "absolute", left: 0, top: 40, zIndex: 10 }}>
         <TouchableOpacity
           onPress={() => {
@@ -54,15 +68,15 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
           }}
           style={styles.icon}
         >
-          <Ionicons name="ios-arrow-back" size={22} color="black" />
+          <Ionicons name='ios-arrow-back' size={25} color={Colors.white} />
         </TouchableOpacity>
       </View>
       <View style={styles.shareItem}>
         <ShareItem
-          imageURL="https://www.facebook.com/daquyankhangthinhvuong/"
-          title="Share our facebook page"
-          message="Our Facebook Link"
-          color="black"
+          imageURL='https://www.facebook.com/daquyankhangthinhvuong/'
+          title='Share our facebook page'
+          message='Our Facebook Link'
+          color='black'
         />
       </View>
       {/* <SearchInput inputValue={searchFilterFunction} /> */}
@@ -72,7 +86,7 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
           height: titleHeight,
         }}
       >
-        <CustomText style={{ fontSize: 30 }}>Tất cả sản phẩm</CustomText>
+        <CustomText style={styles.title}>Tất cả sản phẩm</CustomText>
       </Animated.View>
       <Animated.View
         style={{
@@ -83,9 +97,15 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
           alignItems: "center",
         }}
       >
-        <BlurView tint="light" intensity={50} style={[{ width: "96%" }]}>
+        <BlurView
+          tint='light'
+          intensity={95}
+          style={[{ width: "96%", borderRadius: 5 }]}
+        >
           <TextInput
-            placeholder="Tìm kiếm sản phẩm"
+            placeholder='Tìm kiếm sản phẩm'
+            clearButtonMode='always'
+            onChangeText={(text) => searchFilterFunction(text)}
             style={{ height: 40, marginHorizontal: 20 }}
           />
         </BlurView>
@@ -103,9 +123,12 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.lighter_green,
+    // backgroundColor: Colors.lighter_green,
   },
-
+  title: {
+    fontSize: 30,
+    color: Colors.white,
+  },
   shareItem: {
     position: "absolute",
     right: 0,

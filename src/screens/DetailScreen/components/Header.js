@@ -80,7 +80,6 @@ export const Header = ({ navigation, scrollY, item }) => {
           overflow: "hidden",
           opacity: headerOpacity,
           height: HEADER_MAX_HEIGHT,
-          opacity: headerOpacity,
           transform: [{ translateY: headerTranslate }],
         }}
       ></Animated.View>

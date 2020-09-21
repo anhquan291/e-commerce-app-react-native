@@ -126,7 +126,7 @@ ActionButton.propTypes = {
 const styles = StyleSheet.create({
   action: {
     flexDirection: "row",
-    height: 80,
+    height: 60,
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
@@ -135,21 +135,21 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.grey,
   },
   addCart: {
-    width: "75%",
+    width: "80%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
-    height: 60,
+    borderRadius: 5,
+    height: 50,
   },
   favorite: {
-    width: "20%",
+    width: "18%",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
     paddingTop: 5,
-    borderRadius: 10,
-    height: 60,
+    borderRadius: 5,
+    height: 50,
   },
   actionText: {
     fontSize: 15,

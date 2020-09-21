@@ -1,15 +1,11 @@
-import React, { useState, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Animated,
-} from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet } from "react-native";
 //redux
 import { useSelector } from "react-redux";
+//Color
+import Colors from "../../utils/Colors";
 //Component
-import { ProductBody, Header } from "./components";
+import { ProductBody } from "./components";
 
 export const ProductScreen = (props) => {
   const products = useSelector((state) => state.store.products);
@@ -23,13 +19,6 @@ export const ProductScreen = (props) => {
   };
   return (
     <View style={styles.container}>
-      {/* <Animated.ScrollView
-        scrollEventThrottle={1}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false } //
-        )}
-      ></Animated.ScrollView> */}
       <ProductBody
         navigation={props.navigation}
         productsFilter={productsFilter}
@@ -42,9 +31,8 @@ export const ProductScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
   },
-
   footer: {
     marginTop: 5,
     flex: 1,

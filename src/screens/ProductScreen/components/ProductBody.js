@@ -1,125 +1,131 @@
-import React, { useEffect } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
-  FlatList,
   Animated,
   TouchableWithoutFeedback,
   Keyboard,
+  SectionList,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 //Color
 import Colors from "../../../utils/Colors";
-import ScrollableTabView, {
-  ScrollableTabBar,
-} from "react-native-scrollable-tab-view";
 import HorizontalItem from "./HorizontalItem";
-import { Header } from "./index";
+import CustomText from "../../../components/UI/CustomText";
+import { Header } from "./Header";
 //PropTypes check
 import PropTypes from "prop-types";
+
+ITEM_HEIGHT = 100;
 
 export const ProductBody = ({
   navigation,
   productsFilter,
   searchFilterFunction,
 }) => {
-  const scrollY = new Animated.Value(0);
-  const rings = productsFilter.filter((ring) => ring.type === "ring");
+  const DATA = [];
   const bracelets = productsFilter.filter(
     (bracelet) => bracelet.type === "bracelet"
   );
+  const rings = productsFilter.filter((ring) => ring.type === "ring");
   const stones = productsFilter.filter((stone) => stone.type === "stone");
+  DATA.push({ title: "Vòng Chuối Ngọc", data: bracelets });
+  DATA.push({ title: "Nhẫn Ruby", data: rings });
+  DATA.push({ title: "Đá Quý", data: stones });
+  const scrollY = new Animated.Value(0);
+  const sectionListRef = useRef(null);
+  // const scrollToSection = (index) => {
+  //   sectionListRef.current.scrollToLocation({
+  //     animated: true,
+  //     sectionIndex: index,
+  //     itemIndex: 0,
+  //     viewPosition: 0,
+  //   });
+  // };
+  // const [sectionIndex, setIndex] = useState(0);
+  // const HandleScrollY = (event) => {
+  //   const y = event.nativeEvent.contentOffset.y;
+  //   const sectionIndex =
+  //     y > bracelets.length * ITEM_HEIGHT &&
+  //     y < (bracelets.length + rings.length) * ITEM_HEIGHT
+  //       ? 1
+  //       : y > (bracelets.length + rings.length) * ITEM_HEIGHT
+  //       ? 2
+  //       : 0;
+  //   setIndex(sectionIndex);
+  // };
 
   return (
-    <View style={styles.footer}>
+    <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Header
-          navigation={navigation}
-          searchFilterFunction={searchFilterFunction}
-          scrollY={scrollY}
-        />
+        <LinearGradient
+          colors={[Colors.lighter_green, "#7dd170", Colors.white]}
+        >
+          <Header
+            navigation={navigation}
+            searchFilterFunction={searchFilterFunction}
+            scrollY={scrollY}
+          />
+        </LinearGradient>
       </TouchableWithoutFeedback>
-      <ScrollableTabView
-        initialPage={0}
-        renderTabBar={() => <ScrollableTabBar />}
-        tabBarUnderlineStyle={{
-          backgroundColor: Colors.light_green,
-          height: 2,
-        }}
-        tabBarActiveTextColor={Colors.light_green}
-        tabBarInactiveTextColor={Colors.grey}
-        tabBarTextStyle={{
-          fontSize: 15,
-          paddingTop: 3,
-        }}
-      >
-        <View tabLabel="Vòng chuỗi">
-          {bracelets.length === 0 ? (
-            <View style={styles.center}>
-              <Text style={{ color: Colors.grey }}>
-                Không tìm thấy sản phầm
-              </Text>
+      {productsFilter.length === 0 ? (
+        <CustomText style={{ textAlign: "center", marginTop: 10 }}>
+          Không tìm thấy sản phẩm
+        </CustomText>
+      ) : (
+        <SectionList
+          sections={DATA} // REQUIRED: SECTIONLIST DATA
+          keyExtractor={(item) => item._id}
+          ref={sectionListRef}
+          renderSectionHeader={({ section: { title } }) => (
+            <View style={styles.header}>
+              <CustomText style={styles.title}>{title}</CustomText>
             </View>
-          ) : (
-            <Animated.ScrollView
-              scrollEventThrottle={1}
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                { useNativeDriver: false } //
-              )}
-            >
-              {productsFilter.map((item) => (
-                <HorizontalItem
-                  key={item._id}
-                  item={item}
-                  navigation={navigation}
-                />
-              ))}
-            </Animated.ScrollView>
-            // <FlatList
-            //   data={bracelets}
-            //   keyExtractor={(item) => item._id}
-            //   renderItem={({ item }) => {
-            //     return <HorizontalItem item={item} navigation={navigation} />;
-            //   }}
-            // />
           )}
-        </View>
-        <View tabLabel="Nhẫn">
-          {rings.length === 0 ? (
-            <View style={styles.center}>
-              <Text style={{ color: Colors.grey }}>
-                Không tìm thấy sản phầm
-              </Text>
-            </View>
-          ) : (
-            productsFilter.map((item) => (
-              <HorizontalItem
-                key={item._id}
-                item={item}
-                navigation={navigation}
-              />
-            ))
+          renderItem={({ item }) => (
+            <HorizontalItem item={item} navigation={navigation} />
           )}
-        </View>
-        <View tabLabel="Đá quý">
-          {stones.length === 0 ? (
-            <View style={styles.center}>
-              <Text style={{ color: Colors.grey }}>
-                Không tìm thấy sản phầm
-              </Text>
-            </View>
-          ) : (
-            productsFilter.map((item) => (
-              <HorizontalItem
-                key={item._id}
-                item={item}
-                navigation={navigation}
-              />
-            ))
+          stickySectionHeadersEnabled={true}
+          scrollEventThrottle={1}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: false }
+            // { listener: HandleScrollY, useNativeDriver: false }
           )}
-        </View>
-      </ScrollableTabView>
+        />
+      )}
+      {/* <View style={styles.tabBar}>
+        <FlatList
+          data={sectionTitle}
+          keyExtractor={(item, index) => item + index}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          renderItem={({ item, index }) => {
+            const color = index === sectionIndex ? "#7dd170" : Colors.white;
+            const textColor =
+              index === sectionIndex ? Colors.white : Colors.black;
+            console.log(index);
+            return (
+              <TouchableOpacity
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: 120,
+                  backgroundColor: color,
+                  borderRadius: 5,
+                }}
+                onPress={() => {
+                  scrollToSection(index);
+                }}
+              >
+                <CustomText style={{ fontSize: 16, color: textColor }}>
+                  {item}
+                </CustomText>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </View> */}
     </View>
   );
 };
@@ -130,8 +136,24 @@ ProductBody.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  footer: {
-    marginTop: 5,
+  container: {
     flex: 1,
+  },
+  tabBar: {
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  header: {
+    height: 40,
+    paddingHorizontal: 20,
+    justifyContent: "center",
+    backgroundColor: Colors.white,
+    marginBottom: 5,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: Colors.lighter_green,
   },
 });
