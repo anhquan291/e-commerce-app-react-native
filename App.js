@@ -11,15 +11,15 @@ import {
   favoriteReducer,
   orderReducer,
   productReducer,
-} from "./reducers";
+} from "./src/reducers";
 //Navigator
-import { AppNavigator } from "./navigation";
+import { AppNavigator } from "./src/navigation";
 //redux form
 import { reducer as formReducer } from "redux-form";
 import { StatusBar } from "expo-status-bar";
 
 //Notification
-import LocalNotication from "./components/Notification/LocalNotification";
+import LocalNotication from "./src/components/Notification/LocalNotification";
 
 const rootReducer = combineReducers({
   store: productReducer,
