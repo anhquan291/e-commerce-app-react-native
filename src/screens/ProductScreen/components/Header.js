@@ -68,15 +68,15 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
           }}
           style={styles.icon}
         >
-          <Ionicons name='ios-arrow-back' size={25} color={Colors.white} />
+          <Ionicons name="ios-arrow-back" size={25} color={Colors.white} />
         </TouchableOpacity>
       </View>
       <View style={styles.shareItem}>
         <ShareItem
-          imageURL='https://www.facebook.com/daquyankhangthinhvuong/'
-          title='Share our facebook page'
-          message='Our Facebook Link'
-          color='black'
+          imageURL="https://www.facebook.com/daquyankhangthinhvuong/"
+          title="Share our facebook page"
+          message="Our Facebook Link"
+          color="black"
         />
       </View>
       {/* <SearchInput inputValue={searchFilterFunction} /> */}
@@ -98,15 +98,16 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
         }}
       >
         <BlurView
-          tint='light'
-          intensity={95}
+          tint="dark"
+          intensity={20}
           style={[{ width: "96%", borderRadius: 5 }]}
         >
           <TextInput
-            placeholder='Tìm kiếm sản phẩm'
-            clearButtonMode='always'
+            placeholder="Tìm kiếm sản phẩm"
+            placeholderTextColor={Colors.white}
+            clearButtonMode="always"
             onChangeText={(text) => searchFilterFunction(text)}
-            style={{ height: 40, marginHorizontal: 20 }}
+            style={{ height: 40, marginHorizontal: 20, color: Colors.white }}
           />
         </BlurView>
       </Animated.View>

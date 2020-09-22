@@ -6,7 +6,13 @@ import Colors from "../../utils/Colors";
 import { useSelector } from "react-redux";
 //Components
 import Snackbar from "../../components/Notification/Snackbar";
-import { Header, DetailBody, ActionButton, ModalComp } from "./components";
+import {
+  Header,
+  DetailBody,
+  ActionButton,
+  ModalComp,
+  Comments,
+} from "./components";
 import { colorCheck } from "../../utils/Tools";
 
 export const DetailScreen = (props) => {
@@ -39,6 +45,7 @@ export const DetailScreen = (props) => {
         <View />
       )}
       <Header navigation={props.navigation} scrollY={scrollY} item={item} />
+
       <Animated.ScrollView
         scrollEventThrottle={1}
         onScroll={Animated.event(
@@ -47,6 +54,7 @@ export const DetailScreen = (props) => {
         )}
       >
         <DetailBody item={item} color={color} />
+        <Comments />
       </Animated.ScrollView>
       <ActionButton
         item={item}

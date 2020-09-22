@@ -45,10 +45,8 @@ export const HomeScreen = ({ navigation }) => {
     const fetching = async () => {
       try {
         await dispatch(fetchProducts());
-        if (Object.keys(user.length !== 0)) {
-          await dispatch(fetchCart());
-          await dispatch(fetchFavorite());
-        }
+        await dispatch(fetchCart());
+        await dispatch(fetchFavorite());
         setLoading(false);
       } catch (err) {
         alert(err);

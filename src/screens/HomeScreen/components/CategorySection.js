@@ -55,7 +55,7 @@ export class CategorySection extends React.PureComponent {
           onPress={() => navigation.navigate("Product")}
           style={{ marginHorizontal: 10 }}
         >
-          <BlurView tint='light' intensity={90} style={styles.seeMore}>
+          <BlurView tint="light" intensity={100} style={styles.seeMore}>
             <CustomText style={styles.seeMoreText}>Xem Thêm</CustomText>
           </BlurView>
         </TouchableOpacity>
