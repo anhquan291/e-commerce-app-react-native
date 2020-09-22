@@ -11,14 +11,14 @@ export const DES_CART_QUANTITY = "DES_CART_QUANTITY";
 //Fetch Cart
 export const fetchCart = () => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: CART_LOADING,
-    });
     const user = getState().auth.user;
     const emptyCart = {
       items: [],
     };
     if (user.userid != undefined) {
+      dispatch({
+        type: CART_LOADING,
+      });
       try {
         const response = await timeoutPromise(
           fetch(`${API_URL}/cart`, {
@@ -44,7 +44,6 @@ export const fetchCart = () => {
         if (filterUserCart.length > 0) {
           carts = filterUserCart[0];
         }
-
         dispatch({
           type: FETCH_CART,
           carts,
@@ -53,9 +52,7 @@ export const fetchCart = () => {
         throw err;
       }
     } else {
-      dispatch({
-        type: CART_FAILURE,
-      });
+      return;
     }
   };
 };

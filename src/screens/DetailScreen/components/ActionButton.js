@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "#fff",
     borderTopWidth: 1,
-    borderTopColor: Colors.grey,
+    borderTopColor: Colors.light_grey,
   },
   addCart: {
     width: "80%",

@@ -6,6 +6,7 @@ import {
   TextInput,
   Dimensions,
   Animated,
+  Platform,
 } from "react-native";
 // import SearchInput from "./SearchInput";
 import ShareItem from "../../../components/UI/ShareItem";
@@ -23,30 +24,31 @@ const { width } = Dimensions.get("window");
 const HEADER_HEIGHT = 250;
 const HEADER_MIN = 100;
 const HEADER_DISTANCE = HEADER_HEIGHT - HEADER_MIN;
+const FIXHEIGHT = Platform.OS === "ios" ? HEADER_DISTANCE : HEADER_DISTANCE * 3;
 
 export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
   const headerHeight = scrollY.interpolate({
-    inputRange: [0, HEADER_DISTANCE],
+    inputRange: [0, FIXHEIGHT],
     outputRange: [HEADER_HEIGHT, HEADER_MIN],
     extrapolate: "clamp",
   });
   const titleOpacity = scrollY.interpolate({
-    inputRange: [0, HEADER_DISTANCE],
+    inputRange: [0, FIXHEIGHT],
     outputRange: [1, 0],
     extrapolate: "clamp",
   });
   const borderWidth = scrollY.interpolate({
-    inputRange: [0, HEADER_DISTANCE],
+    inputRange: [0, FIXHEIGHT],
     outputRange: [0, 1],
     extrapolate: "clamp",
   });
   const titleHeight = scrollY.interpolate({
-    inputRange: [0, HEADER_DISTANCE],
+    inputRange: [0, FIXHEIGHT],
     outputRange: [50, 0],
     extrapolate: "clamp",
   });
   const inputWidth = scrollY.interpolate({
-    inputRange: [0, HEADER_DISTANCE],
+    inputRange: [0, FIXHEIGHT],
     outputRange: [width, width - 80],
     extrapolate: "clamp",
   });
@@ -68,15 +70,15 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
           }}
           style={styles.icon}
         >
-          <Ionicons name="ios-arrow-back" size={25} color={Colors.white} />
+          <Ionicons name='ios-arrow-back' size={25} color={Colors.white} />
         </TouchableOpacity>
       </View>
       <View style={styles.shareItem}>
         <ShareItem
-          imageURL="https://www.facebook.com/daquyankhangthinhvuong/"
-          title="Share our facebook page"
-          message="Our Facebook Link"
-          color="black"
+          imageURL='https://www.facebook.com/daquyankhangthinhvuong/'
+          title='Share our facebook page'
+          message='Our Facebook Link'
+          color='black'
         />
       </View>
       {/* <SearchInput inputValue={searchFilterFunction} /> */}
@@ -98,14 +100,14 @@ export const Header = ({ navigation, searchFilterFunction, scrollY }) => {
         }}
       >
         <BlurView
-          tint="dark"
+          tint='dark'
           intensity={20}
           style={[{ width: "96%", borderRadius: 5 }]}
         >
           <TextInput
-            placeholder="Tìm kiếm sản phẩm"
+            placeholder='Tìm kiếm sản phẩm'
             placeholderTextColor={Colors.white}
-            clearButtonMode="always"
+            clearButtonMode='always'
             onChangeText={(text) => searchFilterFunction(text)}
             style={{ height: 40, marginHorizontal: 20, color: Colors.white }}
           />

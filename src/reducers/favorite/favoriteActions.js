@@ -9,11 +9,11 @@ export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 //Fetch Favorite
 export const fetchFavorite = () => {
   return async (dispatch, getState) => {
-    dispatch({
-      type: FAVORITE_LOADING,
-    });
     const user = getState().auth.user;
     if (user.userid != undefined) {
+      dispatch({
+        type: FAVORITE_LOADING,
+      });
       try {
         const response = await timeoutPromise(
           fetch(`${API_URL}/favoriteList`, {
@@ -48,9 +48,7 @@ export const fetchFavorite = () => {
         throw err;
       }
     } else {
-      dispatch({
-        type: FAVORITE_FAILURE,
-      });
+      return;
     }
   };
 };

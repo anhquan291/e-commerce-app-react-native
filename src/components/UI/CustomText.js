@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import React from "react";
+import { Text, StyleSheet } from "react-native";
 // Text.defaultProps.allowFontScaling = false;
 const CustomText = (props) => {
   return (
@@ -16,6 +16,7 @@ const CustomText = (props) => {
 const styles = StyleSheet.create({
   text: {
     fontSize: 14,
+    // fontFamily: "Roboto-Regular",
   },
 });
 

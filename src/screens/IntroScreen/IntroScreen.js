@@ -49,7 +49,6 @@ export const IntroScreen = () => {
 
   return (
     <View style={styles.container}>
-      {loading ? <Loader /> : <></>}
       <Animated.View style={[styles.slider, { backgroundColor }]}>
         <Ticker scrollX={scrollX} />
         <Animated.ScrollView

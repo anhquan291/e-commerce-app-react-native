@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.light_green,
     fontSize: 40,
-    fontWeight: "bold",
     letterSpacing: 5,
+    fontFamily: "Roboto-Bold",
   },
   text: {
     color: "#fff",

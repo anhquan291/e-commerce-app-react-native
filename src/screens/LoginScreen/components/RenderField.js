@@ -4,6 +4,7 @@ import { TextInput } from "react-native-paper";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default renderField = ({
   label,
@@ -34,20 +35,6 @@ export default renderField = ({
               style={{ paddingRight: 10 }}
             />
           }
-          right={
-            passIcon ? (
-              <TextInput.Icon
-                name={showPass ? "eye" : "eye-off"}
-                size={24}
-                color={Colors.lighter_green}
-                onPress={() => {
-                  setShowPass((prev) => !prev);
-                }}
-              />
-            ) : (
-              ""
-            )
-          }
           style={{
             fontSize: 14,
             backgroundColor: "transparent",
@@ -59,6 +46,24 @@ export default renderField = ({
           secureTextEntry={secureTextEntry}
           {...restInput}
         />
+        {passIcon ? (
+          <MaterialCommunityIcons
+            name={showPass ? "eye" : "eye-off"}
+            size={24}
+            color={Colors.lighter_green}
+            onPress={() => {
+              setShowPass((prev) => !prev);
+            }}
+            style={{
+              position: "absolute",
+              top: "40%",
+              right: 10,
+              zIndex: 100,
+            }}
+          />
+        ) : (
+          <></>
+        )}
       </View>
       {touched && error && (
         <CustomText

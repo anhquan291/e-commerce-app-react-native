@@ -369,6 +369,7 @@ export const DrawerNavigator = () => {
                     fontSize: 14,
                     fontWeight: "500",
                     color: focused ? Colors.lighter_green : Colors.grey,
+                    fontFamily: "Roboto-Medium",
                   }}
                 >
                   {label}
@@ -397,6 +398,7 @@ export const DrawerNavigator = () => {
                   fontSize: 14,
                   fontWeight: "500",
                   color: focused ? Colors.lighter_green : Colors.grey,
+                  fontFamily: "Roboto-Medium",
                 }}
               >
                 Đăng nhập
@@ -422,6 +424,7 @@ export const DrawerNavigator = () => {
                   fontSize: 14,
                   fontWeight: "500",
                   color: focused ? Colors.lighter_green : Colors.grey,
+                  fontFamily: "Roboto-Medium",
                 }}
               >
                 Thông Tin Cá Nhân

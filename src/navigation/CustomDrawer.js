@@ -141,7 +141,12 @@ export default (props) => {
                 color={Colors.dark}
               />
               <CustomText
-                style={{ fontSize: 14, color: Colors.dark, fontWeight: "500" }}
+                style={{
+                  fontSize: 14,
+                  color: Colors.dark,
+                  fontWeight: "500",
+                  fontFamily: "Roboto-Medium",
+                }}
               >
                 Đăng xuất
               </CustomText>
@@ -153,7 +158,9 @@ export default (props) => {
       <View style={styles.version}>
         <DrawerItem
           label={() => (
-            <CustomText style={{ color: Colors.grey }}>
+            <CustomText
+              style={{ color: Colors.grey, fontFamily: "Roboto-LightItalic" }}
+            >
               CatTuong App Version 1.0
             </CustomText>
           )}

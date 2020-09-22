@@ -58,26 +58,28 @@ export const CartBody = ({
           </CustomText>
         </View>
       ) : (
-        <FlatList
-          data={carts.items}
-          onRefresh={loadCarts}
-          refreshing={isRefreshing}
-          keyExtractor={(item) => item.item._id}
-          renderItem={({ item }) => {
-            return (
-              <CartItem
-                item={item}
-                onRemove={() => onRemove(item.item._id)}
-                onAdd={() => {
-                  dispatch(addToCart(item.item, user.token));
-                }}
-                onDes={() => {
-                  dispatch(decCartQuantity(carts._id, item.item._id));
-                }}
-              />
-            );
-          }}
-        />
+        <View style={{ marginBottom: 80 }}>
+          <FlatList
+            data={carts.items}
+            onRefresh={loadCarts}
+            refreshing={isRefreshing}
+            keyExtractor={(item) => item.item._id}
+            renderItem={({ item }) => {
+              return (
+                <CartItem
+                  item={item}
+                  onRemove={() => onRemove(item.item._id)}
+                  onAdd={() => {
+                    dispatch(addToCart(item.item, user.token));
+                  }}
+                  onDes={() => {
+                    dispatch(decCartQuantity(carts._id, item.item._id));
+                  }}
+                />
+              );
+            }}
+          />
+        </View>
       )}
     </View>
   );
@@ -93,7 +95,6 @@ CartBody.propTypes = {
 const styles = StyleSheet.create({
   footer: {
     flex: 1,
-    marginBottom: 80,
   },
   nextButton: {
     borderWidth: 1,

@@ -6,6 +6,8 @@ import { navigationRef } from "./RootNavigation";
 import { DrawerNavigator, IntroStackScreen } from "./StoneNavigator";
 import { useDispatch } from "react-redux";
 import { Logout } from "../reducers";
+//Modalize
+import { Host } from "react-native-portalize";
 //Deep Link
 import { urlRedirect } from "../utils/Tools";
 import * as Linking from "expo-linking";
@@ -13,7 +15,7 @@ import * as Linking from "expo-linking";
 YellowBox.ignoreWarnings(["Setting a timer"]);
 
 export const AppNavigator = () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(null);
   const dispatch = useDispatch();
   const isFirstOpen = useSelector((state) => state.store.isFirstOpen);
   useEffect(() => {
@@ -53,11 +55,26 @@ export const AppNavigator = () => {
     };
     autoLogout();
   }, []);
+  useEffect(() => {
+    const autoLogout = async () => {
+      const getUser = await AsyncStorage.getItem("user");
+      if (getUser) {
+        const user = await JSON.parse(getUser);
+        if (user.data.expireTime - Date.now() < 0) {
+          dispatch(Logout());
+        }
+      }
+      return;
+    };
+    autoLogout();
+  }, []);
   return (
     <NavigationContainer ref={navigationRef}>
-      {/* <IntroStackScreen /> */}
-      {(isFirstOpen || value !== null) && <DrawerNavigator />}
-      {!isFirstOpen && value === null && <IntroStackScreen />}
+      <Host>
+        {/* <IntroStackScreen /> */}
+        {(isFirstOpen || value !== null) && <DrawerNavigator />}
+        {!isFirstOpen && value === null && <IntroStackScreen />}
+      </Host>
     </NavigationContainer>
   );
 };
