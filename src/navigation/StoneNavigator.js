@@ -18,6 +18,7 @@ import { AuthScreen } from "../screens/AuthScreen";
 import { IntroScreen } from "../screens/IntroScreen";
 import { SignupScreen } from "../screens/SignupScreen";
 import { LoginScreen } from "../screens/LoginScreen";
+import { TouchIdScreen } from "../screens/TouchIdScreen";
 //Reset Screens
 import { ForgetPwScreen } from "../screens/ForgetPasswordScreen";
 import { ResetPwScreen } from "../screens/ResetPwScreen";
@@ -356,36 +357,34 @@ export const DrawerNavigator = () => {
         itemStyle: { marginVertical: 3 },
       }}
     >
-      {drawers.map(({ name, icon, label, screen }) => {
-        return (
-          <Drawer.Screen
-            key={name}
-            name={name}
-            component={screen}
-            options={() => ({
-              title: ({ focused }) => (
-                <CustomText
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "500",
-                    color: focused ? Colors.lighter_green : Colors.grey,
-                    fontFamily: "Roboto-Medium",
-                  }}
-                >
-                  {label}
-                </CustomText>
-              ),
-              drawerIcon: ({ focused }) => (
-                <MaterialCommunityIcons
-                  name={icon}
-                  size={23}
-                  color={focused ? Colors.lighter_green : Colors.grey}
-                />
-              ),
-            })}
-          />
-        );
-      })}
+      {drawers.map(({ name, icon, label, screen }) => (
+        <Drawer.Screen
+          key={name}
+          name={name}
+          component={screen}
+          options={() => ({
+            title: ({ focused }) => (
+              <CustomText
+                style={{
+                  fontSize: 14,
+                  fontWeight: "500",
+                  color: focused ? Colors.lighter_green : Colors.grey,
+                  fontFamily: "Roboto-Medium",
+                }}
+              >
+                {label}
+              </CustomText>
+            ),
+            drawerIcon: ({ focused }) => (
+              <MaterialCommunityIcons
+                name={icon}
+                size={23}
+                color={focused ? Colors.lighter_green : Colors.grey}
+              />
+            ),
+          })}
+        />
+      ))}
 
       {Object.keys(user).length === 0 ? (
         <Drawer.Screen
@@ -414,31 +413,58 @@ export const DrawerNavigator = () => {
           })}
         />
       ) : (
-        <Drawer.Screen
-          name='Profile'
-          component={ProfileStackScreen}
-          options={() => ({
-            title: ({ focused }) => (
-              <CustomText
-                style={{
-                  fontSize: 14,
-                  fontWeight: "500",
-                  color: focused ? Colors.lighter_green : Colors.grey,
-                  fontFamily: "Roboto-Medium",
-                }}
-              >
-                Thông Tin Cá Nhân
-              </CustomText>
-            ),
-            drawerIcon: ({ focused }) => (
-              <MaterialCommunityIcons
-                name='face-profile'
-                size={25}
-                color={focused ? Colors.lighter_green : Colors.grey}
-              />
-            ),
-          })}
-        />
+        <>
+          <Drawer.Screen
+            name='TouchId'
+            component={TouchIdScreen}
+            options={() => ({
+              title: ({ focused }) => (
+                <CustomText
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "500",
+                    color: focused ? Colors.lighter_green : Colors.grey,
+                    fontFamily: "Roboto-Medium",
+                  }}
+                >
+                  Touch/Face ID
+                </CustomText>
+              ),
+              drawerIcon: ({ focused }) => (
+                <MaterialCommunityIcons
+                  name='security'
+                  size={25}
+                  color={focused ? Colors.lighter_green : Colors.grey}
+                />
+              ),
+            })}
+          />
+          <Drawer.Screen
+            name='Profile'
+            component={ProfileStackScreen}
+            options={() => ({
+              title: ({ focused }) => (
+                <CustomText
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "500",
+                    color: focused ? Colors.lighter_green : Colors.grey,
+                    fontFamily: "Roboto-Medium",
+                  }}
+                >
+                  Thông Tin Cá Nhân
+                </CustomText>
+              ),
+              drawerIcon: ({ focused }) => (
+                <MaterialCommunityIcons
+                  name='face-profile'
+                  size={25}
+                  color={focused ? Colors.lighter_green : Colors.grey}
+                />
+              ),
+            })}
+          />
+        </>
       )}
     </Drawer.Navigator>
   );

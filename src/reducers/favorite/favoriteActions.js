@@ -47,9 +47,8 @@ export const fetchFavorite = () => {
       } catch (err) {
         throw err;
       }
-    } else {
-      return;
     }
+    return;
   };
 };
 //Add Favorite

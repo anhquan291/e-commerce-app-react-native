@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Field, reduxForm, reset } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import {
   StyleSheet,
   View,
@@ -9,6 +9,9 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   ScrollView,
+  Platform,
+  Image,
+  Alert,
 } from "react-native";
 //Colors
 import Colors from "../../../utils/Colors";
@@ -20,6 +23,10 @@ import { Login as LoginAction } from "../../../reducers";
 //PropTypes check
 import PropTypes from "prop-types";
 import renderField from "./RenderField";
+//Authentiation Touch ID Face ID
+import * as LocalAuthentication from "expo-local-authentication";
+import * as SecureStore from "expo-secure-store";
+import { secretKey } from "../../../utils/Config";
 
 //Validation
 const validate = (values) => {
@@ -43,7 +50,37 @@ const Login = (props) => {
   const [showPass, setShowPass] = useState(false);
   const auth = useSelector((state) => state.auth);
   const unmounted = useRef(false);
+  const scanFingerprintOrFaceId = async () => {
+    const resData = await SecureStore.getItemAsync(secretKey);
+    if (resData === null) {
+      return alert("You have to enable LOGIN by touch/face ID");
+    }
+    const result = await LocalAuthentication.authenticateAsync();
+    if (result.success) {
+      const data = await JSON.parse(resData);
+      dispatch(LoginAction(data.email, data.password));
+    }
+  };
 
+  const showAndroidAlert = () => {
+    Alert.alert(
+      "Fingerprint Scan",
+      "Place your finger over the touch sensor and press scan.",
+      [
+        {
+          text: "Scan",
+          onPress: () => {
+            scanFingerprintOrFaceId();
+          },
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel"),
+          style: "cancel",
+        },
+      ]
+    );
+  };
   useEffect(() => {
     return () => {
       unmounted.current = true;
@@ -121,6 +158,20 @@ const Login = (props) => {
             </TouchableOpacity>
           </View>
         </TouchableWithoutFeedback>
+        <View style={styles.center}>
+          <TouchableOpacity
+            onPress={
+              Platform.OS === "android"
+                ? showAndroidAlert
+                : scanFingerprintOrFaceId
+            }
+          >
+            <Image
+              source={require("../../../assets/Images/faceid.png")}
+              style={styles.faceid}
+            />
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -153,6 +204,14 @@ const styles = StyleSheet.create({
   textSignSmall: {
     color: Colors.lighter_green,
     textAlign: "center",
+  },
+  center: {
+    alignItems: "center",
+  },
+  faceid: {
+    resizeMode: "contain",
+    height: 70,
+    width: 70,
   },
 });
 export const LoginForm = reduxForm({

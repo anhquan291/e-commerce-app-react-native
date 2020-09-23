@@ -51,9 +51,8 @@ export const fetchCart = () => {
       } catch (err) {
         throw err;
       }
-    } else {
-      return;
     }
+    return;
   };
 };
 //Add Add to Cart

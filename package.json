@@ -16,6 +16,7 @@
     "@react-navigation/drawer": "^5.9.0",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
+    "add": "^2.0.6",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.8.1",
     "eslint-config-prettier": "^6.11.0",
@@ -25,9 +26,11 @@
     "expo-image-picker": "~8.3.0",
     "expo-linear-gradient": "~8.2.1",
     "expo-linking": "~1.0.1",
+    "expo-local-authentication": "~9.1.1",
     "expo-notifications": "~0.3.3",
     "expo-optimize": "^0.1.46",
     "expo-permissions": "~9.0.1",
+    "expo-secure-store": "~9.0.1",
     "expo-sharing": "~8.2.1",
     "expo-status-bar": "^1.0.0",
     "lottie-react-native": "^3.5.0",
@@ -59,7 +62,8 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-form": "^8.3.6",
     "redux-thunk": "^2.3.0",
-    "sharp-cli": "^1.14.1"
+    "sharp-cli": "^1.14.1",
+    "yarn": "^1.22.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

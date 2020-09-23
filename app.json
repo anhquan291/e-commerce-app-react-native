@@ -16,16 +16,25 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["./src/assets/**/*"],
+
     "ios": {
       "bundleIdentifier": "com.cattuong.ecommerce",
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "We'll use Face ID or Touch ID to secure your login."
+      }
     },
     "android": {
       "package": "com.cattuong.ecommerce",
       "versionCode": 1,
       "useNextNotificationsApi": true,
-      "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE"]
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT"
+      ]
     },
     "notification": { "icon": "./src/assets/icon.png" },
     "description": "E-commerce app contains all necessary features"
