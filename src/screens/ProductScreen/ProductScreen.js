@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 //redux
 import { useSelector } from "react-redux";
+//Color
+import Colors from "../../utils/Colors";
 //Component
-import { ProductBody, Header } from "./components";
+import { ProductBody } from "./components";
 
 export const ProductScreen = (props) => {
   const products = useSelector((state) => state.store.products);
+
   const [productsFilter, setproductsFilter] = useState(products);
   const searchFilterFunction = (text) => {
     const data = products.filter((product) =>
@@ -21,17 +19,10 @@ export const ProductScreen = (props) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
-          <Header
-            navigation={props.navigation}
-            searchFilterFunction={searchFilterFunction}
-          />
-        </View>
-      </TouchableWithoutFeedback>
       <ProductBody
         navigation={props.navigation}
         productsFilter={productsFilter}
+        searchFilterFunction={searchFilterFunction}
       />
     </View>
   );
@@ -40,9 +31,8 @@ export const ProductScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
   },
-
   footer: {
     marginTop: 5,
     flex: 1,

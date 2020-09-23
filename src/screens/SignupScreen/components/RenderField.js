@@ -4,6 +4,7 @@ import { TextInput } from "react-native-paper";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default renderField = ({
   label,
@@ -37,29 +38,6 @@ export default renderField = ({
             style={{ paddingRight: 10 }}
           />
         }
-        right={
-          passIcon === "pass" ? (
-            <TextInput.Icon
-              onPress={() => {
-                setShowPass((prev) => !prev);
-              }}
-              name={showPass ? "eye" : "eye-off"}
-              size={24}
-              color={Colors.lighter_green}
-            />
-          ) : passIcon === "confirm" ? (
-            <TextInput.Icon
-              onPress={() => {
-                setshowConfirmPass((prev) => !prev);
-              }}
-              name={showConfirmPass ? "eye" : "eye-off"}
-              size={24}
-              color={Colors.lighter_green}
-            />
-          ) : (
-            ""
-          )
-        }
         style={{
           fontSize: 14,
           backgroundColor: "transparent",
@@ -71,6 +49,39 @@ export default renderField = ({
         secureTextEntry={secureTextEntry}
         {...restInput}
       />
+      {passIcon === "pass" ? (
+        <MaterialCommunityIcons
+          onPress={() => {
+            setShowPass((prev) => !prev);
+          }}
+          name={showPass ? "eye" : "eye-off"}
+          size={24}
+          color={Colors.lighter_green}
+          style={{
+            position: "absolute",
+            top: "40%",
+            right: 10,
+            zIndex: 100,
+          }}
+        />
+      ) : passIcon === "confirm" ? (
+        <MaterialCommunityIcons
+          onPress={() => {
+            setshowConfirmPass((prev) => !prev);
+          }}
+          name={showConfirmPass ? "eye" : "eye-off"}
+          size={24}
+          color={Colors.lighter_green}
+          style={{
+            position: "absolute",
+            top: "40%",
+            right: 10,
+            zIndex: 100,
+          }}
+        />
+      ) : (
+        <></>
+      )}
 
       {touched && error && (
         <CustomText style={{ color: "red", marginHorizontal: 15 }}>

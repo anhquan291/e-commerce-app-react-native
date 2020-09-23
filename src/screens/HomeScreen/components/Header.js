@@ -16,14 +16,13 @@ import {
   StatusBar,
 } from "react-native";
 //icon
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 //Colors
 import Colors from "../../../utils/Colors";
-// Import react-native-reanimated
+//Search Item component
+import SearchItem from "./SearchItem";
 import Animated, { Easing } from "react-native-reanimated";
 const { Value, timing } = Animated;
-//Search Item component
-import { SearchItem } from "./SearchItem";
 // Calculate window size
 const { width, height } = Dimensions.get("window");
 
@@ -163,7 +162,11 @@ export class Header extends React.Component {
               <TouchableOpacity
                 onPress={() => this.props.navigation.toggleDrawer()}
               >
-                <Feather name='menu' size={25} color={Colors.light_green} />
+                <Ionicons
+                  name='ios-menu'
+                  size={30}
+                  color={Colors.lighter_green}
+                />
               </TouchableOpacity>
               <View>
                 <Image
@@ -197,7 +200,7 @@ export class Header extends React.Component {
                   >
                     <Ionicons
                       name='ios-arrow-back'
-                      size={22}
+                      size={25}
                       color={Colors.light_green}
                     />
                   </TouchableHighlight>
@@ -275,16 +278,17 @@ const styles = StyleSheet.create({
     zIndex: 1000,
     backgroundColor: "#fff",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light_grey,
   },
   header_inner: {
-    // paddingBottom: 5,
     flex: 1,
     overflow: "hidden",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     position: "relative",
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
   search_icon_box: {
     width: 35,

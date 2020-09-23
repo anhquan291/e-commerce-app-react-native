@@ -83,7 +83,7 @@ const Signup = (props) => {
   };
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "position" : null}
+      behavior={Platform.OS == "ios" ? "position" : "height"}
       // keyboardVerticalOffset={40} // adjust the value here if you need more padding
       // style={{ flex: 1 }}
     >
@@ -145,13 +145,9 @@ const Signup = (props) => {
             >
               <View style={styles.signIn}>
                 {loading ? (
-                  <ActivityIndicator
-                    style={{ paddingTop: 10 }}
-                    size='small'
-                    color='#fff'
-                  />
+                  <ActivityIndicator size='small' color='#fff' />
                 ) : (
-                  <CustomText style={styles.textSign}>REGISTER</CustomText>
+                  <CustomText style={styles.textSign}>Đăng ký</CustomText>
                 )}
               </View>
             </TouchableOpacity>
@@ -181,14 +177,13 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.light_green,
     fontSize: 40,
-    fontWeight: "bold",
     letterSpacing: 5,
-    textAlign: "center",
+    fontFamily: "Roboto-Bold",
   },
   textSign: {
     fontSize: 15,
     color: "#fff",
-    fontWeight: "600",
+    fontFamily: "Roboto-Medium",
   },
   textSignSmall: {
     color: Colors.lighter_green,

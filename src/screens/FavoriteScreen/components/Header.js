@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: Colors.lighter_green,
     fontSize: 20,
-    fontWeight: "500",
+    fontFamily: "Roboto-Medium",
     paddingBottom: 5,
   },
 });

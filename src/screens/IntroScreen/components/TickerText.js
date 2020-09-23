@@ -60,5 +60,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: "800",
     color: "#2CB9B0",
+    fontFamily: "Roboto-Medium",
   },
 });

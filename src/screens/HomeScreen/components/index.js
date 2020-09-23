@@ -3,4 +3,4 @@ export * from "./CategorySection";
 export * from "./FloatButton";
 export * from "./Header";
 export * from "./ProductItem";
-export * from "./SearchItem";
+export * from "./Categories";

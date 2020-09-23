@@ -51,7 +51,7 @@ export const Header = ({ navigation, scrollY, item }) => {
           style={styles.goBackIcon}
         >
           <View>
-            <Ionicons name='ios-arrow-back' size={32} color='#fff' />
+            <Ionicons name='ios-arrow-back' size={25} color='#fff' />
           </View>
         </TouchableOpacity>
 
@@ -80,7 +80,6 @@ export const Header = ({ navigation, scrollY, item }) => {
           overflow: "hidden",
           opacity: headerOpacity,
           height: HEADER_MAX_HEIGHT,
-          opacity: headerOpacity,
           transform: [{ translateY: headerTranslate }],
         }}
       ></Animated.View>
@@ -105,7 +104,7 @@ export const Header = ({ navigation, scrollY, item }) => {
 
 const styles = StyleSheet.create({
   topBar: {
-    paddingTop: 30,
+    paddingTop: Platform.OS === "android" ? 15 : 25,
     width: "100%",
     display: "flex",
     flexDirection: "row",

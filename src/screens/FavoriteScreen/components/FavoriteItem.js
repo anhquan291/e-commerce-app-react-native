@@ -109,7 +109,14 @@ export const FavoriteItem = ({ navigation, item }) => {
         <View style={styles.itemContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate("Detail", { item: item })}
-            style={{ marginLeft: 5, width: "30%", marginRight: 10 }}
+            style={{
+              marginLeft: 5,
+              width: "30%",
+              height: "100%",
+              marginRight: 10,
+              alignContent: "center",
+              justifyContent: "center",
+            }}
           >
             <Image
               style={{
@@ -125,11 +132,17 @@ export const FavoriteItem = ({ navigation, item }) => {
               onLoadEnd={() => setIsLoading(false)}
             />
             {isLoading && (
-              <ActivityIndicator
-                size='small'
-                color={Colors.grey}
-                style={{ position: "absolute", left: 0, right: 0, top: 40 }}
-              />
+              <View
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ActivityIndicator size='small' color={Colors.grey} />
+              </View>
             )}
           </TouchableOpacity>
           <View style={styles.info}>

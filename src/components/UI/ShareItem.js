@@ -3,7 +3,7 @@ import { TouchableOpacity, Share } from "react-native";
 //icon
 import { FontAwesome } from "@expo/vector-icons";
 
-const ShareItem = ({ imageURL, title, message }) => {
+const ShareItem = ({ imageURL, title, message, color }) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -26,7 +26,7 @@ const ShareItem = ({ imageURL, title, message }) => {
   };
   return (
     <TouchableOpacity onPress={onShare}>
-      <FontAwesome name="share-square-o" size={28} color="#fff" />
+      <FontAwesome name='share-square-o' size={25} color='white' />
     </TouchableOpacity>
   );
 };

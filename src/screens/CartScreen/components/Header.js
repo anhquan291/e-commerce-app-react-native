@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
     color: Colors.lighter_green,
     fontSize: 20,
     paddingBottom: 5,
-    fontWeight: "500",
+    fontFamily: "Roboto-Medium",
   },
 });

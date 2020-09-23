@@ -7,7 +7,7 @@ import Colors from "./Colors";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
-import { STRIPE_PUBLISHABLE_KEY } from "./Config";
+import { STRIPE_PUBLISHABLE_KEY, API_URL } from "./Config";
 
 export const OpenURL = ({ url, children }) => {
   const handlePress = useCallback(async () => {
@@ -45,8 +45,8 @@ export const urlRedirect = (url) => {
 export const timeoutPromise = (url) => {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
-      reject(new alert("Timeout, Server is not responding"));
-    }, 10 * 1000);
+      reject(new Error("Timeout, Server is not responding"));
+    }, 15 * 1000);
     url.then(
       (res) => {
         clearTimeout(timeoutId);
@@ -58,28 +58,6 @@ export const timeoutPromise = (url) => {
       }
     );
   });
-};
-
-export const uploadProfilePic = async (id, token, imageUri, filename, type) => {
-  try {
-    let formData = new FormData();
-    // Infer the type of the image
-    await formData.append("profilePic", {
-      uri: imageUri,
-      name: filename,
-      type,
-    });
-    await fetch(`http://192.168.0.27:8080/api/v1/user/photo/${id}`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-      body: formData,
-    });
-  } catch (err) {
-    throw err;
-  }
 };
 
 export const _pickImage = async (action) => {

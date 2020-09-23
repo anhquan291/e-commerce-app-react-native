@@ -59,7 +59,9 @@ const Login = (props) => {
     }
   };
   return (
-    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "position" : null}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "position" : "height"}
+    >
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
@@ -96,7 +98,10 @@ const Login = (props) => {
                 }}
               >
                 <CustomText
-                  style={{ ...styles.textSignSmall, fontWeight: "600" }}
+                  style={{
+                    ...styles.textSignSmall,
+                    fontFamily: "Roboto-Medium",
+                  }}
                 >
                   Forget Password ?
                 </CustomText>
@@ -110,7 +115,7 @@ const Login = (props) => {
                 {auth.isLoading ? (
                   <ActivityIndicator size='small' color='#fff' />
                 ) : (
-                  <CustomText style={styles.textSign}>ĐĂNG NHẬP</CustomText>
+                  <CustomText style={styles.textSign}>Đăng nhập</CustomText>
                 )}
               </View>
             </TouchableOpacity>
@@ -143,7 +148,7 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 15,
     color: "#fff",
-    fontWeight: "600",
+    fontFamily: "Roboto-Medium",
   },
   textSignSmall: {
     color: Colors.lighter_green,
