@@ -10,11 +10,12 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
-
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
+import { Ionicons } from "@expo/vector-icons";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 //Action
@@ -22,6 +23,8 @@ import { SignUp as SignUpAct } from "../../../reducers";
 //PropTypes check
 import PropTypes from "prop-types";
 import renderField from "./RenderField";
+
+const { width, height } = Dimensions.get("window");
 
 //Validation
 const validate = (values) => {
@@ -87,6 +90,16 @@ const Signup = (props) => {
       // keyboardVerticalOffset={40} // adjust the value here if you need more padding
       // style={{ flex: 1 }}
     >
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.goBack();
+        }}
+        style={{ position: "absolute", top: 50, left: 20, zIndex: 10 }}
+      >
+        <Ionicons name="ios-arrow-back" size={35} color={Colors.light_green} />
+      </TouchableOpacity>
+
+      <View style={styles.header}></View>
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
@@ -101,39 +114,39 @@ const Signup = (props) => {
             </View>
             <View>
               <Field
-                name='username'
-                keyboardType='default'
-                label='Your Name'
+                name="username"
+                keyboardType="default"
+                label="Your Name"
                 component={renderField}
-                icon='id-card'
+                icon="id-card"
                 autoCapitalize={true}
               />
               <Field
-                name='email'
-                keyboardType='email-address'
-                label='Email'
-                icon='email'
+                name="email"
+                keyboardType="email-address"
+                label="Email"
+                icon="email"
                 component={renderField}
               />
               <Field
-                name='password'
-                keyboardType='default'
-                label='Password'
+                name="password"
+                keyboardType="default"
+                label="Password"
                 component={renderField}
                 secureTextEntry={showPass ? false : true}
-                passIcon='pass'
-                icon='lock'
+                passIcon="pass"
+                icon="lock"
                 showPass={showPass}
                 setShowPass={setShowPass}
               />
               <Field
-                name='confirmpassword'
-                keyboardType='default'
-                label='Confirm Password'
+                name="confirmpassword"
+                keyboardType="default"
+                label="Confirm Password"
                 component={renderField}
                 secureTextEntry={showConfirmPass ? false : true}
-                passIcon='confirm'
-                icon='lock'
+                passIcon="confirm"
+                icon="lock"
                 showConfirmPass={showConfirmPass}
                 setshowConfirmPass={setshowConfirmPass}
               />
@@ -145,7 +158,7 @@ const Signup = (props) => {
             >
               <View style={styles.signIn}>
                 {loading ? (
-                  <ActivityIndicator size='small' color='#fff' />
+                  <ActivityIndicator size="small" color="#fff" />
                 ) : (
                   <CustomText style={styles.textSign}>Đăng ký</CustomText>
                 )}
@@ -164,6 +177,14 @@ Signup.propTypes = {
   reset: PropTypes.func.isRequired,
 };
 const styles = StyleSheet.create({
+  header: {
+    marginTop: height * 0.15,
+    width: width,
+    marginBottom: 40,
+    paddingHorizontal: 20,
+    backgroundColor: Colors.white,
+    zIndex: 1,
+  },
   signIn: {
     width: "100%",
     height: 50,
@@ -172,13 +193,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: "row",
     backgroundColor: Colors.lighter_green,
-    marginTop: 20,
+    marginTop: 10,
   },
   title: {
     color: Colors.light_green,
     fontSize: 40,
     letterSpacing: 5,
     fontFamily: "Roboto-Bold",
+    textAlign: "center",
   },
   textSign: {
     fontSize: 15,

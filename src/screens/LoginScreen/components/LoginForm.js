@@ -12,10 +12,12 @@ import {
   Platform,
   Image,
   Alert,
+  Dimensions,
 } from "react-native";
 //Colors
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
+import { Ionicons } from "@expo/vector-icons";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 //Action
@@ -27,6 +29,8 @@ import renderField from "./RenderField";
 import * as LocalAuthentication from "expo-local-authentication";
 import * as SecureStore from "expo-secure-store";
 import { secretKey } from "../../../utils/Config";
+
+const { height } = Dimensions.get("window");
 
 //Validation
 const validate = (values) => {
@@ -55,7 +59,9 @@ const Login = (props) => {
     if (resData === null) {
       return alert("You have to enable LOGIN by touch/face ID");
     }
-    const result = await LocalAuthentication.authenticateAsync();
+    const result = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Authenticating",
+    });
     if (result.success) {
       const data = await JSON.parse(resData);
       dispatch(LoginAction(data.email, data.password));
@@ -99,6 +105,20 @@ const Login = (props) => {
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "position" : "height"}
     >
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.goBack();
+        }}
+        style={{ position: "absolute", top: 50, left: 20 }}
+      >
+        <Ionicons name="ios-arrow-back" size={35} color={Colors.light_green} />
+      </TouchableOpacity>
+
+      <View style={styles.header}>
+        <View>
+          <CustomText style={styles.title}>LOGIN</CustomText>
+        </View>
+      </View>
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
@@ -110,20 +130,20 @@ const Login = (props) => {
           >
             <View>
               <Field
-                name='email'
-                keyboardType='email-address'
-                label='Email'
-                icon='email'
+                name="email"
+                keyboardType="email-address"
+                label="Email"
+                icon="email"
                 component={renderField}
               />
               <Field
-                name='password'
-                keyboardType='default'
-                label='Password'
+                name="password"
+                keyboardType="default"
+                label="Password"
                 component={renderField}
                 secureTextEntry={showPass ? false : true}
-                passIcon='eye'
-                icon='lock'
+                passIcon="eye"
+                icon="lock"
                 showPass={showPass}
                 setShowPass={setShowPass}
               />
@@ -150,7 +170,7 @@ const Login = (props) => {
             >
               <View style={styles.signIn}>
                 {auth.isLoading ? (
-                  <ActivityIndicator size='small' color='#fff' />
+                  <ActivityIndicator size="small" color="#fff" />
                 ) : (
                   <CustomText style={styles.textSign}>Đăng nhập</CustomText>
                 )}
@@ -186,6 +206,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     marginVertical: 10,
+  },
+  header: {
+    marginTop: height * 0.2,
+    marginBottom: 40,
+    marginHorizontal: 20,
+    zIndex: 1,
+  },
+  title: {
+    color: Colors.light_green,
+    fontSize: 40,
+    letterSpacing: 5,
+    fontFamily: "Roboto-Bold",
+  },
+  text: {
+    color: "#fff",
   },
   signIn: {
     width: "100%",

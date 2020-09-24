@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Switch,
-  Image,
-  TouchableOpacity,
-  Text,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, Switch, Image } from "react-native";
 import { useSelector } from "react-redux";
 import Colors from "../../../utils/Colors";
 import CustomText from "../../../components/UI/CustomText";
@@ -34,17 +26,21 @@ export const AuthBody = () => {
         })
       );
     } else {
-      SecureStore.deleteItemAsync(secretKey);
+      await SecureStore.deleteItemAsync(secretKey);
     }
   };
-  // const getData = async () => {
-  //   const resData = await SecureStore.getItemAsync(key);
-  //   console.log(resData);
-  // };
+  const getData = async () => {
+    const resData = await SecureStore.getItemAsync(secretKey);
+    if (resData === null) {
+      return;
+    }
+    setIsEnabled(true);
+  };
 
   useEffect(() => {
     checkDeviceForHardware();
     checkForFingerprints();
+    getData();
   }, []);
   const checkDeviceForHardware = async () => {
     let compatible = await LocalAuthentication.hasHardwareAsync();
