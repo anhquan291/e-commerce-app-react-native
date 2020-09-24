@@ -35,7 +35,6 @@ export const AuthBody = () => {
       );
     } else {
       SecureStore.deleteItemAsync(secretKey);
-      console.log("deleted");
     }
   };
   // const getData = async () => {
@@ -76,7 +75,7 @@ export const AuthBody = () => {
         <Switch
           trackColor={{ false: "#767577", true: "#60c46b" }}
           thumbColor={isEnabled ? Colors.white : "#f4f3f4"}
-          ios_backgroundColor='#3e3e3e'
+          ios_backgroundColor="#3e3e3e"
           onValueChange={switchHandler}
           value={isEnabled}
           disabled={!isSupport}
