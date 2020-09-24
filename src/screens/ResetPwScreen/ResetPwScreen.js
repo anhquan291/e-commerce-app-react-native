@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 // Action
 import { ResetPassword } from "../../reducers";
 import Loader from "../../components/Loaders/Loader";
+import * as SecureStore from "expo-secure-store";
 
 //Validation
 const validate = (values) => {
@@ -46,6 +47,7 @@ const resetForm = (props) => {
   const submit = async (values) => {
     try {
       await dispatch(ResetPassword(values.password, url));
+      await SecureStore.deleteItemAsync(secretKey);
       Keyboard.dismiss;
       await reset();
       Alert.alert("Reset Successfully", "You can login now", [
@@ -70,7 +72,7 @@ const resetForm = (props) => {
         style={{ position: "absolute", top: 50, left: 20 }}
       >
         <Feather
-          name='arrow-left-circle'
+          name="arrow-left-circle"
           size={30}
           color={Colors.lighter_green}
         />
@@ -78,26 +80,26 @@ const resetForm = (props) => {
       <View style={styles.content}>
         <CustomText style={styles.title}> Reset Password </CustomText>
         <Field
-          name='password'
-          keyboardType='default'
-          label='Mật Khẩu'
+          name="password"
+          keyboardType="default"
+          label="Mật Khẩu"
           component={renderField}
           secureTextEntry={!showPass ? true : false}
-          placeholder='Mật khẩu của bạn'
-          icon='lock-outline'
-          passIcon='pass'
+          placeholder="Mật khẩu của bạn"
+          icon="lock-outline"
+          passIcon="pass"
           showPass={showPass}
           setShowPass={setShowPass}
         />
         <Field
-          name='confirmpassword'
-          keyboardType='default'
-          label='Xác Nhận Mật Khẩu'
+          name="confirmpassword"
+          keyboardType="default"
+          label="Xác Nhận Mật Khẩu"
           component={renderField}
           secureTextEntry={!showConfirmPass ? true : false}
-          placeholder='Xác nhận mật khẩu'
-          passIcon='confirm'
-          icon='lock-outline'
+          placeholder="Xác nhận mật khẩu"
+          passIcon="confirm"
+          icon="lock-outline"
           showConfirmPass={showConfirmPass}
           setshowConfirmPass={setshowConfirmPass}
         />
