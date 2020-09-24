@@ -33,6 +33,7 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 
 ## :star: Features
 - Authentication (Signup, Login, Reset Password).
+- Login with Touch/Face ID.
 - Real time update.
 - User Profile (Upload, Edit Profile Picture, Address).
 - Lottie Animation Icon (https://lottiefiles.com/)
@@ -58,6 +59,7 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 - Reducer: Redux. 
 - Image Picker: Expo image picker.
 - Deep Link: Expo Linking.
+- Touch/Face ID: react native touch id, react native keychain, expo authentication 
 
 ## :star: Contributing
 
