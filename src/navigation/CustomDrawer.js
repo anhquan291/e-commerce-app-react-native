@@ -73,7 +73,7 @@ export default (props) => {
                   style={styles.profilePic}
                   source={
                     user.profilePicture.length === 0
-                      ? require("../assets/Images/defaultprofile.jpg")
+                      ? require("../assets/Images/defaultprofile.png")
                       : { uri: user.profilePicture }
                   }
                 />
@@ -135,7 +135,7 @@ export default (props) => {
           label={() => (
             <View style={styles.logout}>
               <MaterialCommunityIcons
-                name='logout'
+                name="logout"
                 size={25}
                 style={{ marginRight: 30 }}
                 color={Colors.dark}

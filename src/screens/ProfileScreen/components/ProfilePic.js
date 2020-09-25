@@ -65,7 +65,7 @@ export const ProfilePic = ({
           source={
             imageUri.length === 0
               ? user.profilePicture.length === 0
-                ? require("../../../assets/Images/defaultprofile.jpg")
+                ? require("../../../assets/Images/defaultprofile.png")
                 : { uri: user.profilePicture }
               : { uri: imageUri }
           }
@@ -79,7 +79,7 @@ export const ProfilePic = ({
         >
           <View style={styles.cameraContainer}>
             <TouchableOpacity onPress={UploadProfileHandler}>
-              <FontAwesome name='camera' size={15} color='white' />
+              <FontAwesome name="camera" size={15} color="white" />
             </TouchableOpacity>
           </View>
         </View>

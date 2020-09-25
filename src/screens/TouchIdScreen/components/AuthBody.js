@@ -60,10 +60,12 @@ export const AuthBody = () => {
       ) : (
         <></>
       )}
-      <Image
-        source={require("../../../assets/Images/faceid.png")}
-        style={styles.faceid}
-      />
+      <View style={styles.circleImage}>
+        <Image
+          source={require("../../../assets/Images/faceid.png")}
+          style={styles.faceid}
+        />
+      </View>
       <View style={styles.contentContainer}>
         <CustomText style={styles.text}>
           Mở khóa bằng vân tay hoặc khuôn mặt
@@ -101,6 +103,15 @@ const styles = StyleSheet.create({
     color: "red",
     fontFamily: "Roboto-Medium",
     fontSize: 15,
+  },
+  circleImage: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    padding: 20,
+    borderRadius: 70,
+    borderStyle: "dashed",
+    borderColor: Colors.grey,
   },
   faceid: {
     resizeMode: "contain",

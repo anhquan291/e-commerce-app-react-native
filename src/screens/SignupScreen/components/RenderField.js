@@ -17,7 +17,6 @@ export default renderField = ({
   showConfirmPass,
   setshowConfirmPass,
   autoCapitalize,
-  autoCorrect,
   meta: { touched, error, warning },
   input: { onChange, ...restInput },
 }) => {
@@ -27,7 +26,7 @@ export default renderField = ({
         placeholder={label}
         autoCapitalize={autoCapitalize ? "words" : "none"}
         clearButtonMode={passIcon ? "never" : "always"}
-        mode='outlined'
+        mode="outlined"
         selectionColor={Colors.leave_green}
         theme={{ colors: { primary: Colors.leave_green } }}
         left={

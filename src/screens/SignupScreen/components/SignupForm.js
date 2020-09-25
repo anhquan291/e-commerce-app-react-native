@@ -48,6 +48,8 @@ const validate = (values) => {
     errors.username = "Tên không được bỏ trống";
   } else if (values.username.length > 20) {
     errors.username = "Tên không vượt quá 20 ký tự";
+  } else if (values.username.length < 6) {
+    errors.username = "Tên phải nhiều hơn 6 ký tự";
   }
 
   return errors;

@@ -6,11 +6,9 @@ const AskingNotificationPermissonToken = async () => {
     Permissions.NOTIFICATIONS
   );
   let finalStatus = existingStatus;
-
   if (existingStatus !== "granted") {
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     finalStatus = status;
-    console.log(finalStatus);
   }
   if (finalStatus !== "granted") {
     console.log("Failed to get push token for push notification!");

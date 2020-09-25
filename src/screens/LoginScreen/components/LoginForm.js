@@ -179,18 +179,23 @@ const Login = (props) => {
           </View>
         </TouchableWithoutFeedback>
         <View style={styles.center}>
-          <TouchableOpacity
-            onPress={
-              Platform.OS === "android"
-                ? showAndroidAlert
-                : scanFingerprintOrFaceId
-            }
-          >
-            <Image
-              source={require("../../../assets/Images/faceid.png")}
-              style={styles.faceid}
-            />
-          </TouchableOpacity>
+          <CustomText style={styles.loginOpt}>
+            Hoặc đăng nhập bằng khuôn mặt/vân tay
+          </CustomText>
+          <View style={styles.circleImage}>
+            <TouchableOpacity
+              onPress={
+                Platform.OS === "android"
+                  ? showAndroidAlert
+                  : scanFingerprintOrFaceId
+              }
+            >
+              <Image
+                source={require("../../../assets/Images/faceid.png")}
+                style={styles.faceid}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -209,15 +214,15 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: height * 0.2,
-    marginBottom: 40,
+    marginBottom: 10,
     marginHorizontal: 20,
-    zIndex: 1,
   },
   title: {
     color: Colors.light_green,
     fontSize: 40,
     letterSpacing: 5,
     fontFamily: "Roboto-Bold",
+    textAlign: "center",
   },
   text: {
     color: "#fff",
@@ -243,10 +248,24 @@ const styles = StyleSheet.create({
   center: {
     alignItems: "center",
   },
+  circleImage: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    padding: 20,
+    borderRadius: 55,
+    borderStyle: "dashed",
+    borderColor: Colors.grey,
+  },
   faceid: {
     resizeMode: "contain",
     height: 70,
     width: 70,
+  },
+  loginOpt: {
+    color: Colors.lighter_green,
+    fontFamily: "Roboto-Medium",
+    marginBottom: 10,
   },
 });
 export const LoginForm = reduxForm({
