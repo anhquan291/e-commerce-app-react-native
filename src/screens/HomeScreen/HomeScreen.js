@@ -53,7 +53,7 @@ export const HomeScreen = ({ navigation }) => {
       }
     };
     fetching();
-  }, []);
+  }, [user.id]);
 
   if (loading) {
     return (

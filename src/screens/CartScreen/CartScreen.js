@@ -31,6 +31,10 @@ export const CartScreen = (props) => {
     }
     setIsRefreshing(false);
   }, [dispatch, setIsRefreshing]);
+  useEffect(() => {
+    loadCarts();
+  }, [user.userid]);
+
   return (
     <View style={styles.container}>
       <Header user={user} carts={carts} navigation={props.navigation} />
