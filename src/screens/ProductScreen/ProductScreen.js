@@ -33,8 +33,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
   },
-  footer: {
-    marginTop: 5,
-    flex: 1,
-  },
 });

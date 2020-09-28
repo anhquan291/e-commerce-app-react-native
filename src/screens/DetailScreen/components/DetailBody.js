@@ -17,82 +17,80 @@ const { width, height } = Dimensions.get("window");
 
 export const DetailBody = ({ item, color }) => {
   return (
-    <View>
-      <View style={[styles.footer]}>
-        <Animatable.View
-          animation="lightSpeedIn"
-          delay={1000}
-          style={styles.footer_header}
-        >
-          <CustomText selectable={true} style={{ ...styles.title, color }}>
-            {item.filename}
-          </CustomText>
-          <NumberFormat
-            style={{ color: "#fff", fontSize: 13 }}
-            price={item.price}
-            color={color}
-          />
+    <View style={[styles.footer]}>
+      <Animatable.View
+        animation="lightSpeedIn"
+        delay={1000}
+        style={styles.footer_header}
+      >
+        <CustomText selectable={true} style={{ ...styles.title, color }}>
+          {item.filename}
+        </CustomText>
+        <NumberFormat
+          style={{ color: "#fff", fontSize: 13 }}
+          price={item.price}
+          color={color}
+        />
+      </Animatable.View>
+      <View style={{ flexDirection: "row", marginTop: 10 }}>
+        <Animatable.View animation="bounceIn" delay={1600}>
+          <AntDesign name="star" size={15} color={color} />
         </Animatable.View>
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Animatable.View animation="bounceIn" delay={1600}>
-            <AntDesign name="star" size={15} color={color} />
-          </Animatable.View>
-          <Animatable.View animation="bounceIn" delay={1700}>
-            <AntDesign name="star" size={15} color={color} />
-          </Animatable.View>
-          <Animatable.View animation="bounceIn" delay={1800}>
-            <AntDesign name="star" size={15} color={color} />
-          </Animatable.View>
-          <Animatable.View animation="bounceIn" delay={1900}>
-            <AntDesign name="star" size={15} color={color} />
-          </Animatable.View>
-          <Animatable.View animation="bounceIn" delay={2000}>
-            <AntDesign name="star" size={15} color={color} />
-          </Animatable.View>
-        </View>
-        <Animatable.View
-          animation="fadeInUpBig"
-          delay={1000}
-          style={styles.description}
-        >
-          <CustomText
-            style={{
-              ...styles.title,
-              fontWeight: "500",
-              marginTop: 20,
-              marginBottom: 10,
-              textDecorationLine: "underline",
-            }}
-          >
-            Chi tiết
-          </CustomText>
-          <View style={styles.infoContainer}>
-            <CustomText>Màu sắc: </CustomText>
-            <CustomText style={{ color: color }}>{item.color}</CustomText>
-          </View>
-          <View style={styles.infoContainer}>
-            <CustomText>Tình trạng: </CustomText>
-            <CustomText>{item.standard}</CustomText>
-          </View>
-          <View style={styles.infoContainer}>
-            <CustomText>Xuất xứ: </CustomText>
-            <CustomText>{item.origin}</CustomText>
-          </View>
-          <CustomText
-            style={{
-              ...styles.title,
-              textDecorationLine: "underline",
-              fontWeight: "500",
-              marginBottom: 10,
-            }}
-          >
-            Miêu tả
-          </CustomText>
-          <CustomText selectable={true} style={styles.detail}>
-            {item.description}
-          </CustomText>
+        <Animatable.View animation="bounceIn" delay={1700}>
+          <AntDesign name="star" size={15} color={color} />
+        </Animatable.View>
+        <Animatable.View animation="bounceIn" delay={1800}>
+          <AntDesign name="star" size={15} color={color} />
+        </Animatable.View>
+        <Animatable.View animation="bounceIn" delay={1900}>
+          <AntDesign name="star" size={15} color={color} />
+        </Animatable.View>
+        <Animatable.View animation="bounceIn" delay={2000}>
+          <AntDesign name="star" size={15} color={color} />
         </Animatable.View>
       </View>
+      <Animatable.View
+        animation="fadeInUpBig"
+        delay={1000}
+        style={styles.description}
+      >
+        <CustomText
+          style={{
+            ...styles.title,
+            fontWeight: "500",
+            marginTop: 20,
+            marginBottom: 10,
+            textDecorationLine: "underline",
+          }}
+        >
+          Chi tiết
+        </CustomText>
+        <View style={styles.infoContainer}>
+          <CustomText>Màu sắc: </CustomText>
+          <CustomText style={{ color: color }}>{item.color}</CustomText>
+        </View>
+        <View style={styles.infoContainer}>
+          <CustomText>Tình trạng: </CustomText>
+          <CustomText>{item.standard}</CustomText>
+        </View>
+        <View style={styles.infoContainer}>
+          <CustomText>Xuất xứ: </CustomText>
+          <CustomText>{item.origin}</CustomText>
+        </View>
+        <CustomText
+          style={{
+            ...styles.title,
+            textDecorationLine: "underline",
+            fontWeight: "500",
+            marginBottom: 10,
+          }}
+        >
+          Miêu tả
+        </CustomText>
+        <CustomText selectable={true} style={styles.detail}>
+          {item.description}
+        </CustomText>
+      </Animatable.View>
     </View>
   );
 };
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     marginBottom: 10,
-    marginTop: 190,
+    marginTop: 200,
     borderRadius: 30,
   },
   footer_header: {

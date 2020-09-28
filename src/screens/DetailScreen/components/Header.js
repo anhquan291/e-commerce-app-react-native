@@ -42,7 +42,7 @@ export const Header = ({ navigation, scrollY, item }) => {
     extrapolate: "clamp",
   });
   return (
-    <Animatable.View delay={500} animation='fadeInDown'>
+    <Animatable.View delay={500} animation="fadeInDown">
       <View style={styles.topBar}>
         <TouchableOpacity
           onPress={() => {
@@ -51,10 +51,9 @@ export const Header = ({ navigation, scrollY, item }) => {
           style={styles.goBackIcon}
         >
           <View>
-            <Ionicons name='ios-arrow-back' size={25} color='#fff' />
+            <Ionicons name="ios-arrow-back" size={25} color="#fff" />
           </View>
         </TouchableOpacity>
-
         <Animated.View style={{ opacity: headerOpacity }}>
           <CustomText
             style={{ fontSize: 16, color: "#fff", fontWeight: "500" }}
@@ -97,7 +96,7 @@ export const Header = ({ navigation, scrollY, item }) => {
         }}
         onLoadEnd={() => setIsLoading(false)}
       />
-      {isLoading && <ActivityIndicator size='small' color={Colors.grey} />}
+      {isLoading && <ActivityIndicator size="small" color={Colors.grey} />}
     </Animatable.View>
   );
 };

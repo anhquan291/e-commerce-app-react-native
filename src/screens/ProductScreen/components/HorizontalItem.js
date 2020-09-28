@@ -21,8 +21,8 @@ import PropTypes from "prop-types";
 const HorizontalItem = ({ item, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   return (
-    <View>
-      <BlurView tint='dark' intensity={10} style={styles.itemContainer}>
+    <View style={{ backgroundColor: Colors.white }}>
+      <BlurView tint="dark" intensity={10} style={styles.itemContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Detail", { item: item })}
           style={{ marginLeft: 5, width: "40%", marginRight: 10 }}
@@ -42,7 +42,7 @@ const HorizontalItem = ({ item, navigation }) => {
           />
           {isLoading && (
             <ActivityIndicator
-              size='small'
+              size="small"
               color={Colors.grey}
               style={{ position: "absolute", left: 0, right: 0, top: 40 }}
             />
@@ -53,7 +53,7 @@ const HorizontalItem = ({ item, navigation }) => {
           <CustomText style={styles.subText}>Xuất xứ {item.origin}</CustomText>
           <View style={styles.rateContainer}>
             <View style={styles.rate}>
-              <AntDesign name='star' color='#fed922' size={15} />
+              <AntDesign name="star" color="#fed922" size={15} />
               <CustomText style={styles.score}>4.5</CustomText>
             </View>
             <NumberFormat price={item.price} />

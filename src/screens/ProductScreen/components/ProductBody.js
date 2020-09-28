@@ -2,12 +2,12 @@ import React, { useRef } from "react";
 import {
   View,
   StyleSheet,
-  Animated,
   TouchableWithoutFeedback,
   Keyboard,
   SectionList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import Animated, { Value } from "react-native-reanimated";
 //Color
 import Colors from "../../../utils/Colors";
 import HorizontalItem from "./HorizontalItem";
@@ -17,6 +17,8 @@ import { Header } from "./Header";
 import PropTypes from "prop-types";
 
 ITEM_HEIGHT = 100;
+
+const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 
 export const ProductBody = ({
   navigation,
@@ -32,7 +34,7 @@ export const ProductBody = ({
   DATA.push({ title: "Vòng Chuối Ngọc", data: bracelets });
   DATA.push({ title: "Nhẫn Ruby", data: rings });
   DATA.push({ title: "Đá Quý", data: stones });
-  const scrollY = new Animated.Value(0);
+  const scrollY = new Value(0);
   const sectionListRef = useRef(null);
   // const scrollToSection = (index) => {
   //   sectionListRef.current.scrollToLocation({
@@ -58,22 +60,18 @@ export const ProductBody = ({
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <LinearGradient
-          colors={[Colors.lighter_green, "#7dd170", Colors.white]}
-        >
-          <Header
-            navigation={navigation}
-            searchFilterFunction={searchFilterFunction}
-            scrollY={scrollY}
-          />
-        </LinearGradient>
+        <Header
+          navigation={navigation}
+          searchFilterFunction={searchFilterFunction}
+          scrollY={scrollY}
+        />
       </TouchableWithoutFeedback>
       {productsFilter.length === 0 ? (
-        <CustomText style={{ textAlign: "center", marginTop: 10 }}>
+        <CustomText style={{ textAlign: "center", marginTop: 110 }}>
           Không tìm thấy sản phẩm
         </CustomText>
       ) : (
-        <SectionList
+        <AnimatedSectionList
           sections={DATA} // REQUIRED: SECTIONLIST DATA
           keyExtractor={(item) => item._id}
           ref={sectionListRef}
@@ -85,13 +83,14 @@ export const ProductBody = ({
           renderItem={({ item }) => (
             <HorizontalItem item={item} navigation={navigation} />
           )}
-          stickySectionHeadersEnabled={true}
+          stickySectionHeadersEnabled={false}
           scrollEventThrottle={1}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: false }
             // { listener: HandleScrollY, useNativeDriver: false }
           )}
+          contentContainerStyle={{ marginTop: 90, paddingBottom: 100 }}
         />
       )}
       {/* <View style={styles.tabBar}>
@@ -149,7 +148,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: "center",
     backgroundColor: Colors.white,
-    marginBottom: 5,
   },
   title: {
     fontSize: 16,

@@ -5996,13 +5996,6 @@ react-native-appearance@~0.3.3:
     invariant "^2.2.4"
     use-subscription "^1.0.0"
 
-react-native-expo-interactive-section-list@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/react-native-expo-interactive-section-list/-/react-native-expo-interactive-section-list-1.4.1.tgz#b005cee54271e4e1576d324be4197695e9511a0a"
-  integrity sha512-EH4mA8BrTGMAtzxVuNuFUq8dTYTpoV4rxAwFMuJ53uNN0Y/iq9jvbrLr/6CmNQ+IASDcyRJUhU2O+wx5p7ygtw==
-  dependencies:
-    react-native-section-list-get-item-layout "^2.2.3"
-
 react-native-flip-card@^3.4.1:
   version "3.5.6"
   resolved "https://registry.yarnpkg.com/react-native-flip-card/-/react-native-flip-card-3.5.6.tgz#de26f0285aa6f8ee10bb4b696c60c6fb43bb580f"
@@ -6111,11 +6104,6 @@ react-native-scrollable-tab-view@^1.0.0:
     create-react-class "^15.6.2"
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
-
-react-native-section-list-get-item-layout@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-section-list-get-item-layout/-/react-native-section-list-get-item-layout-2.2.3.tgz#152a8efdcb3847dbcbeb04cd2d0de4312d3d2fcb"
-  integrity sha512-fzCW5SiYP6qCZyDHebaElHonIFr8NFrZK9JDkxFLnpxMJih4d+HQ4rHyOs0Z4Gb/FjyCVbRH7RtEnjeQ0XffMg==
 
 react-native-snap-carousel@^3.9.1:
   version "3.9.1"

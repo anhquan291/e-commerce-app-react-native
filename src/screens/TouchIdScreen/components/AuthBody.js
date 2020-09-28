@@ -31,8 +31,12 @@ export const AuthBody = () => {
   };
   const getData = async () => {
     const resData = await SecureStore.getItemAsync(secretKey);
+    const data = await JSON.parse(resData);
     if (resData === null) {
       return;
+    } else if (data.email !== user.email) {
+      await SecureStore.deleteItemAsync(secretKey);
+      return setIsEnabled(false);
     }
     setIsEnabled(true);
   };
@@ -41,7 +45,7 @@ export const AuthBody = () => {
     checkDeviceForHardware();
     checkForFingerprints();
     getData();
-  }, []);
+  }, [user.id]);
   const checkDeviceForHardware = async () => {
     let compatible = await LocalAuthentication.hasHardwareAsync();
     setIsSupport(compatible);
