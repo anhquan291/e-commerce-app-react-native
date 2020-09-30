@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Linking } from "react-native";
-import { FAB } from "react-native-paper";
-import Colors from "../../../utils/Colors";
+import React, { useState } from 'react';
+import { Linking } from 'react-native';
+import { FAB } from 'react-native-paper';
+import Colors from '../../../utils/Colors';
 
 export const FloatButton = () => {
   const [state, setState] = useState({ open: false });
@@ -10,26 +10,26 @@ export const FloatButton = () => {
   return (
     <FAB.Group
       open={open}
-      icon={open ? "send" : "square-edit-outline"}
+      icon={open ? 'send' : 'square-edit-outline'}
       color='#fff'
       fabStyle={{
         backgroundColor: Colors.blue,
-        bottom: -10,
+        bottom: 5,
       }}
       actions={[
         {
-          icon: "phone",
-          onPress: () => Linking.openURL("tel:0968729194"),
+          icon: 'phone',
+          onPress: () => Linking.openURL('tel:0968729194'),
         },
         {
-          icon: "chat-processing",
-          onPress: () => Linking.openURL("https://zalo.me/0359688238"),
+          icon: 'chat-processing',
+          onPress: () => Linking.openURL('https://zalo.me/0359688238'),
         },
         {
-          icon: "facebook-messenger",
+          icon: 'facebook-messenger',
           onPress: () =>
             Linking.openURL(
-              "https://www.messenger.com/t/daquyankhangthinhvuong"
+              'https://www.messenger.com/t/daquyankhangthinhvuong',
             ),
         },
       ]}

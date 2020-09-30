@@ -6025,10 +6025,10 @@ react-native-modalize@^2.0.6:
   resolved "https://registry.yarnpkg.com/react-native-modalize/-/react-native-modalize-2.0.6.tgz#0a8662e77b1fb68d37baa6440cf64b0c0d718b71"
   integrity sha512-/JE9ZRVL9AdjspXBpQnGk+BRiYHnKW77ptXLhudwETQRW5uPR/a80ph4BRkV7DVGwadlf04ASgq63lTpOtAtiw==
 
-react-native-paper@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-4.0.1.tgz#13d2272757fb738113582e900787f365cfa77c74"
-  integrity sha512-C1kHZ5sS3QU2XdmdHnLAzp88T+FWtkOa+43wYjBClevsDvi72aRf6H9PTs8GS69E8tlNHym3kbVcENgnDPMqhQ==
+react-native-paper@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-4.2.0.tgz#534c0f9dbeecfd73d20f1f7b1ef3df32aa2ca4b0"
+  integrity sha512-+pM8olBygXP5cdUcPRC++BPb5DvdYPN2LJFIt2eXbT0GXs7kU7nG+hFRnsxu8awt6em6gcHVVw3ajvQGEl+CIg==
   dependencies:
     "@callstack/react-theme-provider" "^3.0.5"
     color "^3.1.2"

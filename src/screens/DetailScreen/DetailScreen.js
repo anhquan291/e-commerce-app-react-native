@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions, Animated } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Dimensions, Animated } from 'react-native';
 //Color
-import Colors from "../../utils/Colors";
+import Colors from '../../utils/Colors';
 //Redux
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 //Components
-import Snackbar from "../../components/Notification/Snackbar";
+import Snackbar from '../../components/Notification/Snackbar';
 import {
   Header,
   DetailBody,
   ActionButton,
   ModalComp,
   Comments,
-} from "./components";
-import { colorCheck } from "../../utils/Tools";
+} from './components';
+import { colorCheck } from '../../utils/Tools';
 
 export const DetailScreen = (props) => {
   const scrollY = new Animated.Value(0);
   const user = useSelector((state) => state.auth.user);
   const { item } = props.route.params;
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [color, setColor] = useState(Colors.lighter_green);
   //color
@@ -27,7 +27,7 @@ export const DetailScreen = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   //Favorite
   const FavoriteProducts = useSelector((state) =>
-    state.fav.favoriteList.some((product) => product._id === item._id)
+    state.fav.favoriteList.some((product) => product._id === item._id),
   );
   useEffect(() => {
     const checkColor = async () => {
@@ -50,7 +50,7 @@ export const DetailScreen = (props) => {
         scrollEventThrottle={1}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
+          { useNativeDriver: false },
         )}
       >
         <DetailBody item={item} color={color} />
@@ -77,5 +77,5 @@ export const DetailScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  container: { flex: 1, backgroundColor: '#fff', paddingBottom: 20 },
 });

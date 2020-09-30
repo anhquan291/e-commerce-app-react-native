@@ -205,8 +205,8 @@ export const TabScreen = () => {
         },
       })}
       barStyle={{
-        backgroundColor: Colors.white,
-        height: Platform.OS === 'ios' ? 65 : 50,
+        backgroundColor: Colors.light_grey,
+        height: 50,
         justifyContent: 'center',
       }}
       activeColor={Colors.lighter_green}

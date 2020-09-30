@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { AsyncStorage, YellowBox } from "react-native";
-import { useSelector } from "react-redux";
-import { NavigationContainer } from "@react-navigation/native";
-import { navigationRef } from "./RootNavigation";
-import { DrawerNavigator, IntroStackScreen } from "./StoneNavigator";
-import { useDispatch } from "react-redux";
-import { Logout } from "../reducers";
+import React, { useEffect, useState } from 'react';
+import { AsyncStorage, YellowBox } from 'react-native';
+import { useSelector } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './RootNavigation';
+import { DrawerNavigator, IntroStackScreen } from './StoneNavigator';
+import { useDispatch } from 'react-redux';
+import { Logout } from '../reducers';
 //Modalize
-import { Host } from "react-native-portalize";
+import { Host } from 'react-native-portalize';
 //Deep Link
-import { urlRedirect } from "../utils/Tools";
-import * as Linking from "expo-linking";
+import { urlRedirect } from '../utils/Tools';
+import * as Linking from 'expo-linking';
 
-YellowBox.ignoreWarnings(["Setting a timer"]);
+YellowBox.ignoreWarnings(['Setting a timer']);
 
 export const AppNavigator = () => {
   const [value, setValue] = useState(null);
@@ -21,30 +21,30 @@ export const AppNavigator = () => {
   useEffect(() => {
     // listen for new url events coming from Expo
     Linking.addEventListener(
-      "url",
+      'url',
       (event) => {
         urlRedirect(event.url);
       },
-      [urlRedirect]
+      [urlRedirect],
     );
     Linking.getInitialURL().then(urlRedirect);
     Linking.removeEventListener(
-      "url",
+      'url',
       (event) => {
         urlRedirect(event.url);
       },
-      [urlRedirect]
+      [urlRedirect],
     );
   }, [urlRedirect]);
 
   useEffect(() => {
     const isFirstTime = async () => {
-      const firstOpen = await AsyncStorage.getItem("isFirstTime");
+      const firstOpen = await AsyncStorage.getItem('isFirstTime');
       setValue(firstOpen);
     };
     isFirstTime();
     const autoLogout = async () => {
-      const getUser = await AsyncStorage.getItem("user");
+      const getUser = await AsyncStorage.getItem('user');
       if (getUser) {
         const user = await JSON.parse(getUser);
         if (user.data.expireTime - Date.now() < 0) {
@@ -57,7 +57,7 @@ export const AppNavigator = () => {
   }, []);
   useEffect(() => {
     const autoLogout = async () => {
-      const getUser = await AsyncStorage.getItem("user");
+      const getUser = await AsyncStorage.getItem('user');
       if (getUser) {
         const user = await JSON.parse(getUser);
         if (user.data.expireTime - Date.now() < 0) {

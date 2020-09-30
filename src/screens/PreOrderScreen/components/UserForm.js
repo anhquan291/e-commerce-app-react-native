@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import { Field, reduxForm } from "redux-form";
-import renderField from "./RenderField";
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Field, reduxForm } from 'redux-form';
+import renderField from './RenderField';
 //Colors
-import Colors from "../../../utils/Colors";
-import CustomText from "../../../components/UI/CustomText";
+import Colors from '../../../utils/Colors';
+import CustomText from '../../../components/UI/CustomText';
 //PropTypes check
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 //Validation
 const validate = (values) => {
   const errors = {};
   if (!values.name) {
-    errors.name = "Họ tên không được bỏ trống";
+    errors.name = 'Họ tên không được bỏ trống';
   } else if (values.name.length < 6) {
-    errors.name = "Họ tên phải nhiều hơn hoặc bằng 6 ký tự";
+    errors.name = 'Họ tên phải nhiều hơn hoặc bằng 6 ký tự';
   } else {
-    errors.name = "";
+    errors.name = '';
   }
   if (!values.phone) {
-    errors.phone = "Số điện thoại không được bỏ trống";
+    errors.phone = 'Số điện thoại không được bỏ trống';
   } else if (values.phone.length !== 10) {
-    errors.phone = "Số điện thoại phải 10 ký tự";
+    errors.phone = 'Số điện thoại phải 10 ký tự';
   } else {
-    errors.phone = "";
+    errors.phone = '';
   }
   if (!values.address) {
-    errors.address = "Địa chỉ không được bỏ trống";
+    errors.address = 'Địa chỉ không được bỏ trống';
   } else if (values.address.length < 6) {
-    errors.address = "Địa chỉ phải nhiều hơn hoặc bằng 6 ký tự";
+    errors.address = 'Địa chỉ phải nhiều hơn hoặc bằng 6 ký tự';
   } else {
-    errors.address = "";
+    errors.address = '';
   }
 
   return errors;
 };
 
 const User = ({ getReceiver, checkValidation }) => {
-  const [receiverName, setReceiverName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [receiverName, setReceiverName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
 
   useEffect(() => {
     getReceiver(receiverName, phone, address);
@@ -96,17 +96,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     color: Colors.text,
-    fontWeight: "500",
+    fontWeight: '500',
     marginVertical: 10,
     marginHorizontal: 10,
   },
   inputContainer: {
-    paddingTop: 20,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     paddingHorizontal: 10,
   },
 });
 export const UserForm = reduxForm({
-  form: "user", // a unique identifier for this form
+  form: 'user', // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(User);
