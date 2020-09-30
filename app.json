@@ -35,7 +35,8 @@
         "WRITE_EXTERNAL_STORAGE",
         "USE_BIOMETRIC",
         "USE_FINGERPRINT"
-      ]
+      ],
+      "softwareKeyboardLayoutMode": "pan"
     },
     "notification": { "icon": "./src/assets/icon.png" },
     "description": "E-commerce app contains all necessary features"

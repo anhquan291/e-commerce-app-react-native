@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,14 +6,14 @@ import {
   Platform,
   FlatList,
   AsyncStorage,
-} from "react-native";
+} from 'react-native';
 //Redux
-import { useSelector, useDispatch } from "react-redux";
-import { fetchProducts, fetchCart, fetchFavorite } from "../../reducers";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts } from '../../reducers';
 //Colors
-import Colors from "../../utils/Colors";
+import Colors from '../../utils/Colors';
 //Animation
-import Animated from "react-native-reanimated";
+import Animated from 'react-native-reanimated';
 //Components
 import {
   Carousel,
@@ -21,33 +21,29 @@ import {
   CategorySection,
   FloatButton,
   categories,
-} from "./components";
-import Skeleton from "../../components/Loaders/SkeletonLoading";
-import Snackbar from "../../components/Notification/Snackbar";
+} from './components';
+import Skeleton from '../../components/Loaders/SkeletonLoading';
+import Snackbar from '../../components/Notification/Snackbar';
 //FloatButton
-import { Portal, Provider } from "react-native-paper";
+import { Portal, Provider } from 'react-native-paper';
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 //height
-const { height } = Dimensions.get("window");
+const { height } = Dimensions.get('window');
 
 export const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   //Header Animation
   let scrollY = new Animated.Value(0);
-  const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.auth.user);
   const products = useSelector((state) => state.store.products);
+  const isLoading = useSelector((state) => state.store.isLoading);
   const notification = useSelector((state) => state.auth.notification);
   //fetch Api
   useEffect(() => {
-    setLoading(true);
     // AsyncStorage.removeItem("isFirstTime");
     const fetching = async () => {
       try {
         await dispatch(fetchProducts());
-        await dispatch(fetchCart());
-        await dispatch(fetchFavorite());
-        setLoading(false);
       } catch (err) {
         alert(err);
       }
@@ -55,7 +51,7 @@ export const HomeScreen = ({ navigation }) => {
     fetching();
   }, [user.id]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <View style={styles.center}>
         <Skeleton />
@@ -75,9 +71,9 @@ export const HomeScreen = ({ navigation }) => {
           <FloatButton />
         </Portal>
         <AnimatedFlatList
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           showsVerticalScrollIndicator={false}
-          bounces={Platform.OS === "android" ? true : false}
+          bounces={Platform.OS === 'android' ? true : false}
           scrollEventThrottle={1}
           onScroll={Animated.event(
             [
@@ -85,7 +81,7 @@ export const HomeScreen = ({ navigation }) => {
                 nativeEvent: { contentOffset: { y: scrollY } },
               },
             ],
-            { useNativeDriver: true }
+            { useNativeDriver: true },
           )}
           data={categories}
           keyExtractor={(item) => item.name}
@@ -111,7 +107,7 @@ export const HomeScreen = ({ navigation }) => {
             message={
               Object.keys(user).length === 0
                 ? notification
-                : notification + " " + user.name
+                : notification + ' ' + user.name
             }
           />
         )}
@@ -123,13 +119,13 @@ export const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   center: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.light_bg,
-    marginTop: Platform.OS === "android" ? 75 : height < 668 ? 75 : 100,
+    marginTop: Platform.OS === 'android' ? 75 : height < 668 ? 75 : 100,
   },
 });

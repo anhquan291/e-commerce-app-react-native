@@ -1,20 +1,19 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
   SectionList,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import Animated, { Value } from "react-native-reanimated";
+} from 'react-native';
+import Animated, { Value } from 'react-native-reanimated';
 //Color
-import Colors from "../../../utils/Colors";
-import HorizontalItem from "./HorizontalItem";
-import CustomText from "../../../components/UI/CustomText";
-import { Header } from "./Header";
+import Colors from '../../../utils/Colors';
+import HorizontalItem from './HorizontalItem';
+import CustomText from '../../../components/UI/CustomText';
+import { Header } from './Header';
 //PropTypes check
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 ITEM_HEIGHT = 100;
 
@@ -27,13 +26,13 @@ export const ProductBody = ({
 }) => {
   const DATA = [];
   const bracelets = productsFilter.filter(
-    (bracelet) => bracelet.type === "bracelet"
+    (bracelet) => bracelet.type === 'bracelet',
   );
-  const rings = productsFilter.filter((ring) => ring.type === "ring");
-  const stones = productsFilter.filter((stone) => stone.type === "stone");
-  DATA.push({ title: "Vòng Chuối Ngọc", data: bracelets });
-  DATA.push({ title: "Nhẫn Ruby", data: rings });
-  DATA.push({ title: "Đá Quý", data: stones });
+  const rings = productsFilter.filter((ring) => ring.type === 'ring');
+  const stones = productsFilter.filter((stone) => stone.type === 'stone');
+  DATA.push({ title: 'Vòng Chuối Ngọc', data: bracelets });
+  DATA.push({ title: 'Nhẫn Ruby', data: rings });
+  DATA.push({ title: 'Đá Quý', data: stones });
   const scrollY = new Value(0);
   const sectionListRef = useRef(null);
   // const scrollToSection = (index) => {
@@ -67,7 +66,7 @@ export const ProductBody = ({
         />
       </TouchableWithoutFeedback>
       {productsFilter.length === 0 ? (
-        <CustomText style={{ textAlign: "center", marginTop: 110 }}>
+        <CustomText style={{ textAlign: 'center', marginTop: 110 }}>
           Không tìm thấy sản phẩm
         </CustomText>
       ) : (
@@ -87,7 +86,7 @@ export const ProductBody = ({
           scrollEventThrottle={1}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: false }
+            { useNativeDriver: true },
             // { listener: HandleScrollY, useNativeDriver: false }
           )}
           contentContainerStyle={{ marginTop: 90, paddingBottom: 100 }}
@@ -140,18 +139,18 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     height: 40,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     height: 40,
     paddingHorizontal: 20,
-    justifyContent: "center",
+    justifyContent: 'center',
     backgroundColor: Colors.white,
   },
   title: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: '500',
     color: Colors.lighter_green,
   },
 });

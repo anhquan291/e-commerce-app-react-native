@@ -1,49 +1,50 @@
-import React from "react";
+import React from 'react';
+import { Platform } from 'react-native';
 import {
   createStackNavigator,
   CardStyleInterpolators,
   TransitionPresets,
-} from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-//Icon
-import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
-//Color
-import Colors from "../utils/Colors";
-//Custom Drawer
-import CustomDrawer from "./CustomDrawer";
-import CustomText from "../components/UI/CustomText";
-//Auth Screens
-import { AuthScreen } from "../screens/AuthScreen";
-import { IntroScreen } from "../screens/IntroScreen";
-import { SignupScreen } from "../screens/SignupScreen";
-import { LoginScreen } from "../screens/LoginScreen";
-import { TouchIdScreen } from "../screens/TouchIdScreen";
-//Reset Screens
-import { ForgetPwScreen } from "../screens/ForgetPasswordScreen";
-import { ResetPwScreen } from "../screens/ResetPwScreen";
-import { FinishResetPwScreen } from "../screens/FinishResetPwScreen";
-//Home Screens
-import { HomeScreen } from "../screens/HomeScreen";
-import { ContactScreen } from "../screens/ContactScreen";
+} from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+// Icon
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+// Color
+import Colors from '../utils/Colors';
+// Custom Drawer
+import CustomDrawer from './CustomDrawer';
+import CustomText from '../components/UI/CustomText';
+// Auth Screens
+import { AuthScreen } from '../screens/AuthScreen';
+import { IntroScreen } from '../screens/IntroScreen';
+import { SignupScreen } from '../screens/SignupScreen';
+import { LoginScreen } from '../screens/LoginScreen';
+import { TouchIdScreen } from '../screens/TouchIdScreen';
+// Reset Screens
+import { ForgetPwScreen } from '../screens/ForgetPasswordScreen';
+import { ResetPwScreen } from '../screens/ResetPwScreen';
+import { FinishResetPwScreen } from '../screens/FinishResetPwScreen';
+// Home Screens
+import { HomeScreen } from '../screens/HomeScreen';
+import { ContactScreen } from '../screens/ContactScreen';
 //Product Screens
-import { CartScreen } from "../screens/CartScreen";
-import { DetailScreen } from "../screens/DetailScreen";
-import { FavoriteScreen } from "../screens/FavoriteScreen";
-import { ProductScreen } from "../screens/ProductScreen";
-//Order Screens
-import { OrderScreen } from "../screens/OrderScreen";
-import { PreOrderScreen } from "../screens/PreOrderScreen";
-import { PaymentScreen } from "../screens/PaymentScreen";
-import { AddCreditCardScreen } from "../screens/PaymentScreen";
-import { FinishOrderScreen } from "../screens/FinishOrderScreen";
-//Profile Screens
-import { ProfileScreen } from "../screens/ProfileScreen";
-import { EditProfileScreen } from "../screens/ProfileScreen";
-//redux
-import { useSelector } from "react-redux";
+import { CartScreen } from '../screens/CartScreen';
+import { DetailScreen } from '../screens/DetailScreen';
+import { FavoriteScreen } from '../screens/FavoriteScreen';
+import { ProductScreen } from '../screens/ProductScreen';
+// Order Screens
+import { OrderScreen } from '../screens/OrderScreen';
+import { PreOrderScreen } from '../screens/PreOrderScreen';
+import { PaymentScreen } from '../screens/PaymentScreen';
+import { AddCreditCardScreen } from '../screens/PaymentScreen';
+import { FinishOrderScreen } from '../screens/FinishOrderScreen';
+// Profile Screens
+import { ProfileScreen } from '../screens/ProfileScreen';
+import { EditProfileScreen } from '../screens/ProfileScreen';
+// redux
+import { useSelector } from 'react-redux';
 
-//create Navigator
+// create Navigator
 
 const IntroStack = createStackNavigator();
 export const IntroStackScreen = () => (
@@ -67,41 +68,20 @@ export const LoginStackScreen = () => (
     }}
     mode='modal'
   >
-    <LoginStack.Screen
-      name='LoginScreen'
-      component={LoginScreen}
-      options={{ headerShown: false }}
-    />
-    <LoginStack.Screen
-      name='ForgetPwScreen'
-      component={ForgetPwScreen}
-      options={{ headerShown: false }}
-    />
+    <LoginStack.Screen name='LoginScreen' component={LoginScreen} />
+    <LoginStack.Screen name='ForgetPwScreen' component={ForgetPwScreen} />
   </LoginStack.Navigator>
 );
 
 const AuthStack = createStackNavigator();
 export const AuthStackScreen = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen
-      name='AuthScreen'
-      component={AuthScreen}
-      options={{ headerShown: false }}
-    />
-    <AuthStack.Screen
-      name='LoginScreen'
-      component={LoginStackScreen}
-      options={{ headerShown: false }}
-    />
-    <AuthStack.Screen
-      name='SignupScreen'
-      component={SignupScreen}
-      options={{ headerShown: false }}
-    />
+  <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+    <AuthStack.Screen name='AuthScreen' component={AuthScreen} />
+    <AuthStack.Screen name='LoginScreen' component={LoginStackScreen} />
+    <AuthStack.Screen name='SignupScreen' component={SignupScreen} />
     <AuthStack.Screen
       name='FinishResetScreen'
       component={FinishResetPwScreen}
-      options={{ headerShown: false }}
     />
   </AuthStack.Navigator>
 );
@@ -110,19 +90,12 @@ const FavoriteStack = createStackNavigator();
 export const FavoriteStackScreen = () => (
   <FavoriteStack.Navigator
     screenOptions={{
+      headerShown: false,
       cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
     }}
   >
-    <FavoriteStack.Screen
-      name='FavoriteScreen'
-      component={FavoriteScreen}
-      options={{ headerShown: false }}
-    />
-    <FavoriteStack.Screen
-      name='Detail'
-      component={DetailScreen}
-      options={{ headerShown: false }}
-    />
+    <FavoriteStack.Screen name='FavoriteScreen' component={FavoriteScreen} />
+    <FavoriteStack.Screen name='Detail' component={DetailScreen} />
   </FavoriteStack.Navigator>
 );
 
@@ -136,42 +109,24 @@ export const PaymentStackScreen = () => (
       ...TransitionPresets.ModalPresentationIOS,
     }}
   >
-    <PaymentStack.Screen
-      name='PaymentScreen'
-      component={PaymentScreen}
-      options={{ headerShown: false }}
-    />
+    <PaymentStack.Screen name='PaymentScreen' component={PaymentScreen} />
     <PaymentStack.Screen
       name='AddCreditCardScreen'
       component={AddCreditCardScreen}
-      options={{ headerShown: false }}
     />
   </PaymentStack.Navigator>
 );
 
 const CartStack = createStackNavigator();
 export const CartStackScreen = () => (
-  <CartStack.Navigator>
-    <CartStack.Screen
-      name='CartScreen'
-      component={CartScreen}
-      options={{ headerShown: false }}
-    />
+  <CartStack.Navigator screenOptions={{ headerShown: false }}>
+    <CartStack.Screen name='CartScreen' component={CartScreen} />
 
-    <CartStack.Screen
-      name='PreOrderScreen'
-      component={PreOrderScreen}
-      options={{ headerShown: false }}
-    />
-    <CartStack.Screen
-      name='Payment'
-      component={PaymentStackScreen}
-      options={{ headerShown: false }}
-    />
+    <CartStack.Screen name='PreOrderScreen' component={PreOrderScreen} />
+    <CartStack.Screen name='Payment' component={PaymentStackScreen} />
     <CartStack.Screen
       name='AddCreditCardScreen'
       component={AddCreditCardScreen}
-      options={{ headerShown: false }}
     />
   </CartStack.Navigator>
 );
@@ -180,24 +135,13 @@ const ProductStack = createStackNavigator();
 export const ProductStackScreen = () => (
   <ProductStack.Navigator
     screenOptions={{
+      headerShown: false,
       cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
     }}
   >
-    <ProductStack.Screen
-      name='ProductScreen'
-      component={ProductScreen}
-      options={{ headerShown: false }}
-    />
-    <ProductStack.Screen
-      name='DetailScreen'
-      component={DetailScreen}
-      options={{ headerShown: false }}
-    />
-    <ProductStack.Screen
-      name='CartScreen'
-      component={CartStackScreen}
-      options={{ headerShown: false }}
-    />
+    <ProductStack.Screen name='ProductScreen' component={ProductScreen} />
+    <ProductStack.Screen name='DetailScreen' component={DetailScreen} />
+    <ProductStack.Screen name='CartScreen' component={CartStackScreen} />
   </ProductStack.Navigator>
 );
 
@@ -213,16 +157,8 @@ export const ProfileStackScreen = () => (
     }}
     mode='modal'
   >
-    <ProfileStack.Screen
-      name='Profile'
-      component={ProfileScreen}
-      options={{ headerShown: false }}
-    />
-    <ProfileStack.Screen
-      name='ProfileEdit'
-      component={EditProfileScreen}
-      options={{ headerShown: false }}
-    />
+    <ProfileStack.Screen name='Profile' component={ProfileScreen} />
+    <ProfileStack.Screen name='ProfileEdit' component={EditProfileScreen} />
   </ProfileStack.Navigator>
 );
 
@@ -230,6 +166,7 @@ const HomeStack = createStackNavigator();
 export const HomeStackScreen = () => (
   <HomeStack.Navigator
     screenOptions={{
+      headerShown: false,
       cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
     }}
   >
@@ -237,38 +174,17 @@ export const HomeStackScreen = () => (
       name='Home'
       component={HomeScreen}
       //animationEnabled: false , nằm trong option
-      options={{ headerShown: false }}
     />
-    <HomeStack.Screen
-      name='Detail'
-      component={DetailScreen}
-      options={{ headerShown: false }}
-    />
-    <HomeStack.Screen
-      name='Cart'
-      component={CartStackScreen}
-      options={{ headerShown: false }}
-    />
-    <HomeStack.Screen
-      name='Product'
-      component={ProductStackScreen}
-      options={{ headerShown: false }}
-    />
-    <HomeStack.Screen
-      name='FinishOrder'
-      component={FinishOrderScreen}
-      options={{ headerShown: false }}
-    />
-    <HomeStack.Screen
-      name='ResetPw'
-      component={ResetPwScreen}
-      options={{ headerShown: false }}
-    />
+    <HomeStack.Screen name='Detail' component={DetailScreen} />
+    <HomeStack.Screen name='Cart' component={CartStackScreen} />
+    <HomeStack.Screen name='Product' component={ProductStackScreen} />
+    <HomeStack.Screen name='FinishOrder' component={FinishOrderScreen} />
+    <HomeStack.Screen name='ResetPw' component={ResetPwScreen} />
   </HomeStack.Navigator>
 );
 
 //Tab
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 export const TabScreen = () => {
   const carts = useSelector((state) => state.cart.cartItems);
@@ -278,45 +194,43 @@ export const TabScreen = () => {
         tabBarIcon: ({ focused }) => {
           let iconName;
           const color = focused ? Colors.lighter_green : Colors.grey;
-          if (route.name === "HomeTab") {
-            iconName = "home";
-          } else if (route.name === "Favorite") {
-            iconName = "hearto";
-          } else if (route.name === "Cart") {
-            iconName = "shoppingcart";
+          if (route.name === 'HomeTab') {
+            iconName = 'home';
+          } else if (route.name === 'Favorite') {
+            iconName = 'hearto';
+          } else if (route.name === 'Cart') {
+            iconName = 'shoppingcart';
           }
           return <AntDesign name={iconName} size={23} color={color} />;
         },
       })}
-      tabBarOptions={{
-        activeTintColor: Colors.lighter_green,
-        inactiveTintColor: Colors.grey,
-        style: {
-          // borderTopLeftRadius: 15,
-          // borderTopRightRadius: 15,
-          // position: "absolute",
-        },
+      barStyle={{
+        backgroundColor: Colors.white,
+        height: Platform.OS === 'ios' ? 65 : 50,
+        justifyContent: 'center',
       }}
+      activeColor={Colors.lighter_green}
+      inactiveColor={Colors.grey}
     >
       <Tab.Screen
         name='HomeTab'
         component={HomeStackScreen}
         options={{
-          tabBarLabel: "Trang chủ",
+          tabBarLabel: 'Trang chủ',
         }}
       />
       <Tab.Screen
         name='Favorite'
         component={FavoriteStackScreen}
         options={() => ({
-          tabBarLabel: "Yêu thích",
+          tabBarLabel: 'Yêu thích',
         })}
       />
       <Tab.Screen
         name='Cart'
         component={CartStackScreen}
         options={() => ({
-          tabBarLabel: "Giỏ hàng",
+          tabBarLabel: 'Giỏ hàng',
           tabBarBadge: carts.items.length === 0 ? null : carts.items.length,
         })}
       />
@@ -330,22 +244,22 @@ export const DrawerNavigator = () => {
   const user = useSelector((state) => state.auth.user);
   const drawers = [
     {
-      name: "HomeTab",
+      name: 'HomeTab',
       screen: TabScreen,
-      label: "Trang Chủ",
-      icon: "home-outline",
+      label: 'Trang Chủ',
+      icon: 'home-outline',
     },
     {
-      name: "Order",
+      name: 'Order',
       screen: OrderScreen,
-      label: "Đơn Hàng",
-      icon: "receipt",
+      label: 'Đơn Hàng',
+      icon: 'receipt',
     },
     {
-      name: "Contact",
+      name: 'Contact',
       screen: ContactScreen,
-      label: "Liên Hệ",
-      icon: "contacts",
+      label: 'Liên Hệ',
+      icon: 'contacts',
     },
   ];
 
@@ -367,9 +281,9 @@ export const DrawerNavigator = () => {
               <CustomText
                 style={{
                   fontSize: 14,
-                  fontWeight: "500",
+                  fontWeight: '500',
                   color: focused ? Colors.lighter_green : Colors.grey,
-                  fontFamily: "Roboto-Medium",
+                  fontFamily: 'Roboto-Medium',
                 }}
               >
                 {label}
@@ -395,9 +309,9 @@ export const DrawerNavigator = () => {
               <CustomText
                 style={{
                   fontSize: 14,
-                  fontWeight: "500",
+                  fontWeight: '500',
                   color: focused ? Colors.lighter_green : Colors.grey,
-                  fontFamily: "Roboto-Medium",
+                  fontFamily: 'Roboto-Medium',
                 }}
               >
                 Đăng nhập
@@ -422,9 +336,9 @@ export const DrawerNavigator = () => {
                 <CustomText
                   style={{
                     fontSize: 14,
-                    fontWeight: "500",
+                    fontWeight: '500',
                     color: focused ? Colors.lighter_green : Colors.grey,
-                    fontFamily: "Roboto-Medium",
+                    fontFamily: 'Roboto-Medium',
                   }}
                 >
                   Touch/Face ID
@@ -447,9 +361,9 @@ export const DrawerNavigator = () => {
                 <CustomText
                   style={{
                     fontSize: 14,
-                    fontWeight: "500",
+                    fontWeight: '500',
                     color: focused ? Colors.lighter_green : Colors.grey,
-                    fontFamily: "Roboto-Medium",
+                    fontFamily: 'Roboto-Medium',
                   }}
                 >
                   Thông Tin Cá Nhân
