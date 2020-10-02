@@ -14,7 +14,7 @@ export const FloatButton = () => {
       color='#fff'
       fabStyle={{
         backgroundColor: Colors.blue,
-        bottom: 5,
+        bottom: 10,
       }}
       actions={[
         {

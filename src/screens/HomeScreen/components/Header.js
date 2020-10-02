@@ -6,11 +6,8 @@ import {
   Dimensions,
   StyleSheet,
   View,
-  TextInput,
   Text,
   Image,
-  TouchableHighlight,
-  TouchableOpacity,
   FlatList,
   Platform,
   StatusBar,
@@ -22,6 +19,7 @@ import Colors from '../../../utils/Colors';
 //Search Item component
 import SearchItem from './SearchItem';
 import Animated, { Easing } from 'react-native-reanimated';
+import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 const { Value, timing } = Animated;
 // Calculate window size
 const { width, height } = Dimensions.get('window');
@@ -122,12 +120,16 @@ export class Header extends React.Component {
   render() {
     const scrollY = this.props.scrollPoint;
     const headerPlatform = 50;
-    const _diff_clamp_scroll_y = Animated.diffClamp(scrollY, 0, headerPlatform);
-    const _header_height = Animated.interpolate(_diff_clamp_scroll_y, {
-      inputRange: [0, headerPlatform],
-      outputRange: [headerPlatform, 0],
-      extrapolate: 'clamp',
+    const clampedScrollY = scrollY.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1],
+      extrapolateLeft: 'clamp',
     });
+    const _diff_clamp_scroll_y = Animated.diffClamp(
+      clampedScrollY,
+      0,
+      headerPlatform,
+    );
     const _header_translate_y = Animated.interpolate(_diff_clamp_scroll_y, {
       inputRange: [0, headerPlatform],
       outputRange: [0, -headerPlatform],
@@ -148,13 +150,12 @@ export class Header extends React.Component {
             style={[
               styles.header,
               {
-                height: Platform.OS === 'ios' ? _header_height : 50,
                 transform: [
                   {
-                    translateY: Platform.OS === 'ios' ? _header_translate_y : 0,
+                    translateY: _header_translate_y,
                   },
                 ],
-                opacity: Platform.OS === 'ios' ? _header_opacity : 1,
+                opacity: _header_opacity,
               },
             ]}
           >
@@ -177,14 +178,14 @@ export class Header extends React.Component {
                   }}
                 />
               </View>
-              <TouchableHighlight
+              <TouchableOpacity
                 activeOpacity={1}
                 underlayColor={'#ccd0d5'}
                 onPress={this._onFocus}
                 style={styles.search_icon_box}
               >
-                <Ionicons name='ios-search' size={20} color='#fff' />
-              </TouchableHighlight>
+                <Ionicons name='ios-search' size={20} color={Colors.white} />
+              </TouchableOpacity>
               <Animated.View
                 style={[
                   styles.input_box,
@@ -192,7 +193,7 @@ export class Header extends React.Component {
                 ]}
               >
                 <Animated.View style={{ opacity: this._back_button_opacity }}>
-                  <TouchableHighlight
+                  <TouchableOpacity
                     activeOpacity={1}
                     underlayColor={'#ccd0d5'}
                     onPress={this._onBlur}
@@ -203,7 +204,7 @@ export class Header extends React.Component {
                       size={25}
                       color={Colors.light_green}
                     />
-                  </TouchableHighlight>
+                  </TouchableOpacity>
                 </Animated.View>
                 <TextInput
                   ref='input'
@@ -276,10 +277,20 @@ export class Header extends React.Component {
 const styles = StyleSheet.create({
   header_safe_area: {
     zIndex: 1000,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.light_grey,
+  },
+  header: {
+    position: 'absolute',
+    backgroundColor: Colors.white,
+    width,
+    height: 50,
+    top:
+      Platform.OS === 'android'
+        ? StatusBar.currentHeight
+        : height > 736
+        ? 40
+        : 20,
   },
   header_inner: {
     flex: 1,
@@ -287,7 +298,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'relative',
     paddingHorizontal: 15,
   },
   search_icon_box: {
@@ -296,7 +306,7 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     backgroundColor: Colors.lighter_green,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: Colors.white,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -309,7 +319,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     width: width,
   },
   back_icon_box: {
@@ -334,16 +344,16 @@ const styles = StyleSheet.create({
     height: height,
     position: 'absolute',
     left: 0,
-    bottom: 0,
     zIndex: 999,
   },
   content_safe_area: {
     flex: 1,
-    paddingTop: 120,
-    backgroundColor: '#fff',
+    paddingTop: Platform.OS === 'android' ? 80 : 40,
+    paddingBottom: 80,
+    backgroundColor: Colors.white,
   },
   content_inner: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     borderTopWidth: 1,
     borderTopColor: Colors.light_grey,
   },

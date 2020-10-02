@@ -1,17 +1,17 @@
-import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import React from 'react';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   PlaceholderContainer,
   Placeholder,
-} from "react-native-loading-placeholder";
+} from 'react-native-loading-placeholder';
 
-const { height } = Dimensions.get("window");
+const { height, width } = Dimensions.get('window');
 
 const Gradient = () => {
   return (
     <LinearGradient
-      colors={["#eeeeee", "#dddddd", "#eeeeee"]}
+      colors={['#eeeeee', '#dddddd', '#eeeeee']}
       start={{ x: 1.0, y: 0.0 }}
       end={{ x: 0.0, y: 0.0 }}
       style={{
@@ -33,7 +33,7 @@ const Skeleton = () => {
         <Placeholder
           style={{
             ...styles.placeholder,
-            width: "100%",
+            width: '100%',
             height: 130,
           }}
         />
@@ -42,24 +42,24 @@ const Skeleton = () => {
         <Placeholder
           style={{
             ...styles.placeholder,
-            width: "60%",
+            width: '60%',
             height: 30,
           }}
         />
       </View>
       <View style={styles.content}>
-        <View style={{ width: "49%" }}>
+        <View style={{ width: '49%' }}>
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "95%",
+              width: '95%',
               height: 95,
             }}
           />
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "80%",
+              width: '80%',
               height: 20,
               marginTop: 5,
             }}
@@ -67,7 +67,7 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "30%",
+              width: '30%',
               height: 20,
               marginTop: 5,
             }}
@@ -75,24 +75,24 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "95%",
+              width: '95%',
               height: 40,
               marginTop: 5,
             }}
           />
         </View>
-        <View style={{ width: "49%" }}>
+        <View style={{ width: '49%' }}>
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "95%",
+              width: '95%',
               height: 95,
             }}
           />
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "80%",
+              width: '80%',
               height: 20,
               marginTop: 5,
             }}
@@ -100,7 +100,7 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "30%",
+              width: '30%',
               height: 20,
               marginTop: 5,
             }}
@@ -108,24 +108,24 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "95%",
+              width: '95%',
               height: 40,
               marginTop: 5,
             }}
           />
         </View>
-        <View style={{ width: "49%", marginTop: 15 }}>
+        <View style={{ width: '49%', marginTop: 15 }}>
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "95%",
+              width: '95%',
               height: 95,
             }}
           />
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "80%",
+              width: '80%',
               height: 20,
               marginTop: 5,
             }}
@@ -133,7 +133,7 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "30%",
+              width: '30%',
               height: 20,
               marginTop: 5,
             }}
@@ -141,24 +141,24 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "95%",
+              width: '95%',
               height: 40,
               marginTop: 5,
             }}
           />
         </View>
-        <View style={{ width: "49%", marginTop: 15 }}>
+        <View style={{ width: '49%', marginTop: 15 }}>
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "95%",
+              width: '95%',
               height: 95,
             }}
           />
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "80%",
+              width: '80%',
               height: 20,
               marginTop: 5,
             }}
@@ -166,7 +166,7 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "30%",
+              width: '30%',
               height: 20,
               marginTop: 5,
             }}
@@ -174,7 +174,7 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "95%",
+              width: '95%',
               height: 40,
               marginTop: 5,
             }}
@@ -188,7 +188,7 @@ const Skeleton = () => {
           <Placeholder
             style={{
               ...styles.placeholder,
-              width: "100%",
+              width: '100%',
               height: 50,
             }}
           />
@@ -202,19 +202,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     zIndex: 10,
-    width: "100%",
-    backgroundColor: "#fff",
-    height: "100%",
+    position: 'absolute',
+    width,
+    backgroundColor: '#fff',
+    height,
+    marginTop: 80,
   },
-
   placeholder: {
-    backgroundColor: "#eeeeee",
+    backgroundColor: '#eeeeee',
     borderRadius: 5,
   },
   banner: {
     marginTop: 10,
-    width: "100%",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
     paddingHorizontal: 10,
   },
   text: {
@@ -223,10 +224,10 @@ const styles = StyleSheet.create({
   },
   content: {
     marginTop: 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: 10,
-    justifyContent: "space-between",
-    flexWrap: "wrap",
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
 });
 

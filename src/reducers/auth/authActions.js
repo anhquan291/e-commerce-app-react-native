@@ -1,20 +1,20 @@
-import { AsyncStorage } from "react-native";
-import { API_URL } from "../../utils/Config";
-import { timeoutPromise } from "../../utils/Tools";
+import { AsyncStorage } from 'react-native';
+import { API_URL } from '../../utils/Config';
+import { timeoutPromise } from '../../utils/Tools';
 
-export const AUTH_LOADING = "AUTH_LOADING";
-export const SIGN_UP = "SIGN_UP";
-export const LOGIN = "LOGIN";
-export const AUTH_FAILURE = "AUTH_FAILURE";
-export const AUTH_SUCCESS = "AUTH_SUCCESS";
-export const LOGOUT = "LOGOUT";
-export const EDIT_INFO = "EDIT_INFO ";
-export const UPLOAD_PROFILEPIC = "UPLOAD_PROFILEPIC";
-export const FORGET_PASSWORD = "FORGET_PASSWORD";
-export const RESET_PASSWORD = "RESET_PASSWORD";
-export const RESET_ERROR = "RESET_ERROR";
+export const AUTH_LOADING = 'AUTH_LOADING';
+export const SIGN_UP = 'SIGN_UP';
+export const LOGIN = 'LOGIN';
+export const AUTH_FAILURE = 'AUTH_FAILURE';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const LOGOUT = 'LOGOUT';
+export const EDIT_INFO = 'EDIT_INFO ';
+export const UPLOAD_PROFILEPIC = 'UPLOAD_PROFILEPIC';
+export const FORGET_PASSWORD = 'FORGET_PASSWORD';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const RESET_ERROR = 'RESET_ERROR';
 
-import AskingExpoToken from "../../components/Notification/AskingNotiPermission";
+import AskingExpoToken from '../../components/Notification/AskingNotiPermission';
 
 //Create dataStorage
 const saveDataToStorage = (name, data) => {
@@ -22,7 +22,7 @@ const saveDataToStorage = (name, data) => {
     name,
     JSON.stringify({
       data,
-    })
+    }),
   );
 };
 
@@ -35,16 +35,16 @@ export const SignUp = (name, email, password) => {
       const response = await timeoutPromise(
         fetch(`${API_URL}/user/register`, {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             name,
             email,
             password,
           }),
-        })
+        }),
       );
       if (!response.ok) {
         const errorResData = await response.json();
@@ -73,16 +73,16 @@ export const Login = (email, password) => {
       const response = await timeoutPromise(
         fetch(`${API_URL}/user/login`, {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             email,
             password,
             pushTokens: [pushToken],
           }),
-        })
+        }),
       );
       if (!response.ok) {
         const errorResData = await response.json();
@@ -92,7 +92,7 @@ export const Login = (email, password) => {
         throw new Error(errorResData.err);
       }
       const resData = await response.json();
-      saveDataToStorage("user", resData);
+      saveDataToStorage('user', resData);
       dispatch(setLogoutTimer(60 * 60 * 1000));
       dispatch({
         type: LOGIN,
@@ -114,16 +114,16 @@ export const EditInfo = (phone, address) => {
       const response = await timeoutPromise(
         fetch(`${API_URL}/user/${user.userid}`, {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "auth-token": user.token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': user.token,
           },
-          method: "PATCH",
+          method: 'PATCH',
           body: JSON.stringify({
             phone,
             address,
           }),
-        })
+        }),
       );
       if (!response.ok) {
         const errorResData = await response.json();
@@ -152,7 +152,7 @@ export const UploadProfilePic = (imageUri, filename, type) => {
     const user = getState().auth.user;
     let formData = new FormData();
     // Infer the type of the image
-    formData.append("profilePic", {
+    formData.append('profilePic', {
       uri: imageUri,
       name: filename,
       type,
@@ -161,13 +161,13 @@ export const UploadProfilePic = (imageUri, filename, type) => {
       const response = await timeoutPromise(
         fetch(`${API_URL}/user/photo/${user.userid}`, {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "multipart/form-data",
-            "auth-token": user.token,
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'auth-token': user.token,
           },
-          method: "PATCH",
+          method: 'PATCH',
           body: formData,
-        })
+        }),
       );
       if (!response.ok) {
         const errorResData = await response.json();
@@ -196,14 +196,14 @@ export const ForgetPassword = (email) => {
       const response = await timeoutPromise(
         fetch(`${API_URL}/user/reset_pw`, {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             email,
           }),
-        })
+        }),
       );
       if (!response.ok) {
         const errorResData = await response.json();
@@ -231,15 +231,15 @@ export const ResetPassword = (password, url) => {
           `${API_URL}/user/receive_new_password/${url.userid}/${url.token}`,
           {
             headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
             },
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify({
               password,
             }),
-          }
-        )
+          },
+        ),
       );
       if (!response.ok) {
         const errorResData = await response.json();
@@ -261,7 +261,7 @@ export const ResetPassword = (password, url) => {
 export const Logout = () => {
   return (dispatch) => {
     clearLogoutTimer(); //clear setTimeout when logout
-    AsyncStorage.removeItem("user");
+    AsyncStorage.removeItem('user');
     dispatch({
       type: LOGOUT,
       user: {},
@@ -280,7 +280,7 @@ const setLogoutTimer = (expirationTime) => {
   return (dispatch) => {
     timer = setTimeout(async () => {
       await dispatch(Logout());
-      alert("Logout section expired");
+      alert('Logout section expired');
     }, expirationTime);
   };
 };

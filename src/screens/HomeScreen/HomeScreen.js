@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -49,20 +49,12 @@ export const HomeScreen = ({ navigation }) => {
       }
     };
     fetching();
-  }, [user.id]);
-
-  // if () {
-  //   return (
-
-  //   );
-  // }
+  }, [user.userid]);
 
   return (
     <Provider>
       {isLoading ? (
-        <View style={styles.center}>
-          <Skeleton />
-        </View>
+        <Skeleton />
       ) : (
         <View style={styles.container}>
           <Header
@@ -74,9 +66,13 @@ export const HomeScreen = ({ navigation }) => {
             <FloatButton />
           </Portal>
           <AnimatedFlatList
-            style={{ width: '100%' }}
+            contentContainerStyle={styles.list}
             showsVerticalScrollIndicator={false}
-            bounces={Platform.OS === 'android' ? true : false}
+            ListHeaderComponent={() => (
+              <View style={styles.banner}>
+                <Carousel />
+              </View>
+            )}
             scrollEventThrottle={1}
             onScroll={Animated.event(
               [
@@ -95,11 +91,6 @@ export const HomeScreen = ({ navigation }) => {
                 data={products}
                 navigation={navigation}
               />
-            )}
-            ListHeaderComponent={() => (
-              <View style={styles.banner}>
-                <Carousel />
-              </View>
             )}
           />
           {Object.keys(notification).length === 0 ? (
@@ -123,13 +114,11 @@ export const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
   },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.light_bg,
-    marginTop: Platform.OS === 'android' ? 75 : height < 668 ? 75 : 100,
+  list: {
+    width: '100%',
+    marginTop: 50,
+    paddingBottom: 20,
   },
 });

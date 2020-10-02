@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    bottom: 60,
+    top: 80,
     zIndex: 1000,
   },
   snackbar: {
