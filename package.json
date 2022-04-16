@@ -57,7 +57,6 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-form": "^8.3.6",
     "redux-thunk": "^2.3.0",
-    "sharp-cli": "^1.14.1",
     "yarn": "^1.22.5"
   },
   "devDependencies": {

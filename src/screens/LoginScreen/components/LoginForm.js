@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Field, reduxForm } from "redux-form";
+import React, { useState, useRef, useEffect } from 'react';
+import { Field, reduxForm } from 'redux-form';
 import {
   StyleSheet,
   View,
@@ -13,37 +13,37 @@ import {
   Image,
   Alert,
   Dimensions,
-} from "react-native";
+} from 'react-native';
 //Colors
-import Colors from "../../../utils/Colors";
-import CustomText from "../../../components/UI/CustomText";
-import { Ionicons } from "@expo/vector-icons";
+import Colors from '../../../utils/Colors';
+import CustomText from '../../../components/UI/CustomText';
+import { Ionicons } from '@expo/vector-icons';
 //Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 //Action
-import { Login as LoginAction } from "../../../reducers";
+import { Login as LoginAction } from '../../../reducers';
 //PropTypes check
-import PropTypes from "prop-types";
-import renderField from "./RenderField";
+import PropTypes from 'prop-types';
+import renderField from './RenderField';
 //Authentiation Touch ID Face ID
-import * as LocalAuthentication from "expo-local-authentication";
-import * as SecureStore from "expo-secure-store";
-import { secretKey } from "../../../utils/Config";
+import * as LocalAuthentication from 'expo-local-authentication';
+import * as SecureStore from 'expo-secure-store';
+import { secretKey } from '../../../utils/Config';
 
-const { height } = Dimensions.get("window");
+const { height } = Dimensions.get('window');
 
 //Validation
 const validate = (values) => {
   const errors = {};
   if (!values.email) {
-    errors.email = "Email không được bỏ trống";
+    errors.email = 'Email không được bỏ trống';
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Email không hơp lệ";
+    errors.email = 'Email không hơp lệ';
   }
   if (!values.password) {
-    errors.password = "Mật khẩu không được bỏ trống";
+    errors.password = 'Mật khẩu không được bỏ trống';
   } else if (values.password.length < 6) {
-    errors.password = "Mật khẩu phải nhiều hơn hoặc bằng 6 ký tự";
+    errors.password = 'Mật khẩu phải nhiều hơn hoặc bằng 6 ký tự';
   }
   return errors;
 };
@@ -53,14 +53,14 @@ const Login = (props) => {
   const { handleSubmit } = props;
   const [showPass, setShowPass] = useState(false);
   const auth = useSelector((state) => state.auth);
-  const unmounted = useRef(false);
+  const [loading, setLoading] = useState(false);
   const scanFingerprintOrFaceId = async () => {
     const resData = await SecureStore.getItemAsync(secretKey);
     if (resData === null) {
-      return alert("You have to enable LOGIN by touch/face ID");
+      return alert('You have to enable LOGIN by touch/face ID');
     }
     const result = await LocalAuthentication.authenticateAsync({
-      promptMessage: "Authenticating",
+      promptMessage: 'Authenticating',
     });
     if (result.success) {
       const data = await JSON.parse(resData);
@@ -70,46 +70,41 @@ const Login = (props) => {
 
   const showAndroidAlert = () => {
     Alert.alert(
-      "Fingerprint Scan",
-      "Place your finger over the touch sensor and press scan.",
+      'Fingerprint Scan',
+      'Place your finger over the touch sensor and press scan.',
       [
         {
-          text: "Scan",
+          text: 'Scan',
           onPress: () => {
             scanFingerprintOrFaceId();
           },
         },
         {
-          text: "Cancel",
-          onPress: () => console.log("Cancel"),
-          style: "cancel",
+          text: 'Cancel',
+          onPress: () => console.log('Cancel'),
+          style: 'cancel',
         },
-      ]
+      ],
     );
   };
-  useEffect(() => {
-    return () => {
-      unmounted.current = true;
-    };
-  }, []);
 
   const submit = async (values) => {
     try {
+      setLoading(true);
       await dispatch(LoginAction(values.email, values.password));
-      props.navigation.navigate("Home");
+      props.navigation.navigate('Home');
     } catch (err) {
+      setLoading(false);
       alert(err);
     }
   };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "position" : "height"}
-    >
+    <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'position' : 'height'}>
       <TouchableOpacity
         onPress={() => {
           props.navigation.goBack();
         }}
-        style={{ position: "absolute", top: 50, left: 20 }}
+        style={{ position: 'absolute', top: 50, left: 20 }}
       >
         <Ionicons name="ios-arrow-back" size={35} color={Colors.light_green} />
       </TouchableOpacity>
@@ -123,7 +118,7 @@ const Login = (props) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
             style={{
-              flexDirection: "column",
+              flexDirection: 'column',
               marginHorizontal: 10,
               zIndex: -1,
             }}
@@ -151,13 +146,13 @@ const Login = (props) => {
             <View style={styles.group}>
               <TouchableOpacity
                 onPress={() => {
-                  props.navigation.navigate("ForgetPwScreen");
+                  props.navigation.navigate('ForgetPwScreen');
                 }}
               >
                 <CustomText
                   style={{
                     ...styles.textSignSmall,
-                    fontFamily: "Roboto-Medium",
+                    fontFamily: 'Roboto-Medium',
                   }}
                 >
                   Forget Password ?
@@ -166,10 +161,10 @@ const Login = (props) => {
             </View>
             <TouchableOpacity
               onPress={handleSubmit(submit)}
-              style={{ marginVertical: 10, alignItems: "center" }}
+              style={{ marginVertical: 10, alignItems: 'center' }}
             >
               <View style={styles.signIn}>
-                {auth.isLoading ? (
+                {loading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
                   <CustomText style={styles.textSign}>Đăng nhập</CustomText>
@@ -185,13 +180,11 @@ const Login = (props) => {
           <View style={styles.circleImage}>
             <TouchableOpacity
               onPress={
-                Platform.OS === "android"
-                  ? showAndroidAlert
-                  : scanFingerprintOrFaceId
+                Platform.OS === 'android' ? showAndroidAlert : scanFingerprintOrFaceId
               }
             >
               <Image
-                source={require("../../../assets/Images/faceid.png")}
+                source={require('../../../assets/Images/faceid.png')}
                 style={styles.faceid}
               />
             </TouchableOpacity>
@@ -208,8 +201,8 @@ Login.propTypes = {
 };
 const styles = StyleSheet.create({
   group: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     marginVertical: 10,
   },
   header: {
@@ -221,54 +214,54 @@ const styles = StyleSheet.create({
     color: Colors.light_green,
     fontSize: 40,
     letterSpacing: 5,
-    fontFamily: "Roboto-Bold",
-    textAlign: "center",
+    fontFamily: 'Roboto-Bold',
+    textAlign: 'center',
   },
   text: {
-    color: "#fff",
+    color: '#fff',
   },
   signIn: {
-    width: "100%",
+    width: '100%',
     height: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5,
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: Colors.lighter_green,
   },
   textSign: {
     fontSize: 15,
-    color: "#fff",
-    fontFamily: "Roboto-Medium",
+    color: '#fff',
+    fontFamily: 'Roboto-Medium',
   },
   textSignSmall: {
     color: Colors.lighter_green,
-    textAlign: "center",
+    textAlign: 'center',
   },
   center: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   circleImage: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 2,
     padding: 20,
     borderRadius: 55,
-    borderStyle: "dashed",
+    borderStyle: 'dashed',
     borderColor: Colors.grey,
   },
   faceid: {
-    resizeMode: "contain",
+    resizeMode: 'contain',
     height: 70,
     width: 70,
   },
   loginOpt: {
     color: Colors.lighter_green,
-    fontFamily: "Roboto-Medium",
+    fontFamily: 'Roboto-Medium',
     marginBottom: 10,
   },
 });
 export const LoginForm = reduxForm({
-  form: "login", // a unique identifier for this form
+  form: 'login', // a unique identifier for this form
   validate, // <--- validation function given to redux-form
 })(Login);
