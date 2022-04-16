@@ -50,7 +50,7 @@ const IntroStack = createStackNavigator();
 export const IntroStackScreen = () => (
   <IntroStack.Navigator>
     <IntroStack.Screen
-      name='IntroScreen'
+      name="IntroScreen"
       component={IntroScreen}
       options={{ headerShown: false }}
     />
@@ -66,23 +66,20 @@ export const LoginStackScreen = () => (
       cardOverlayEnabled: true,
       ...TransitionPresets.ModalPresentationIOS,
     }}
-    mode='modal'
+    mode="modal"
   >
-    <LoginStack.Screen name='LoginScreen' component={LoginScreen} />
-    <LoginStack.Screen name='ForgetPwScreen' component={ForgetPwScreen} />
+    <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
+    <LoginStack.Screen name="ForgetPwScreen" component={ForgetPwScreen} />
   </LoginStack.Navigator>
 );
 
 const AuthStack = createStackNavigator();
 export const AuthStackScreen = () => (
   <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-    <AuthStack.Screen name='AuthScreen' component={AuthScreen} />
-    <AuthStack.Screen name='LoginScreen' component={LoginStackScreen} />
-    <AuthStack.Screen name='SignupScreen' component={SignupScreen} />
-    <AuthStack.Screen
-      name='FinishResetScreen'
-      component={FinishResetPwScreen}
-    />
+    <AuthStack.Screen name="AuthScreen" component={AuthScreen} />
+    <AuthStack.Screen name="LoginScreen" component={LoginStackScreen} />
+    <AuthStack.Screen name="SignupScreen" component={SignupScreen} />
+    <AuthStack.Screen name="FinishResetScreen" component={FinishResetPwScreen} />
   </AuthStack.Navigator>
 );
 
@@ -94,8 +91,8 @@ export const FavoriteStackScreen = () => (
       cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
     }}
   >
-    <FavoriteStack.Screen name='FavoriteScreen' component={FavoriteScreen} />
-    <FavoriteStack.Screen name='Detail' component={DetailScreen} />
+    <FavoriteStack.Screen name="FavoriteScreen" component={FavoriteScreen} />
+    <FavoriteStack.Screen name="Detail" component={DetailScreen} />
   </FavoriteStack.Navigator>
 );
 
@@ -109,25 +106,19 @@ export const PaymentStackScreen = () => (
       ...TransitionPresets.ModalPresentationIOS,
     }}
   >
-    <PaymentStack.Screen name='PaymentScreen' component={PaymentScreen} />
-    <PaymentStack.Screen
-      name='AddCreditCardScreen'
-      component={AddCreditCardScreen}
-    />
+    <PaymentStack.Screen name="PaymentScreen" component={PaymentScreen} />
+    <PaymentStack.Screen name="AddCreditCardScreen" component={AddCreditCardScreen} />
   </PaymentStack.Navigator>
 );
 
 const CartStack = createStackNavigator();
 export const CartStackScreen = () => (
   <CartStack.Navigator screenOptions={{ headerShown: false }}>
-    <CartStack.Screen name='CartScreen' component={CartScreen} />
+    <CartStack.Screen name="CartScreen" component={CartScreen} />
 
-    <CartStack.Screen name='PreOrderScreen' component={PreOrderScreen} />
-    <CartStack.Screen name='Payment' component={PaymentStackScreen} />
-    <CartStack.Screen
-      name='AddCreditCardScreen'
-      component={AddCreditCardScreen}
-    />
+    <CartStack.Screen name="PreOrderScreen" component={PreOrderScreen} />
+    <CartStack.Screen name="Payment" component={PaymentStackScreen} />
+    <CartStack.Screen name="AddCreditCardScreen" component={AddCreditCardScreen} />
   </CartStack.Navigator>
 );
 
@@ -139,9 +130,9 @@ export const ProductStackScreen = () => (
       cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
     }}
   >
-    <ProductStack.Screen name='ProductScreen' component={ProductScreen} />
-    <ProductStack.Screen name='DetailScreen' component={DetailScreen} />
-    <ProductStack.Screen name='CartScreen' component={CartStackScreen} />
+    <ProductStack.Screen name="ProductScreen" component={ProductScreen} />
+    <ProductStack.Screen name="DetailScreen" component={DetailScreen} />
+    <ProductStack.Screen name="CartScreen" component={CartStackScreen} />
   </ProductStack.Navigator>
 );
 
@@ -155,10 +146,10 @@ export const ProfileStackScreen = () => (
       cardOverlayEnabled: true,
       ...TransitionPresets.ModalPresentationIOS,
     }}
-    mode='modal'
+    mode="modal"
   >
-    <ProfileStack.Screen name='Profile' component={ProfileScreen} />
-    <ProfileStack.Screen name='ProfileEdit' component={EditProfileScreen} />
+    <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+    <ProfileStack.Screen name="ProfileEdit" component={EditProfileScreen} />
   </ProfileStack.Navigator>
 );
 
@@ -171,15 +162,15 @@ export const HomeStackScreen = () => (
     }}
   >
     <HomeStack.Screen
-      name='Home'
+      name="Home"
       component={HomeScreen}
       //animationEnabled: false , nằm trong option
     />
-    <HomeStack.Screen name='Detail' component={DetailScreen} />
-    <HomeStack.Screen name='Cart' component={CartStackScreen} />
-    <HomeStack.Screen name='Product' component={ProductStackScreen} />
-    <HomeStack.Screen name='FinishOrder' component={FinishOrderScreen} />
-    <HomeStack.Screen name='ResetPw' component={ResetPwScreen} />
+    <HomeStack.Screen name="Detail" component={DetailScreen} />
+    <HomeStack.Screen name="Cart" component={CartStackScreen} />
+    <HomeStack.Screen name="Product" component={ProductStackScreen} />
+    <HomeStack.Screen name="FinishOrder" component={FinishOrderScreen} />
+    <HomeStack.Screen name="ResetPw" component={ResetPwScreen} />
   </HomeStack.Navigator>
 );
 
@@ -206,28 +197,28 @@ export const TabScreen = () => {
       })}
       barStyle={{
         backgroundColor: Colors.light_grey,
-        height: 50,
+        height: 75,
         justifyContent: 'center',
       }}
       activeColor={Colors.lighter_green}
       inactiveColor={Colors.grey}
     >
       <Tab.Screen
-        name='HomeTab'
+        name="HomeTab"
         component={HomeStackScreen}
         options={{
           tabBarLabel: 'Trang chủ',
         }}
       />
       <Tab.Screen
-        name='Favorite'
+        name="Favorite"
         component={FavoriteStackScreen}
         options={() => ({
           tabBarLabel: 'Yêu thích',
         })}
       />
       <Tab.Screen
-        name='Cart'
+        name="Cart"
         component={CartStackScreen}
         options={() => ({
           tabBarLabel: 'Giỏ hàng',
@@ -302,7 +293,7 @@ export const DrawerNavigator = () => {
 
       {Object.keys(user).length === 0 ? (
         <Drawer.Screen
-          name='SignUp'
+          name="SignUp"
           component={AuthStackScreen}
           options={() => ({
             title: ({ focused }) => (
@@ -319,7 +310,7 @@ export const DrawerNavigator = () => {
             ),
             drawerIcon: ({ focused }) => (
               <MaterialCommunityIcons
-                name='login'
+                name="login"
                 size={23}
                 color={focused ? Colors.lighter_green : Colors.grey}
               />
@@ -329,7 +320,7 @@ export const DrawerNavigator = () => {
       ) : (
         <>
           <Drawer.Screen
-            name='TouchId'
+            name="TouchId"
             component={TouchIdScreen}
             options={() => ({
               title: ({ focused }) => (
@@ -346,7 +337,7 @@ export const DrawerNavigator = () => {
               ),
               drawerIcon: ({ focused }) => (
                 <MaterialCommunityIcons
-                  name='security'
+                  name="security"
                   size={25}
                   color={focused ? Colors.lighter_green : Colors.grey}
                 />
@@ -354,7 +345,7 @@ export const DrawerNavigator = () => {
             })}
           />
           <Drawer.Screen
-            name='Profile'
+            name="Profile"
             component={ProfileStackScreen}
             options={() => ({
               title: ({ focused }) => (
@@ -371,7 +362,7 @@ export const DrawerNavigator = () => {
               ),
               drawerIcon: ({ focused }) => (
                 <MaterialCommunityIcons
-                  name='face-profile'
+                  name="face-profile"
                   size={25}
                   color={focused ? Colors.lighter_green : Colors.grey}
                 />

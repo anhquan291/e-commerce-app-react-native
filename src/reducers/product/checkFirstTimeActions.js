@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const FIRST_OPEN = 'FIRST_OPEN';
 
 //Create dataStorage
@@ -7,7 +7,7 @@ const saveDataToStorage = (name, data) => {
     name,
     JSON.stringify({
       data,
-    })
+    }),
   );
 };
 

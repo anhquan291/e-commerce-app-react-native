@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, YellowBox } from 'react-native';
+import { LogBox } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './RootNavigation';
@@ -12,7 +13,7 @@ import { Host } from 'react-native-portalize';
 import { urlRedirect } from '../utils/Tools';
 import * as Linking from 'expo-linking';
 
-YellowBox.ignoreWarnings(['Setting a timer']);
+LogBox.ignoreLogs(['Setting a timer']);
 
 export const AppNavigator = () => {
   const [value, setValue] = useState(null);

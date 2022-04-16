@@ -8,9 +8,9 @@ import {
   AUTH_FAILURE,
   FORGET_PASSWORD,
   RESET_PASSWORD,
-} from "./authActions";
-import { AsyncStorage } from "react-native";
-import UserMessages from "../../messages/user";
+} from './authActions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserMessages from '../../messages/user';
 
 const initialState = {
   user: {},
@@ -22,7 +22,7 @@ const initialState = {
 export const authReducer = (state = initialState, action) => {
   //set user if token doesn't expire yet
   const userInformation = async () => {
-    const getUser = await AsyncStorage.getItem("user");
+    const getUser = await AsyncStorage.getItem('user');
     if (!getUser) {
       return initialState;
     }
@@ -42,7 +42,7 @@ export const authReducer = (state = initialState, action) => {
     case LOGIN:
       return {
         user: action.user,
-        notification: UserMessages["user.login.success"],
+        notification: UserMessages['user.login.success'],
         isLoading: false,
       };
     case SIGN_UP: {
@@ -61,7 +61,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {},
-        notification: UserMessages["user.logout.sucesss"],
+        notification: UserMessages['user.logout.sucesss'],
         isLoading: false,
       };
     case FORGET_PASSWORD:

@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '../../utils/Config';
 import { timeoutPromise } from '../../utils/Tools';
 
@@ -227,19 +227,16 @@ export const ResetPassword = (password, url) => {
     });
     try {
       const response = await timeoutPromise(
-        fetch(
-          `${API_URL}/user/receive_new_password/${url.userid}/${url.token}`,
-          {
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            method: 'POST',
-            body: JSON.stringify({
-              password,
-            }),
+        fetch(`${API_URL}/user/receive_new_password/${url.userid}/${url.token}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
-        ),
+          method: 'POST',
+          body: JSON.stringify({
+            password,
+          }),
+        }),
       );
       if (!response.ok) {
         const errorResData = await response.json();
